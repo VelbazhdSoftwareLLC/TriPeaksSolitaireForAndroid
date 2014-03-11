@@ -83,7 +83,7 @@ import java.util.Iterator;
 /**
  * it's a JFrame that listens to window events
  */
-public class TriPeaks extends JFrame implements WindowListener {
+public class TriPeaks extends JFrame {
 	/**
 	 * 
 	 */
@@ -240,7 +240,127 @@ public class TriPeaks extends JFrame implements WindowListener {
 		maxStr.setAlignmentX(Component.LEFT_ALIGNMENT);
 		col3.add(maxStr);
 
-		addWindowListener(this); // add a window-event listner to the frame
+		// add a window-event listner to the frame
+		addWindowListener(new WindowListener() {
+			public void windowOpened(WindowEvent e) { // the window is opened
+				InputStream is = TriPeaks.class
+						.getResourceAsStream(settingsFile); // get
+															// the
+															// file
+															// as
+															// a
+															// stream
+				String line = null; // placeholder for the line
+				String defName = "";
+
+				try {
+					if (is == null)
+						throw new Exception("First Time Running");
+					BufferedReader in = new BufferedReader(
+							new InputStreamReader(is)); // create
+														// a
+														// buffered
+														// reader
+														// for
+														// the
+														// file
+					if ((line = in.readLine()) != null) { // read the line
+						defName = line;
+					}
+					in.close(); // close the file
+				} catch (FileNotFoundException eFNF) { // file wasn't found
+														// (probably
+														// first time running)
+					System.out
+							.println("File not found (probably because the User hasn't played before): "
+									+ eFNF.getMessage());
+				} catch (IOException eIO) { // other IO error
+					System.out
+							.println("Error reading from file -OR- closing file");
+				} catch (Exception eE) {
+					System.out.println("First time run");
+				}
+				uName = JOptionPane.showInputDialog(TriPeaks.this, "Player Name:",
+						defName); // ask
+									// for
+									// the
+									// player's
+									// name
+				if ((uName == null) || (uName.equals("")))
+					System.exit(0); // if the name is empty or Cancel was
+									// pressed, exit
+				try {
+					readScoreSets(); // read the scores for the player
+				} catch (NewPlayerException eNP) {
+					board.setDefaults();
+				}
+			}
+
+			public void windowClosing(WindowEvent e) { // the X is clicked (not
+														// when the
+														// window disappears -
+														// that's
+														// windowClosed
+				int penalty = board.getPenalty(); // get the penalty for
+													// quitting
+				if (penalty != 0) { // if there is a penalty at all
+					int uI = JOptionPane.showConfirmDialog(TriPeaks.this,
+							"Are you sure you want to quit?\nQuitting now results in a penalty of $"
+									+ penalty + "!", "Confirm Quit",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE); // show
+															// a
+															// confirmation
+															// message
+					if (uI == JOptionPane.YES_OPTION) { // if the user clicked
+														// Yes
+						board.doPenalty(penalty); // perform the penalty
+					} else
+						return; // no was clicked - don't do anything
+				}
+				File setFile = new File(settingsFile); // create the file
+				if (setFile.canWrite() == false) {
+					return; // if the file doesn't exist, don't do anything
+				}
+				try {
+					BufferedWriter out = new BufferedWriter(new FileWriter(
+							setFile)); // create
+										// a
+										// buffered
+										// writer
+										// for
+										// the
+										// file
+					out.write(uName); // write the default username
+					out.close(); // close the file
+				} catch (FileNotFoundException eFNF) { // file wasn't found
+					System.out.println("File not found: " + eFNF.getMessage());
+				} catch (IOException eIO) { // other IO exception
+					System.out
+							.println("Error writing to file -OR- closing file");
+				}
+				writeScoreSets(); // write the scores for the user
+				System.exit(0); // exit
+			}
+
+			// the following methods aren't used, but necessary to implement
+			// KeyListener
+			// and WindowListener
+			public void windowClosed(WindowEvent e) {
+			}
+
+			public void windowIconified(WindowEvent e) {
+			}
+
+			public void windowDeiconified(WindowEvent e) {
+			}
+
+			public void windowActivated(WindowEvent e) {
+			}
+
+			public void windowDeactivated(WindowEvent e) {
+			}
+		});
 	}
 
 	public JMenuBar createMenuBar() { // creates the menu bar
@@ -1156,7 +1276,8 @@ public class TriPeaks extends JFrame implements WindowListener {
 						selIndex = q; // find the old font's index
 				}
 
-				JList fontList = new JList(fonts); // a list for the fonts
+				JList<Object> fontList = new JList<Object>(fonts); // a list for
+																	// the fonts
 				fontList.addListSelectionListener(new ListSelectionListener() { // add
 																				// a
 																				// list
@@ -2012,8 +2133,12 @@ public class TriPeaks extends JFrame implements WindowListener {
 		String fileName = rot13(uName); // the filename is the ROT13 cipher of
 										// their name
 		File file = new File(dirName + File.separator + fileName + ".txt"); // get
-																			// the
-																			// file
+		/*
+		 * if the file is null, don't do anything the file
+		 */
+		if (file.canRead() == false) {
+			throw new NewPlayerException("New Player: " + uName);
+		}
 		String line = null; // placeholder for the line
 		int[] stats = new int[CardPanel.NSTATS]; // the array for the stats
 		boolean[] cheats = new boolean[CardPanel.NCHEATS]; // cheats array for
@@ -2027,22 +2152,15 @@ public class TriPeaks extends JFrame implements WindowListener {
 															// (the passphrase
 															// is the filename
 															// backwards)
+		BufferedReader in = null;
 		try {
-			if (file == null)
-				throw new NewPlayerException("New Player: " + uName); // if the
-																		// file
-																		// is
-																		// null,
-																		// don't
-																		// do
-																		// anything
-			BufferedReader in = new BufferedReader(new FileReader(file)); // create
-																			// a
-																			// buffered
-																			// reader
-																			// for
-																			// the
-																			// file
+			in = new BufferedReader(new FileReader(file)); // create
+															// a
+															// buffered
+															// reader
+															// for
+															// the
+															// file
 			String deced;
 			while ((line = in.readLine()) != null) { // read the lines
 														// one-by-one
@@ -2128,10 +2246,12 @@ public class TriPeaks extends JFrame implements WindowListener {
 										JOptionPane.ERROR_MESSAGE);
 						board.setDefaults();
 						board.reset();
+						in.close();
 						return;
 					}
 				}
 			}
+
 			board.setStats(stats); // set the stats in the board
 			board.setCheated(hasCheated); // set the cheat status
 			setTitle(hasCheated ? "TriPeaks - Cheat Mode" : "TriPeaks"); // set
@@ -2149,7 +2269,6 @@ public class TriPeaks extends JFrame implements WindowListener {
 			}
 			updateStats(); // update the labels
 			board.repaint(); // repaint the board
-			in.close(); // close the file
 		} catch (FileNotFoundException eFNF) { // file wasn't found (probalby
 												// because the user doesn't
 												// exist yet
@@ -2158,6 +2277,11 @@ public class TriPeaks extends JFrame implements WindowListener {
 							+ eFNF.getMessage());
 		} catch (IOException eIO) { // other IO error
 			System.out.println("Error reading from file -OR- closing file");
+		} finally {
+			try {
+				in.close();// close the file
+			} catch (Exception e) {
+			}
 		}
 	}
 
@@ -2165,14 +2289,14 @@ public class TriPeaks extends JFrame implements WindowListener {
 		String fileName = rot13(uName); // filename is the ROT13 cipher of the
 										// username
 		File setFile = new File(dirName + File.separator + fileName + ".txt"); // create
-																				// the
-																				// file
+		if (setFile.canWrite() == false)
+			return; // if the file doesn't exist, don't do anything
+					// the
+					// file
 		Encryptor enc = new Encryptor(backward(fileName)); // set up the
 															// encryptor to
 															// encrpyt the lines
 		try {
-			if (setFile == null)
-				return; // if the file doesn't exist, don't do anything
 			BufferedWriter out = new BufferedWriter(new FileWriter(setFile)); // create
 																				// a
 																				// buffered
@@ -2233,109 +2357,5 @@ public class TriPeaks extends JFrame implements WindowListener {
 		} catch (IOException eIO) { // other IO exception
 			System.out.println("Error writing to file -OR- closing file");
 		}
-	}
-
-	public void windowOpened(WindowEvent e) { // the window is opened
-		InputStream is = TriPeaks.class.getResourceAsStream(settingsFile); // get
-																			// the
-																			// file
-																			// as
-																			// a
-																			// stream
-		String line = null; // placeholder for the line
-		String defName = "";
-
-		try {
-			if (is == null)
-				throw new Exception("First Time Running");
-			BufferedReader in = new BufferedReader(new InputStreamReader(is)); // create
-																				// a
-																				// buffered
-																				// reader
-																				// for
-																				// the
-																				// file
-			if ((line = in.readLine()) != null) { // read the line
-				defName = line;
-			}
-			in.close(); // close the file
-		} catch (FileNotFoundException eFNF) { // file wasn't found (probably
-												// first time running)
-			System.out
-					.println("File not found (probably because the User hasn't played before): "
-							+ eFNF.getMessage());
-		} catch (IOException eIO) { // other IO error
-			System.out.println("Error reading from file -OR- closing file");
-		} catch (Exception eE) {
-			System.out.println("First time run");
-		}
-		uName = JOptionPane.showInputDialog(this, "Player Name:", defName); // ask
-																			// for
-																			// the
-																			// player's
-																			// name
-		if ((uName == null) || (uName.equals("")))
-			System.exit(0); // if the name is empty or Cancel was pressed, exit
-		try {
-			readScoreSets(); // read the scores for the player
-		} catch (NewPlayerException eNP) {
-			board.setDefaults();
-		}
-	}
-
-	public void windowClosing(WindowEvent e) { // the X is clicked (not when the
-												// window disappears - that's
-												// windowClosed
-		int penalty = board.getPenalty(); // get the penalty for quitting
-		if (penalty != 0) { // if there is a penalty at all
-			int uI = JOptionPane.showConfirmDialog(this,
-					"Are you sure you want to quit?\nQuitting now results in a penalty of $"
-							+ penalty + "!", "Confirm Quit",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); // show
-																				// a
-																				// confirmation
-																				// message
-			if (uI == JOptionPane.YES_OPTION) { // if the user clicked Yes
-				board.doPenalty(penalty); // perform the penalty
-			} else
-				return; // no was clicked - don't do anything
-		}
-		File setFile = new File(settingsFile); // create the file
-		try {
-			if (setFile == null)
-				return; // if the file doesn't exist, don't do anything
-			BufferedWriter out = new BufferedWriter(new FileWriter(setFile)); // create
-																				// a
-																				// buffered
-																				// writer
-																				// for
-																				// the
-																				// file
-			out.write(uName); // write the default username
-			out.close(); // close the file
-		} catch (FileNotFoundException eFNF) { // file wasn't found
-			System.out.println("File not found: " + eFNF.getMessage());
-		} catch (IOException eIO) { // other IO exception
-			System.out.println("Error writing to file -OR- closing file");
-		}
-		writeScoreSets(); // write the scores for the user
-		System.exit(0); // exit
-	}
-
-	// the following methods aren't used, but necessary to implement KeyListener
-	// and WindowListener
-	public void windowClosed(WindowEvent e) {
-	}
-
-	public void windowIconified(WindowEvent e) {
-	}
-
-	public void windowDeiconified(WindowEvent e) {
-	}
-
-	public void windowActivated(WindowEvent e) {
-	}
-
-	public void windowDeactivated(WindowEvent e) {
 	}
 } // end class TriPeaks

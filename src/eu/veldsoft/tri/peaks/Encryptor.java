@@ -1,7 +1,6 @@
 package eu.veldsoft.tri.peaks;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -78,12 +77,8 @@ class Encryptor { // a class used to encrypt and decrypt stuff
 																	// Base64
 																	// encoding
 			return out; // return the encrypted string
-		} catch (BadPaddingException eBP) {
+		} catch (BadPaddingException | IllegalBlockSizeException | IOException e) {
 		} // catch all the exceptions
-		catch (IllegalBlockSizeException eIBS) {
-		} catch (UnsupportedEncodingException eUE) {
-		} catch (IOException eIO) {
-		}
 		return null; // return null if there was an exception
 	}
 
@@ -100,10 +95,7 @@ class Encryptor { // a class used to encrypt and decrypt stuff
 			return out; // return the decrypted string
 
 			// catch all the exceptions
-		} catch (BadPaddingException eBP) {
-		} catch (IllegalBlockSizeException eIBS) {
-		} catch (UnsupportedEncodingException eUE) {
-		} catch (IOException eIO) {
+		} catch (BadPaddingException | IllegalBlockSizeException | IOException eBP) {
 		}
 		return null; // return null if there was an exception
 	}

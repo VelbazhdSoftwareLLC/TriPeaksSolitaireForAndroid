@@ -129,9 +129,8 @@ class HighScoreModel extends AbstractTableModel {
 		if (!scoresDir.isDirectory())
 			return false;
 		File[] scoreFiles = scoresDir.listFiles();
-		BufferedReader in;
 
-		ArrayList<ArrayList> scoreLists = new ArrayList<ArrayList>();
+		ArrayList<ArrayList<Object>> scoreLists = new ArrayList<ArrayList<Object>>();
 		ArrayList<Object> plrScores;
 
 		String fileName, deced, line;
@@ -146,6 +145,7 @@ class HighScoreModel extends AbstractTableModel {
 			dec = new Encryptor(TriPeaks.backward(fileName.substring(0,
 					dotIndex)));
 			plrScores.add(TriPeaks.rot13(fileName.substring(0, dotIndex)));
+			BufferedReader in = null;
 			try {
 				in = new BufferedReader(new FileReader(scoreFiles[q]));
 				for (int w = 0; w < CardPanel.NSTATS; w++) {
@@ -169,6 +169,11 @@ class HighScoreModel extends AbstractTableModel {
 				System.out.println(eFNF.getMessage());
 			} catch (IOException eIO) {
 				System.out.println("Error reading from file -OR- closing file");
+			} finally {
+				try {
+					in.close();
+				} catch (Exception e) {
+				}
 			}
 		}
 
@@ -183,8 +188,8 @@ class HighScoreModel extends AbstractTableModel {
 		data = new Object[scoreLists.size()][getColumnCount()];
 
 		int q = 0;
-		for (Iterator<ArrayList> it1 = scoreLists.iterator(); it1.hasNext(); q++) {
-			ArrayList score = it1.next();
+		for (Iterator<ArrayList<Object>> it1 = scoreLists.iterator(); it1.hasNext(); q++) {
+			ArrayList<Object> score = it1.next();
 			data[q][0] = TriPeaks.capitalize((String) score.get(0));
 			data[q][1] = score.get(1);
 			if (((Integer) score.get(4)).intValue() != 0)

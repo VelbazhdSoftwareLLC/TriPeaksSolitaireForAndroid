@@ -15,10 +15,15 @@ class CurrencyRenderer extends DefaultTableCellRenderer {
 	}
 
 	public void setValue(Object value) {
-		if (value == null)
-			setText("");
-		DecimalFormat format = null;
+		setText("");
+
+		if (value == null) {
+			return;
+		}
+		
 		double num = 0.0;
+		DecimalFormat format = null;
+		
 		if (value.getClass() == Integer.class) {
 			format = new DecimalFormat("$###,###");
 			num = ((Integer) value).intValue();
@@ -26,13 +31,11 @@ class CurrencyRenderer extends DefaultTableCellRenderer {
 			format = new DecimalFormat("$###,##0.00");
 			num = ((Double) value).doubleValue();
 		} else {
-			setText("");
 			return;
 		}
-		if (format == null) {
-			setText("");
-			return;
+		
+		if (format != null) {
+			setText(format.format(num));
 		}
-		setText(format.format(num));
 	}
 }
