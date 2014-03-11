@@ -1,6 +1,8 @@
 package eu.veldsoft.tri.peaks;
 
-//import all the necessary stuff
+/*
+ * import all the necessary stuff
+ */
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -89,125 +91,200 @@ public class TriPeaks extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private CardPanel board; // the panel with the cards
+	// the panel with the cards
+	private CardPanel board;
+
+	// the labels for the stats
 	JLabel curGame, maxMin, curStr, sesWin, sesAvg, sesGame, plrGame, plrAvg,
-			maxStr; // the labels for the stats
+			maxStr;
+
 	public static final String scoresDir = "GevFpbef";
-	private final String dirName = scoresDir; // the folder with the score files
-												// (ROT13 of TriScores)
+
+	// the folder with the score files
+	// (ROT13 of TriScores)
+	private final String dirName = scoresDir;
+
 	private final String settingsFile = "TriSet";
-	private String uName; // name of the player
-	private JPanel statsPanel; // the pnael with the stats
+
+	// name of the player
+	private String uName;
+
+	// the pnael with the stats
+	private JPanel statsPanel;
+
 	private JCheckBoxMenuItem[] cheatItems = new JCheckBoxMenuItem[CardPanel.NCHEATS];
+
 	private boolean seenWarn = false;
+
 	private JCheckBoxMenuItem statsCheck;
 
-	public TriPeaks(String title) { // class constructor
-		super(title); // call the JFrame contructor
+	// class constructor
+	public TriPeaks(String title) {
+		// call the JFrame contructor
+		super(title);
 	}
 
-	public static void main(String[] args) { // entry point for the application
-		TriPeaks TP = new TriPeaks("TriPeaks"); // create the frame
+	// entry point for the application
+	public static void main(String[] args) {
+		// create the frame
+		TriPeaks TP = new TriPeaks("TriPeaks");
+
 		/*
 		 * don't do anything when user presses the X - custom close handling
 		 */
 		TP.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		TP.createGUI(); // create the GUI
-		TP.pack(); // give everything enough room
+
+		// create the GUI
+		TP.createGUI();
+
+		// give everything enough room
+		TP.pack();
+
 		TP.setIconImage(getIcon("Images" + File.separator + "TriPeaks.png"));
-		TP.setResizable(false); // can't resize the window
-		TP.setVisible(true); // show it.
+
+		// can't resize the window
+		TP.setResizable(false);
+
+		// show it.
+		TP.setVisible(true);
 	}
 
-	public static Image getIcon(String path) { // returns an Image based on the
-												// path
-		ImageIcon img = getImageIcon(path); // gets the image icon based on the
-											// path
+	// returns an Image based on the
+	// path
+	public static Image getIcon(String path) {
+		// gets the image icon based on the
+		// path
+		ImageIcon img = getImageIcon(path);
+
+		// if the image icon isn't null, get the
+		// image from it
+		// otherwise return null
 		if (img != null)
-			return img.getImage(); // if the image icon isn't null, get the
-									// image from it
+			return img.getImage();
 		else
-			return null; // otherwise return null
+			return null;
 	}
 
-	public static ImageIcon getImageIcon(String path) { // returns an ImageIcon
-														// based on the path
-														// (ImageIcon implements
-														// Icon, and Image
-														// doesn't)
-		URL imgURL = TriPeaks.class.getResource(path); // get the URL
+	// returns an ImageIcon
+	// based on the path
+	// (ImageIcon implements
+	// Icon, and Image
+	// doesn't)
+	public static ImageIcon getImageIcon(String path) {
+		// get the URL
+		URL imgURL = TriPeaks.class.getResource(path);
+
+		// if the URL isn't null, return the
+		// ImageIcon
+		// otherwise return null
 		if (imgURL != null)
-			return new ImageIcon(imgURL); // if the URL isn't null, return the
-											// ImageIcon
+			return new ImageIcon(imgURL);
 		else
-			return null; // otherwise return null
+			return null;
 	}
 
-	public void createGUI() { // creates the GUI with the given frame
+	// creates the GUI with the given frame
+	public void createGUI() {
+		// align
+		// stuff
+		// on
+		// the
+		// Y-Axis
 		getContentPane().setLayout(
-				new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS)); // align
-																		// stuff
-																		// on
-																		// the
-																		// Y-Axis
-		setJMenuBar(createMenuBar()); // set the menu bar for the frame
+				new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 
-		board = new CardPanel(); // create the panel with the cards
-		getContentPane().add(board); // add it to the frame
+		// set the menu bar for the frame
+		setJMenuBar(createMenuBar());
 
-		statsPanel = new JPanel(); // create the statistics panel
-		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.LINE_AXIS)); // align
-																				// stuff
-																				// on
-																				// the
-																				// X-Axis
-		getContentPane().add(statsPanel); // add it to the frame
+		// create the panel with the cards
+		board = new CardPanel();
 
-		JPanel col1 = new JPanel(); // create the panel for the first column (of
-									// 3)
-		col1.setLayout(new BoxLayout(col1, BoxLayout.PAGE_AXIS)); // align stuff
-																	// on the
-																	// Y-Axis
-		col1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5)); // give it
-																		// some
-																		// room
-																		// (5 px
-																		// on
-																		// each
-																		// side,
-																		// 10 on
-																		// the
-																		// left)
-		statsPanel.add(col1); // add it to the stats panel
+		// add it to the frame
+		getContentPane().add(board);
 
-		statsPanel.add(Box.createHorizontalGlue()); // add horizontal "glue" -
-													// even out the space
-													// between the columns
+		// create the statistics panel
+		statsPanel = new JPanel();
 
-		JPanel col2 = new JPanel(); // same thing for the second column
+		// align
+		// stuff
+		// on
+		// the
+		// X-Axis
+		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.LINE_AXIS));
+
+		// add it to the frame
+		getContentPane().add(statsPanel);
+
+		// create the panel for the first column (of
+		// 3)
+		JPanel col1 = new JPanel();
+
+		// align stuff
+		// on the
+		// Y-Axis
+		col1.setLayout(new BoxLayout(col1, BoxLayout.PAGE_AXIS));
+
+		// give it
+		// some
+		// room
+		// (5 px
+		// on
+		// each
+		// side,
+		// 10 on
+		// the
+		// left)
+		col1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
+
+		// add it to the stats panel
+		statsPanel.add(col1);
+
+		// add horizontal "glue" -
+		// even out the space
+		// between the columns
+		statsPanel.add(Box.createHorizontalGlue());
+
+		// same thing for the second column
+		JPanel col2 = new JPanel();
+
 		col2.setLayout(new BoxLayout(col2, BoxLayout.PAGE_AXIS));
-		col2.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // top,
-																		// left,
-																		// bottom,
-																		// right
+
+		// top,
+		// left,
+		// bottom,
+		// right
+		col2.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
 		statsPanel.add(col2);
 
-		statsPanel.add(Box.createHorizontalGlue()); // more "glue"
+		// more "glue"
+		statsPanel.add(Box.createHorizontalGlue());
 
-		JPanel col3 = new JPanel(); // and the third
+		// and the third
+		JPanel col3 = new JPanel();
+
 		col3.setLayout(new BoxLayout(col3, BoxLayout.PAGE_AXIS));
-		col3.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10)); // 10 on
-																		// the
-																		// right
+
+		// 10 on
+		// the
+		// right
+		col3.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
+
 		statsPanel.add(col3);
 
-		curGame = new JLabel("Game Winnings: ?"); // create the label, with the
-													// default text
-		curGame.setAlignmentX(Component.LEFT_ALIGNMENT); // it should be
-															// left-aligned
-															// within the panel
-		col1.add(curGame); // add it to the first column
+		// create the label, with the
+		// default text
+		curGame = new JLabel("Game Winnings: ?");
+
+		// it should be
+		// left-aligned
+		// within the panel
+		curGame.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		// add it to the first column
 		// same thing for the rest of the labels
+		col1.add(curGame);
+
 		maxMin = new JLabel("Most - Won: ?, Lost ?");
 		maxMin.setAlignmentX(Component.LEFT_ALIGNMENT);
 		col1.add(maxMin);
@@ -242,105 +319,147 @@ public class TriPeaks extends JFrame {
 
 		// add a window-event listner to the frame
 		addWindowListener(new WindowListener() {
-			public void windowOpened(WindowEvent e) { // the window is opened
+			// the window is opened
+			public void windowOpened(WindowEvent e) {
+				// get
+				// the
+				// file
+				// as
+				// a
+				// stream
 				InputStream is = TriPeaks.class
-						.getResourceAsStream(settingsFile); // get
-															// the
-															// file
-															// as
-															// a
-															// stream
-				String line = null; // placeholder for the line
+						.getResourceAsStream(settingsFile);
+				// placeholder for the line
+				String line = null;
 				String defName = "";
 
 				try {
 					if (is == null)
 						throw new Exception("First Time Running");
+
+					// create
+					// a
+					// buffered
+					// reader
+					// for
+					// the
+					// file
 					BufferedReader in = new BufferedReader(
-							new InputStreamReader(is)); // create
-														// a
-														// buffered
-														// reader
-														// for
-														// the
-														// file
-					if ((line = in.readLine()) != null) { // read the line
+							new InputStreamReader(is));
+
+					// read the line
+					if ((line = in.readLine()) != null) {
 						defName = line;
 					}
-					in.close(); // close the file
-				} catch (FileNotFoundException eFNF) { // file wasn't found
-														// (probably
-														// first time running)
+
+					// close the file
+					in.close();
+				} catch (FileNotFoundException eFNF) {
+					// file wasn't found
+					// (probably
+					// first time running)
 					System.out
 							.println("File not found (probably because the User hasn't played before): "
 									+ eFNF.getMessage());
-				} catch (IOException eIO) { // other IO error
+				} catch (IOException eIO) {
+					// other IO error
 					System.out
 							.println("Error reading from file -OR- closing file");
 				} catch (Exception eE) {
 					System.out.println("First time run");
 				}
-				uName = JOptionPane.showInputDialog(TriPeaks.this, "Player Name:",
-						defName); // ask
-									// for
-									// the
-									// player's
-									// name
+
+				// ask
+				// for
+				// the
+				// player's
+				// name
+				uName = JOptionPane.showInputDialog(TriPeaks.this,
+						"Player Name:", defName);
+
+				// if the name is empty or Cancel was
+				// pressed, exit
 				if ((uName == null) || (uName.equals("")))
-					System.exit(0); // if the name is empty or Cancel was
-									// pressed, exit
+					System.exit(0);
+
 				try {
-					readScoreSets(); // read the scores for the player
+					// read the scores for the player
+					readScoreSets();
 				} catch (NewPlayerException eNP) {
 					board.setDefaults();
 				}
 			}
 
-			public void windowClosing(WindowEvent e) { // the X is clicked (not
-														// when the
-														// window disappears -
-														// that's
-														// windowClosed
-				int penalty = board.getPenalty(); // get the penalty for
-													// quitting
-				if (penalty != 0) { // if there is a penalty at all
+			// the X is clicked (not
+			// when the
+			// window disappears -
+			// that's
+			// windowClosed
+			public void windowClosing(WindowEvent e) {
+				// get the penalty for
+				// quitting
+				int penalty = board.getPenalty();
+
+				// if there is a penalty at all
+				if (penalty != 0) {
+					// show
+					// a
+					// confirmation
+					// message
 					int uI = JOptionPane.showConfirmDialog(TriPeaks.this,
 							"Are you sure you want to quit?\nQuitting now results in a penalty of $"
 									+ penalty + "!", "Confirm Quit",
 							JOptionPane.YES_NO_OPTION,
-							JOptionPane.WARNING_MESSAGE); // show
-															// a
-															// confirmation
-															// message
-					if (uI == JOptionPane.YES_OPTION) { // if the user clicked
-														// Yes
-						board.doPenalty(penalty); // perform the penalty
-					} else
-						return; // no was clicked - don't do anything
+							JOptionPane.WARNING_MESSAGE);
+					
+					// if the user clicked
+					// Yes
+					if (uI == JOptionPane.YES_OPTION) {
+						// perform the penalty
+						board.doPenalty(penalty); 
+					} else {
+						// no was clicked - don't do anything
+						return; 
+					}
 				}
-				File setFile = new File(settingsFile); // create the file
+				
+				// create the file
+				File setFile = new File(settingsFile); 
 				if (setFile.canWrite() == false) {
-					return; // if the file doesn't exist, don't do anything
+					// if the file doesn't exist, don't do anything
+					return; 
 				}
+				
 				try {
+					// create
+					// a
+					// buffered
+					// writer
+					// for
+					// the
+					// file
 					BufferedWriter out = new BufferedWriter(new FileWriter(
-							setFile)); // create
-										// a
-										// buffered
-										// writer
-										// for
-										// the
-										// file
-					out.write(uName); // write the default username
-					out.close(); // close the file
-				} catch (FileNotFoundException eFNF) { // file wasn't found
+							setFile));
+					
+					// write the default username
+					out.write(uName); 
+					
+					// close the file
+					out.close(); 
+				} catch (FileNotFoundException eFNF) { 
+					// file wasn't found
 					System.out.println("File not found: " + eFNF.getMessage());
-				} catch (IOException eIO) { // other IO exception
+				} catch (IOException eIO) { 
+					// other IO exception
 					System.out
 							.println("Error writing to file -OR- closing file");
 				}
-				writeScoreSets(); // write the scores for the user
-				System.exit(0); // exit
+				
+				// write the scores for the user
+				writeScoreSets(); 
+				
+				// exit
+				System.exit(0); 
 			}
 
 			// the following methods aren't used, but necessary to implement
@@ -2041,176 +2160,282 @@ public class TriPeaks extends JFrame {
 		return Character.toUpperCase(in.charAt(0)) + in.substring(1);
 	}
 
-	public static String dSign(int in) { // add a dollar sign to a number
-		if (in < 0)
-			return ("-$" + (-1) * in); // put the negative sign out in front if
-										// it's negative
-		else
-			return "$" + in; // otherwise just add the dollar sign
+	// add a dollar sign to a number
+	public static String dSign(int in) {
+		if (in < 0) {
+			// put the negative sign out in front if
+			// it's negative
+			return ("-$" + (-1) * in);
+		} else {
+			// otherwise just add the dollar sign
+			return "$" + in;
+		}
 	}
 
-	public int randInt(int max) { // returns a random integer - 0 <= anInt < max
-		int anInt = (int) (max * Math.random()); // generate a the random value
-		return anInt; // return it
+	// returns a random integer - 0 <= anInt < max
+	public int randInt(int max) {
+		// generate a the random value
+		int anInt = (int) (max * Math.random());
+
+		// return it
+		return anInt;
 	}
 
-	public int[] genGrid(int num) { // generates an "optimal" grid based on the
-									// number of elements
-		int[] dim = new int[2]; // the array for the dimensions
-		for (int q = 1; q <= num; q++) { // go through each of the numbers to
-											// the given one
-			if (q * q == num) { // if it's a perfect square
-				dim[0] = dim[1] = q; // set both values as the given number's
-										// square root
-				return dim; // return the dimensions
+	// generates an "optimal" grid based on the
+	// number of elements
+	public int[] genGrid(int num) {
+		// the array for the dimensions
+		int[] dim = new int[2];
+
+		// go through each of the numbers to
+		// the given one
+		for (int q = 1; q <= num; q++) {
+			// if it's a perfect square
+			if (q * q == num) {
+				// set both values as the given number's
+				// square root
+				dim[0] = dim[1] = q;
+
+				// return the dimensions
+				return dim;
 			}
 		}
-		for (int q = 1; q <= num; q++) { // go through the numbers again - check
-											// for something else
-			int w; // a placeholder
-			for (w = 1; w <= q + 2; w++) { // go from 1 to 2 more than the
-											// current number
-				if (q * w >= num) { // if the grid will fit
-					dim[0] = q; // set the first value
-					dim[1] = w; // and the second
-					return dim; // return the dimensions
+
+		// go through the numbers again - check
+		// for something else
+		for (int q = 1; q <= num; q++) {
+			// a placeholder
+			int w;
+
+			// go from 1 to 2 more than the
+			// current number
+			for (w = 1; w <= q + 2; w++) {
+				// if the grid will fit
+				if (q * w >= num) {
+					// set the first value
+					dim[0] = q;
+
+					// and the second
+					dim[1] = w;
+
+					// return the dimensions
+					return dim;
 				}
 			}
-			if ((q + 1) * (q + 2) >= num) { // if +1 and +2 will satisfy the
-											// number
-				dim[0] = q + 1; // set the first value
-				dim[1] = q + 2; // set the second value
-				return dim; // return the dimensions
+
+			// if +1 and +2 will satisfy the
+			// number
+			if ((q + 1) * (q + 2) >= num) {
+				// set the first value
+				dim[0] = q + 1;
+
+				// set the second value
+				dim[1] = q + 2;
+
+				// return the dimensions
+				return dim;
 			}
-			for (; w <= q + 4; w++) { // go to the 4 more than the current
-										// number (no initialization statement -
-										// go from the previous for left off)
-				if (q * w >= num) { // if the grid will fit
-					dim[0] = q; // set the first value
-					dim[1] = w; // and the second
-					return dim; // return the dimensions
+
+			// go to the 4 more than the current
+			// number (no initialization statement -
+			// go from the previous for left off)
+			for (; w <= q + 4; w++) {
+				// if the grid will fit
+				if (q * w >= num) {
+					// set the first value
+					dim[0] = q;
+
+					// and the second
+					dim[1] = w;
+
+					// return the dimensions
+					return dim;
 				}
 			}
 		}
 		return dim; // if something BAD happened, return 0 x 0
 	}
 
-	public static String rot13(String in) { // calculates the ROT13 cipher of a
-											// string
-		String low = in.toLowerCase(); // only lowercase characters are wanted
-		StringBuffer out = new StringBuffer(); // a buffer for the output string
-		final String letters = "abcdefghijklmnopqrstuvwxyz"; // all the letters
-																// of the
-																// alphabet
-		int index, newIndex; // two index holders
-		for (int q = 0; q < low.length(); q++) { // go through the letters in
-													// the input string
-			index = letters.indexOf(low.charAt(q)); // find the current
-													// character's index in the
-													// alphabet string
+	// calculates the ROT13 cipher of a
+	// string
+	public static String rot13(String in) {
+		// only lowercase characters are wanted
+		String low = in.toLowerCase();
+
+		// a buffer for the output string
+		StringBuffer out = new StringBuffer();
+
+		// all the letters
+		// of the
+		// alphabet
+		final String letters = "abcdefghijklmnopqrstuvwxyz";
+
+		// two index holders
+		int index, newIndex;
+
+		// go through the letters in
+		// the input string
+		for (int q = 0; q < low.length(); q++) {
+
+			// find the current
+			// character's index in the
+			// alphabet string
+			index = letters.indexOf(low.charAt(q));
+
+			// if the letter wasn't found, skip it
 			if (index == -1)
-				continue; // if the letter wasn't found, skip it
-			newIndex = (index + 13) % 26; // do the rotation by 13
-			out.append(letters.charAt(newIndex)); // append the ciphered
-													// characted
+				continue;
+
+			// do the rotation by 13
+			newIndex = (index + 13) % 26;
+
+			// append the ciphered
+			// characted
+			out.append(letters.charAt(newIndex));
 		}
-		return out.toString(); // return the ciphered string
+
+		// return the ciphered string
+		return out.toString();
 	}
 
-	public static String backward(String in) { // reverse a string
-		StringBuffer out = new StringBuffer(); // buffer for output
-		for (int q = 1; q <= in.length(); q++) { // go through the characters
-			out.append(in.charAt(in.length() - q)); // append that character
-													// from the end of the
-													// string
+	// reverse a string
+	public static String backward(String in) {
+		// buffer for output
+		StringBuffer out = new StringBuffer();
+
+		// go through the characters
+		for (int q = 1; q <= in.length(); q++) {
+			// append that character
+			// from the end of the
+			// string
+			out.append(in.charAt(in.length() - q));
 		}
-		return out.toString(); // return the reversed string
+
+		// return the reversed string
+		return out.toString();
 	}
 
-	public void readScoreSets() throws NewPlayerException { // reads the scores
-															// from the current
-															// user's file.
-		String fileName = rot13(uName); // the filename is the ROT13 cipher of
-										// their name
-		File file = new File(dirName + File.separator + fileName + ".txt"); // get
+	// reads the scores
+	// from the current
+	// user's file.
+	public void readScoreSets() throws NewPlayerException {
+
+		// the filename is the ROT13 cipher of
+		// their name
+		String fileName = rot13(uName);
+
+		// get
+		File file = new File(dirName + File.separator + fileName + ".txt");
+
 		/*
 		 * if the file is null, don't do anything the file
 		 */
 		if (file.canRead() == false) {
 			throw new NewPlayerException("New Player: " + uName);
 		}
-		String line = null; // placeholder for the line
-		int[] stats = new int[CardPanel.NSTATS]; // the array for the stats
-		boolean[] cheats = new boolean[CardPanel.NCHEATS]; // cheats array for
-															// the cheat menu
-															// items
-		boolean hasCheated = false; // the cheat status
-		int lNum = -1; // line number (incremented before setting value)
-		Encryptor dec = new Encryptor(backward(fileName)); // set up the
-															// encryptor to
-															// decrypt the lines
-															// (the passphrase
-															// is the filename
-															// backwards)
+
+		// placeholder for the line
+		String line = null;
+
+		// the array for the stats
+		int[] stats = new int[CardPanel.NSTATS];
+
+		// cheats array for
+		// the cheat menu
+		// items
+		boolean[] cheats = new boolean[CardPanel.NCHEATS];
+
+		// the cheat status
+		boolean hasCheated = false;
+
+		// line number (incremented before setting value)
+		int lNum = -1;
+
+		// set up the
+		// encryptor to
+		// decrypt the lines
+		// (the passphrase
+		// is the filename
+		// backwards)
+		Encryptor dec = new Encryptor(backward(fileName));
+
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(file)); // create
-															// a
-															// buffered
-															// reader
-															// for
-															// the
-															// file
+			// create
+			// a
+			// buffered
+			// reader
+			// for
+			// the
+			// file
+			in = new BufferedReader(new FileReader(file));
+
+			// read the lines
+			// one-by-one
 			String deced;
-			while ((line = in.readLine()) != null) { // read the lines
-														// one-by-one
-				lNum++; // increment the line number
+			while ((line = in.readLine()) != null) {
+				// increment the line number
+				lNum++;
+
+				// stop if there are more lines than needed
 				if (lNum > (stats.length + cheats.length + 6))
-					break; // stop if there are more lines than needed
+					break;
+
 				deced = dec.decrypt(line);
-				if ((lNum >= 0) && (lNum < stats.length))
-					stats[lNum] = Integer.parseInt(deced); // set the value
-															// based on the
-															// decrypted line,
-															// if the line
-															// belongs to the
-															// stats array
-				else if ((lNum >= stats.length)
-						&& (lNum < (stats.length + cheats.length)))
-					cheats[lNum - stats.length] = Boolean.parseBoolean(deced); // set
-																				// the
-																				// values
-																				// based
-																				// on
-																				// the
-																				// decrypted
-																				// line,
-																				// if
-																				// the
-																				// line
-																				// belongs
-																				// to
-																				// the
-																				// cheats
-																				// array
-				else if (lNum == stats.length + cheats.length)
+
+				if ((lNum >= 0) && (lNum < stats.length)) {
+					// set the value
+					// based on the
+					// decrypted line,
+					// if the line
+					// belongs to the
+					// stats array
+					stats[lNum] = Integer.parseInt(deced);
+				} else if ((lNum >= stats.length)
+						&& (lNum < (stats.length + cheats.length))) {
+					// set
+					// the
+					// values
+					// based
+					// on
+					// the
+					// decrypted
+					// line,
+					// if
+					// the
+					// line
+					// belongs
+					// to
+					// the
+					// cheats
+					// array
+					cheats[lNum - stats.length] = Boolean.parseBoolean(deced);
+				} else if (lNum == stats.length + cheats.length)
 					hasCheated = Boolean.parseBoolean(deced);
 				else if (lNum == stats.length + cheats.length + 1)
 					board.setCardFront(deced);
 				else if (lNum == stats.length + cheats.length + 2)
 					board.setCardBack(deced);
 				else if (lNum == stats.length + cheats.length + 3) {
-					int cm1, cm2; // two commas
-					cm1 = deced.indexOf(','); // get the indexes of the two
-												// commas
+					// two commas
+					int cm1, cm2;
+
+					// get the indexes of the two
+					// commas
+					cm1 = deced.indexOf(',');
+
 					cm2 = deced.lastIndexOf(',');
+
+					// if either comma isn't found, exit
 					if ((cm1 == -1) || (cm2 == -1) || (cm1 == cm2))
-						continue; // if either comma isn't found, exit
+						continue;
+
+					// convert to integer and
+					// set the color
 					board.setBackColor(new Color(Integer.parseInt(deced
 							.substring(0, cm1)), Integer.parseInt(deced
 							.substring(cm1 + 1, cm2)), Integer.parseInt(deced
-							.substring(cm2 + 1)))); // convert to integer and
-													// set the color
+							.substring(cm2 + 1))));
 				} else if (lNum == stats.length + cheats.length + 4) {
 					int dash, cm1, cm2;
 					dash = deced.indexOf('-');
@@ -2252,26 +2477,39 @@ public class TriPeaks extends JFrame {
 				}
 			}
 
-			board.setStats(stats); // set the stats in the board
-			board.setCheated(hasCheated); // set the cheat status
-			setTitle(hasCheated ? "TriPeaks - Cheat Mode" : "TriPeaks"); // set
-																			// the
-																			// title
-																			// based
-																			// on
-																			// the
-																			// cheat
-																			// status
-			for (int q = 0; q < cheats.length; q++) { // go through the cheats
-				cheatItems[q].setSelected(cheats[q]); // set the selected status
-														// of the menu items
-														// used for the cheats
+			// set the stats in the board
+			board.setStats(stats);
+
+			// set the cheat status
+			board.setCheated(hasCheated);
+
+			// set
+			// the
+			// title
+			// based
+			// on
+			// the
+			// cheat
+			// status
+			setTitle(hasCheated ? "TriPeaks - Cheat Mode" : "TriPeaks");
+
+			// go through the cheats
+			for (int q = 0; q < cheats.length; q++) {
+				// set the selected status
+				// of the menu items
+				// used for the cheats
+				cheatItems[q].setSelected(cheats[q]);
 			}
-			updateStats(); // update the labels
-			board.repaint(); // repaint the board
-		} catch (FileNotFoundException eFNF) { // file wasn't found (probalby
-												// because the user doesn't
-												// exist yet
+
+			// update the labels
+			updateStats();
+
+			// repaint the board
+			board.repaint();
+		} catch (FileNotFoundException eFNF) {
+			// file wasn't found (probalby
+			// because the user doesn't
+			// exist yet
 			System.out
 					.println("File not found (probably because the User hasn't played before): "
 							+ eFNF.getMessage());
@@ -2279,61 +2517,89 @@ public class TriPeaks extends JFrame {
 			System.out.println("Error reading from file -OR- closing file");
 		} finally {
 			try {
-				in.close();// close the file
+				// close the file
+				in.close();
 			} catch (Exception e) {
 			}
 		}
 	}
 
-	public void writeScoreSets() { // writes the scores for the current player
-		String fileName = rot13(uName); // filename is the ROT13 cipher of the
-										// username
-		File setFile = new File(dirName + File.separator + fileName + ".txt"); // create
+	// writes the scores for the current player
+	public void writeScoreSets() {
+		// filename is the ROT13 cipher of the
+		// username
+		String fileName = rot13(uName);
+
+		// create
+		File setFile = new File(dirName + File.separator + fileName + ".txt");
+
+		// if the file doesn't exist, don't do anything
+		// the
+		// file
 		if (setFile.canWrite() == false)
-			return; // if the file doesn't exist, don't do anything
-					// the
-					// file
-		Encryptor enc = new Encryptor(backward(fileName)); // set up the
-															// encryptor to
-															// encrpyt the lines
+			return;
+
+		// set up the
+		// encryptor to
+		// encrpyt the lines
+		Encryptor enc = new Encryptor(backward(fileName));
+
 		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(setFile)); // create
-																				// a
-																				// buffered
-																				// writer
-																				// for
-																				// the
-																				// file
+			// create
+			// a
+			// buffered
+			// writer
+			// for
+			// the
+			// file
+			BufferedWriter out = new BufferedWriter(new FileWriter(setFile));
+
 			boolean[] cheats = board.getCheats();
+
 			Color boardColor = board.getBackColor();
+
 			Font textFont = board.getTextFont();
+
 			Color fontColor = board.getFontColor();
+
 			long dtMod = new Date().getTime();
-			out.write(enc.encrypt("" + board.getScore())); // player's overall
-															// score
-			out.newLine(); // new line
-			out.write(enc.encrypt("" + board.getHighScore())); // player's
-																// highes score
+
+			// player's overall
+			// score
+			out.write(enc.encrypt("" + board.getScore()));
+			// new line
 			out.newLine();
-			out.write(enc.encrypt("" + board.getLowScore())); // player's lowest
-																// score
+			// player's
+			// highes score
+			out.write(enc.encrypt("" + board.getHighScore()));
 			out.newLine();
-			out.write(enc.encrypt("" + board.getNumGames())); // number of games
-																// played by the
-																// user
+			// player's lowest
+			// score
+			out.write(enc.encrypt("" + board.getLowScore()));
 			out.newLine();
-			out.write(enc.encrypt("" + board.getHighStreak())); // player's
-																// longest
-																// streak
+			// number of games
+			// played by the
+			// user
+			out.write(enc.encrypt("" + board.getNumGames()));
 			out.newLine();
-			out.write(enc.encrypt("" + cheats[0])); // first cheat
+			// player's
+			// longest
+			// streak
+			out.write(enc.encrypt("" + board.getHighStreak()));
 			out.newLine();
-			out.write(enc.encrypt("" + cheats[1])); // second cheat
+			// first cheat
+			out.write(enc.encrypt("" + cheats[0]));
 			out.newLine();
-			out.write(enc.encrypt("" + cheats[2])); // third cheat
+			// second cheat
+			out.write(enc.encrypt("" + cheats[1]));
 			out.newLine();
-			out.write(enc.encrypt("" + board.hasCheated())); // player's cheat
-																// status
+			// third cheat
+			out.write(enc.encrypt("" + cheats[2]));
+			out.newLine();
+			// player's cheat
+			// status
+			out.write(enc.encrypt("" + board.hasCheated()));
+
 			out.newLine();
 			out.write(enc.encrypt("" + board.getCardFront()));
 			out.newLine();
@@ -2350,11 +2616,16 @@ public class TriPeaks extends JFrame {
 					+ fontColor.getGreen() + "," + boardColor.getBlue()));
 			out.newLine();
 			out.write(enc.encrypt("" + 1000 * ((long) dtMod / 1000)));
-			out.close(); // close the file
+
+			// close the file
+			out.close();
+
 			setFile.setLastModified(dtMod);
-		} catch (FileNotFoundException eFNF) { // file wasn't found
+		} catch (FileNotFoundException eFNF) {
+			// file wasn't found
 			System.out.println("File not found: " + eFNF.getMessage());
-		} catch (IOException eIO) { // other IO exception
+		} catch (IOException eIO) {
+			// other IO exception
 			System.out.println("Error writing to file -OR- closing file");
 		}
 	}

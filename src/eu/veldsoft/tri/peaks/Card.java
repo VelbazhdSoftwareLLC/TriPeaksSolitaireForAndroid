@@ -1,19 +1,27 @@
 package eu.veldsoft.tri.peaks;
 
-class Card { // defines a card
-	public static final int CLUBS = 0; // the 4 suits
+//defines a card
+class Card {
+	// the 4 suits
+	public static final int CLUBS = 0;
 	public static final int HEARTS = 1;
 	public static final int DIAMONDS = 2;
 	public static final int SPADES = 3;
 
-	public static final int HEIGHT = 86; // the height and width of the card
+	// the height and width of the card
+	public static final int HEIGHT = 86;
 	public static final int WIDTH = 64;
 
-	private boolean isFaceDown; // is it facing down
-	private boolean visible; // is it visible
-	private int value; // value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
-	private int suit; // suit of the card, as defined above
-	private int xCoord; // coordinates of the card (center, not top-left)
+	// is it facing down
+	private boolean isFaceDown;
+	// is it visible
+	private boolean visible;
+	// value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
+	private int value;
+	// suit of the card, as defined above
+	private int suit;
+	// coordinates of the card (center, not top-left)
+	private int xCoord;
 	private int yCoord;
 
 	public Card() {
@@ -21,15 +29,26 @@ class Card { // defines a card
 		this(-1, -1, false, false, 0, 0);
 	}
 
+	// specify all the fields at once
 	public Card(int value, int suit, boolean isFaceDown, boolean visible,
-			int x, int y) { // specify all the fields at once
-		this.value = value; // set the value
+			int x, int y) {
+		// set the value
+		this.value = value;
+
+		// check if it's a valid suit
+		// set the suit
 		if ((suit == CLUBS) || (suit == HEARTS) || (suit == DIAMONDS)
-				|| (suit == SPADES)) // check if it's a valid suit
-			this.suit = suit; // set the suit
-		this.isFaceDown = isFaceDown; // set the face-down flag
-		this.visible = visible; // set the visible flag
-		xCoord = x; // set the coordinates
+				|| (suit == SPADES))
+			this.suit = suit;
+
+		// set the face-down flag
+		this.isFaceDown = isFaceDown;
+
+		// set the visible flag
+		this.visible = visible;
+
+		// set the coordinates
+		xCoord = x;
 		yCoord = y;
 	}
 
@@ -59,12 +78,16 @@ class Card { // defines a card
 	}
 
 	// mutator methods
-	public void setValue(int newVal) { // sets the value of the card
-		if ((newVal >= 0) && (newVal < 13)) // checks if it's a valid value
-			value = newVal; // set the value
+	// sets the value of the card
+	public void setValue(int newVal) {
+		// checks if it's a valid value
+		// set the value
+		if ((newVal >= 0) && (newVal < 13))
+			value = newVal;
 	}
 
-	public void setSuit(int newSuit) { // sets the suit
+	// sets the suit
+	public void setSuit(int newSuit) {
 		if ((newSuit == CLUBS) || (newSuit == HEARTS) || (newSuit == DIAMONDS)
 				|| (newSuit == SPADES))
 			suit = newSuit;
@@ -78,8 +101,9 @@ class Card { // defines a card
 		this.isFaceDown = isFaceDown;
 	}
 
-	public static String suitAsString(int aSuit) { // converts the suit to a
-													// string
+	// converts the suit to a
+	// string
+	public static String suitAsString(int aSuit) {
 		switch (aSuit) {
 		case CLUBS:
 			return "clubs";
@@ -95,8 +119,9 @@ class Card { // defines a card
 		}
 	}
 
-	public String suitAsString() { // returns the string representation of the
-									// current suit
+	// returns the string representation of the
+	// current suit
+	public String suitAsString() {
 		return suitAsString(suit);
 	}
 
@@ -112,7 +137,8 @@ class Card { // defines a card
 		visible = newVis;
 	}
 
-	public String toString() { // converts the card to a string representation
+	// converts the card to a string representation
+	public String toString() {
 		String val;
 		switch (value) {
 		case 12:
@@ -134,13 +160,19 @@ class Card { // defines a card
 		return finVal;
 	}
 
-	public boolean isAdjacentTo(Card that) { // checks if the value of the card
-												// is 1 off from the given card
-		int tempThis = value; // this card's value
-		int tempThat = that.getValue(); // the given card's value
+	// checks if the value of the card
+	// is 1 off from the given card
+	public boolean isAdjacentTo(Card that) {
+		// this card's value
+		int tempThis = value;
+
+		// the given card's value
+		int tempThat = that.getValue();
+
+		// check if it's one away
 		if (((tempThis + 1) % 13 == tempThat)
 				|| ((tempThat + 1) % 13 == tempThis))
-			return true; // check if it's one away
+			return true;
 		else
 			return false;
 	}

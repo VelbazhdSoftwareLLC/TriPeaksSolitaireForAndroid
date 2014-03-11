@@ -17,86 +17,128 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
-class Encryptor { // a class used to encrypt and decrypt stuff
-	Cipher encipher; // two cipher objects - one for encrypting and one for
-						// decrypting
+// a class used to encrypt and decrypt stuff
+class Encryptor {
+	// two cipher objects - one for encrypting and one for
+	// decrypting
+	Cipher encipher;
 	Cipher decipher;
-	byte[] salt = { (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
-			(byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03 }; // salt for
-																	// the
-																	// encryption
-																	// (more
-																	// secure)
-	int iterCt = 19; // number of iterations for encryption
 
-	public Encryptor(String passPhrase) { // create the encryptor object
-		try { // lots of things can go wrong
+	// salt for
+	// the
+	// encryption
+	// (more
+	// secure)
+	byte[] salt = { (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32,
+			(byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03 };
+
+	// number of iterations for encryption
+	int iterCt = 19;
+
+	// create the encryptor object
+	public Encryptor(String passPhrase) {
+		// lots of things can go wrong
+		try {
+			// create the PBE (Password-based ecryption) key
+			// specification
 			KeySpec keySpec = new PBEKeySpec(passPhrase.toCharArray(), salt,
-					iterCt); // create the PBE (Password-based ecryption) key
-								// specification
+					iterCt);
+
+			// generate a secret encryption
+			// key (Password-Based
+			// Encryption with Message
+			// Digest 5 and Data Encryption
+			// Standard)
 			SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES")
-					.generateSecret(keySpec); // generate a secret encryption
-												// key (Password-Based
-												// Encryption with Message
-												// Digest 5 and Data Encryption
-												// Standard)
-			encipher = Cipher.getInstance(key.getAlgorithm()); // create the
-																// Cipher
-																// objects
+					.generateSecret(keySpec);
+
+			// create the
+			// Cipher
+			// objects
+			encipher = Cipher.getInstance(key.getAlgorithm());
 			decipher = Cipher.getInstance(key.getAlgorithm());
-			AlgorithmParameterSpec pSpec = new PBEParameterSpec(salt, iterCt); // create
-																				// the
-																				// encryption
-																				// algorithm
-			decipher.init(Cipher.DECRYPT_MODE, key, pSpec); // initialize the
-															// two Ciphers, with
-															// the same keya and
-															// algorithm, but
-															// different modes
+
+			// create
+			// the
+			// encryption
+			// algorithm
+			AlgorithmParameterSpec pSpec = new PBEParameterSpec(salt, iterCt);
+
+			// initialize the
+			// two Ciphers, with
+			// the same keya and
+			// algorithm, but
+			// different modes
+			decipher.init(Cipher.DECRYPT_MODE, key, pSpec);
 			encipher.init(Cipher.ENCRYPT_MODE, key, pSpec);
+
+			// catch all the exceptions that can get thrown.
 		} catch (InvalidAlgorithmParameterException eIAP) {
-		} // catch all the exceptions that can get thrown.
-		catch (InvalidKeySpecException eIKS) {
+		} catch (InvalidKeySpecException eIKS) {
 		} catch (NoSuchPaddingException eNSP) {
 		} catch (NoSuchAlgorithmException eNSA) {
 		} catch (InvalidKeyException eIK) {
 		}
 	}
 
-	public String encrypt(String in) { // encrypts a stirng
-		try { // lots of things that can go wrong
-			byte[] utf8 = in.getBytes("UTF8"); // Convert the string to UTF-8
-												// bytecodes
-			byte[] enBytes = encipher.doFinal(utf8); // have the Cipher encrypt
-														// the bytes
-			String out = new String(Base64Coder.encode(enBytes)); // Create a
-																	// string
-																	// from the
-																	// bytes
-																	// using
-																	// Base64
-																	// encoding
-			return out; // return the encrypted string
+	// encrypts a stirng
+	public String encrypt(String in) {
+		// lots of things that can go wrong
+		try {
+			// Convert the string to UTF-8
+			// bytecodes
+			byte[] utf8 = in.getBytes("UTF8");
+
+			// have the Cipher encrypt
+			// the bytes
+			byte[] enBytes = encipher.doFinal(utf8);
+
+			// Create a
+			// string
+			// from the
+			// bytes
+			// using
+			// Base64
+			// encoding
+			String out = new String(Base64Coder.encode(enBytes));
+
+			// return the encrypted string
+			return out;
+
+			// catch all the exceptions
 		} catch (BadPaddingException | IllegalBlockSizeException | IOException e) {
-		} // catch all the exceptions
-		return null; // return null if there was an exception
+		}
+
+		// return null if there was an exception
+		return null;
 	}
 
-	public String decrypt(String in) { // decrypts a string
-		try { // lots of things that can go wrong
-			byte[] deBytes = Base64Coder.decode(in); // get the encrypted bytes
-														// by decoding the
-														// Base64-encoded text
-			byte[] utf8 = decipher.doFinal(deBytes); // use the Cipher to
-														// decrypt the bytes
-														// into UTF-8 bytecodes
-			String out = new String(utf8, "UTF8"); // create a new string from
-													// those bytes
-			return out; // return the decrypted string
+	// decrypts a string
+	public String decrypt(String in) {
+		// lots of things that can go wrong
+		try {
+			// get the encrypted bytes
+			// by decoding the
+			// Base64-encoded text
+			byte[] deBytes = Base64Coder.decode(in);
+
+			// use the Cipher to
+			// decrypt the bytes
+			// into UTF-8 bytecodes
+			byte[] utf8 = decipher.doFinal(deBytes);
+
+			// create a new string from
+			// those bytes
+			String out = new String(utf8, "UTF8");
+
+			// return the decrypted string
+			return out;
 
 			// catch all the exceptions
 		} catch (BadPaddingException | IllegalBlockSizeException | IOException eBP) {
 		}
-		return null; // return null if there was an exception
+
+		// return null if there was an exception
+		return null;
 	}
 } // end Encryptor class

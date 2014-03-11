@@ -10,16 +10,31 @@ import java.util.Iterator;
 
 import javax.swing.table.AbstractTableModel;
 
+/**
+ * 
+ * @author
+ */
 class HighScoreModel extends AbstractTableModel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
 	public static final String[] columnNames = { "Player Name", "Score",
 			"Average", "Most Won", "Most Lost", "Longest Streak", "# of games",
 			"Has Cheated" };
+
+	/**
+	 * 
+	 */
 	public static Object[][] defaultPlrs = new Object[10][columnNames.length];
+	
+	/**
+	 * 
+	 */
 	static {
 		defaultPlrs[0][0] = "The Game";
 		defaultPlrs[0][1] = new Integer(50000);
@@ -102,16 +117,30 @@ class HighScoreModel extends AbstractTableModel {
 		defaultPlrs[9][6] = new Boolean(false);
 	}
 
+	/**
+	 * 
+	 */
 	private Object[][] data;
 
+	/**
+	 * @return
+	 */
 	public int getColumnCount() {
 		return columnNames.length;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getRowCount() {
 		return data.length;
 	}
 
+	/**
+	 * @param c
+	 * 
+	 * @return
+	 */
 	public String getColumnName(int c) {
 		return columnNames[c];
 	}
@@ -163,9 +192,11 @@ class HighScoreModel extends AbstractTableModel {
 				deced = dec.decrypt(line);
 				plrScores.add(new Boolean(deced));
 				scoreLists.add(plrScores);
-			} catch (FileNotFoundException eFNF) { // Should never happen b/c we
-													// are opening files listed
-													// in a folder...
+
+				// Should never happen b/c we
+				// are opening files listed
+				// in a folder...
+			} catch (FileNotFoundException eFNF) {
 				System.out.println(eFNF.getMessage());
 			} catch (IOException eIO) {
 				System.out.println("Error reading from file -OR- closing file");
@@ -188,7 +219,8 @@ class HighScoreModel extends AbstractTableModel {
 		data = new Object[scoreLists.size()][getColumnCount()];
 
 		int q = 0;
-		for (Iterator<ArrayList<Object>> it1 = scoreLists.iterator(); it1.hasNext(); q++) {
+		for (Iterator<ArrayList<Object>> it1 = scoreLists.iterator(); it1
+				.hasNext(); q++) {
 			ArrayList<Object> score = it1.next();
 			data[q][0] = TriPeaks.capitalize((String) score.get(0));
 			data[q][1] = score.get(1);
