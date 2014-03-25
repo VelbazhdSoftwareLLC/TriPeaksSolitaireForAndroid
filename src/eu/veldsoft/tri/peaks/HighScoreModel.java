@@ -154,7 +154,7 @@ class HighScoreModel extends AbstractTableModel {
 	}
 
 	public boolean readAndSetData() {
-		File scoresDir = new File(TriPeaks.scoresDir);
+		File scoresDir = new File(TriPeaks.SCORES_DIRECTORY);
 		if (!scoresDir.isDirectory())
 			return false;
 		File[] scoreFiles = scoresDir.listFiles();

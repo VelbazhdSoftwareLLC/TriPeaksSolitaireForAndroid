@@ -99,6 +99,11 @@ public class TriPeaks extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * all the letters of the alphabet
+	 */
+	private static final String LETTERS = "abcdefghijklmnopqrstuvwxyz";
+
+	/**
 	 * the panel with the cards
 	 */
 	private CardPanel board;
@@ -116,18 +121,22 @@ public class TriPeaks extends JFrame {
 	JLabel plrAvg;
 	JLabel maxStr;
 
-	public static final String scoresDir = "GevFpbef";
+	public static final String SCORES_DIRECTORY = "GevFpbef";
 
 	// the folder with the score files
 	// (ROT13 of TriScores)
-	private final String dirName = scoresDir;
+	private final String dirName = SCORES_DIRECTORY;
 
-	private final String settingsFile = "TriSet";
+	private final String SETTINGS_FILE_NAME = "TriSet";
 
-	// name of the player
+	/**
+	 * name of the player
+	 */
 	private String uName;
 
-	// the pnael with the stats
+	/**
+	 * the pnael with the stats
+	 */
 	private JPanel statsPanel;
 
 	private JCheckBoxMenuItem[] cheatItems = new JCheckBoxMenuItem[CardPanel.NCHEATS];
@@ -771,10 +780,19 @@ public class TriPeaks extends JFrame {
 																// the folder
 							randCard = PRNG.nextInt(52); // generate a random
 															// value
+							String suit = null;
+							if (randCard < 13) {
+								suit = Card.Suit.CLUBS.toString();
+							} else if (randCard < 26) {
+								suit = Card.Suit.HEARTS.toString();
+							} else if (randCard < 39) {
+								suit = Card.Suit.DIAMONDS.toString();
+							} else if (randCard < 52) {
+								suit = Card.Suit.SPADES.toString();
+							}
 							// to get the random card
 							previewName = frontsDirs[q].toString()
-									+ File.separator
-									+ Card.suitAsString((int) (randCard / 13))
+									+ File.separator + suit
 									+ ((randCard % 13) + 1) + ".png"; // get a
 																		// random
 																		// card
@@ -1934,7 +1952,7 @@ public class TriPeaks extends JFrame {
 				// a
 				// stream
 				InputStream is = TriPeaks.class
-						.getResourceAsStream(settingsFile);
+						.getResourceAsStream(SETTINGS_FILE_NAME);
 				// placeholder for the line
 				String line = null;
 				String defName = "";
@@ -2030,7 +2048,7 @@ public class TriPeaks extends JFrame {
 				}
 
 				// create the file
-				File setFile = new File(settingsFile);
+				File setFile = new File(SETTINGS_FILE_NAME);
 				if (setFile.canWrite() == false) {
 					// if the file doesn't exist, don't do anything
 					return;
@@ -2292,11 +2310,6 @@ public class TriPeaks extends JFrame {
 		}
 		return dim; // if something BAD happened, return 0 x 0
 	}
-
-	/**
-	 * all the letters of the alphabet
-	 */
-	private static final String LETTERS = "abcdefghijklmnopqrstuvwxyz";
 
 	/**
 	 * calculates the ROT13 cipher of a string

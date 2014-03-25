@@ -1,39 +1,77 @@
 package eu.veldsoft.tri.peaks;
 
-//defines a card
+import static eu.veldsoft.tri.peaks.Card.Suit.*;
+
+/**
+ * defines a card
+ * 
+ * @author Todor Balabanov
+ */
 class Card {
-	// the 4 suits
-	public static final int CLUBS = 0;
-	public static final int HEARTS = 1;
-	public static final int DIAMONDS = 2;
-	public static final int SPADES = 3;
+	/**
+	 * the 4 suits
+	 * 
+	 * @author Todor Balabanov
+	 */
+	public static enum Suit {
+		CLUBS("clubs"), HEARTS("hearts"), DIAMONDS("diamands"), SPADES("spades");
+
+		private final String description;
+
+		private Suit(String description) {
+			this.description = description;
+		}
+
+		@Override
+		public String toString() {
+			return (description);
+		}
+	}
 
 	// the height and width of the card
 	public static final int HEIGHT = 86;
 	public static final int WIDTH = 64;
 
-	// is it facing down
+	/**
+	 * is it facing down
+	 */
 	private boolean isFaceDown;
-	// is it visible
+
+	/**
+	 * is it visible
+	 */
 	private boolean visible;
-	// value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
-	private int value;
-	// suit of the card, as defined above
-	private int suit;
-	// coordinates of the card (center, not top-left)
+
+	/**
+	 * value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
+	 */
+	private int rank;
+
+	/**
+	 * suit of the card, as defined above
+	 */
+	private Suit suit;
+
+	/**
+	 * coordinates of the card (center, not top-left)
+	 */
 	private int xCoord;
+
+	/**
+	 * coordinates of the card (center, not top-left)
+	 */
 	private int yCoord;
 
-	public Card() {
-		// must initialize manually, later on
-		this(-1, -1, false, false, 0, 0);
-	}
+	// public Card() {
+	// // must initialize manually, later on
+	// this(-1, -1, false, false, 0, 0);
+	// }
 
 	// specify all the fields at once
-	public Card(int value, int suit, boolean isFaceDown, boolean visible,
+	public Card(int value, Suit suit, boolean isFaceDown, boolean visible,
 			int x, int y) {
 		// set the value
-		this.value = value;
+		this.rank = value;
 
 		// check if it's a valid suit
 		// set the suit
@@ -54,10 +92,10 @@ class Card {
 
 	// accessor methods for the class
 	public int getValue() {
-		return value;
+		return rank;
 	}
 
-	public int getSuit() {
+	public Suit getSuit() {
 		return suit;
 	}
 
@@ -83,11 +121,11 @@ class Card {
 		// checks if it's a valid value
 		// set the value
 		if ((newVal >= 0) && (newVal < 13))
-			value = newVal;
+			rank = newVal;
 	}
 
 	// sets the suit
-	public void setSuit(int newSuit) {
+	public void setSuit(Suit newSuit) {
 		if ((newSuit == CLUBS) || (newSuit == HEARTS) || (newSuit == DIAMONDS)
 				|| (newSuit == SPADES))
 			suit = newSuit;
@@ -99,30 +137,6 @@ class Card {
 
 	public void flip(boolean isFaceDown) {
 		this.isFaceDown = isFaceDown;
-	}
-
-	// converts the suit to a
-	// string
-	public static String suitAsString(int aSuit) {
-		switch (aSuit) {
-		case CLUBS:
-			return "clubs";
-		case HEARTS:
-			return "hearts";
-		case DIAMONDS:
-			return "diamonds";
-		case SPADES:
-			return "spades";
-		default:
-			System.out.println("Invalid Suit!!!");
-			return "Invalid Suit";
-		}
-	}
-
-	// returns the string representation of the
-	// current suit
-	public String suitAsString() {
-		return suitAsString(suit);
 	}
 
 	public void setX(int newX) {
@@ -140,7 +154,7 @@ class Card {
 	// converts the card to a string representation
 	public String toString() {
 		String val;
-		switch (value) {
+		switch (rank) {
 		case 12:
 			val = "king";
 			break;
@@ -151,9 +165,9 @@ class Card {
 			val = "jack";
 			break;
 		default:
-			val = value + "";
+			val = rank + "";
 		}
-		String finVal = val + " of " + suitAsString() + ": "
+		String finVal = val + " of " + suit + ": "
 				+ ((isFaceDown) ? "facing down" : "facing up") + ", "
 				+ ((visible) ? "visible" : "invisible") + " :: (" + xCoord
 				+ ", " + yCoord + ")";
@@ -164,7 +178,7 @@ class Card {
 	// is 1 off from the given card
 	public boolean isAdjacentTo(Card that) {
 		// this card's value
-		int tempThis = value;
+		int tempThis = rank;
 
 		// the given card's value
 		int tempThat = that.getValue();
@@ -180,10 +194,10 @@ class Card {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = 17;
 		result = prime * result + (isFaceDown ? 1231 : 1237);
-		result = prime * result + suit;
-		result = prime * result + value;
+		result = prime * result + rank;
+		result = prime * result + ((suit == null) ? 0 : suit.hashCode());
 		result = prime * result + (visible ? 1231 : 1237);
 		result = prime * result + xCoord;
 		result = prime * result + yCoord;
@@ -201,9 +215,9 @@ class Card {
 		Card other = (Card) obj;
 		if (isFaceDown != other.isFaceDown)
 			return false;
-		if (suit != other.suit)
+		if (rank != other.rank)
 			return false;
-		if (value != other.value)
+		if (suit != other.suit)
 			return false;
 		if (visible != other.visible)
 			return false;
@@ -213,5 +227,4 @@ class Card {
 			return false;
 		return true;
 	}
-
 } // end class Card

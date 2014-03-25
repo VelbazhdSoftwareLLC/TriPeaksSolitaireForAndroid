@@ -106,6 +106,9 @@ class Base64Coder {
 		return out;
 	}
 
+	/**
+	 * Object less class.
+	 */
 	private Base64Coder() {
 	}
 } // end Base64Coder class

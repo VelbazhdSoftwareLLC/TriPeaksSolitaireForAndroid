@@ -23,7 +23,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private Color backColor = (Color.GREEN).darker().darker(); // background
 																// color of the
 																// board
@@ -55,12 +55,31 @@ class CardPanel extends JPanel implements MouseListener {
 
 	public CardPanel() { // class constructor
 		for (int q = 0; q < 52; q++) { // initialize all the cards
-			theCards[q] = new Card(0, 0, false, false, 0, 0); // create a new
-																// Card object -
-																// random values
-																// - so it
-																// doesn't throw
-																// NullPointerException...
+			// create a new
+			// Card object -
+			// random values
+			// - so it
+			// doesn't throw
+			// NullPointerException...
+			switch (q / 13) {
+			case 0:
+				theCards[q] = new Card(q % 13, Card.Suit.CLUBS, true, true, 0,
+						0);
+				break;
+			case 1:
+				theCards[q] = new Card(q % 13, Card.Suit.HEARTS, true, true, 0,
+						0);
+				break;
+			case 2:
+				theCards[q] = new Card(q % 13, Card.Suit.DIAMONDS, true, true,
+						0, 0);
+				break;
+			case 3:
+				theCards[q] = new Card(q % 13, Card.Suit.SPADES, true, true, 0,
+						0);
+				break;
+			}
+
 			theCards[q].setVisible(false);
 		}
 		setPreferredSize(new Dimension(Card.WIDTH * 10, Card.HEIGHT * 4)); // sets
@@ -106,7 +125,7 @@ class CardPanel extends JPanel implements MouseListener {
 			if (!theCards[q].isFacingDown()) // if it's face-up
 				imgURL = TriPeaks.class.getResource("CardSets" + File.separator
 						+ "Fronts" + File.separator + frontFolder
-						+ File.separator + theCards[q].suitAsString()
+						+ File.separator + theCards[q].getSuit()
 						+ (theCards[q].getValue() + 1) + ".png"); // get the
 																	// corresponding
 																	// front of
@@ -122,7 +141,7 @@ class CardPanel extends JPanel implements MouseListener {
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Fronts" + File.separator
 							+ frontFolder + File.separator
-							+ theCards[q].suitAsString()
+							+ theCards[q].getSuit()
 							+ (theCards[q].getValue() + 1) + ".png"); // get the
 																		// corresponding
 																		// front
@@ -200,10 +219,28 @@ class CardPanel extends JPanel implements MouseListener {
 		}
 		int[] cards = randomize(); // randomize the cards
 		for (int q = 0; q < 52; q++) { // initialize all the cards
-			theCards[q] = new Card(); // create a new Card object
-			theCards[q].setSuit((int) cards[q] / 13); // set the card's suit
-			theCards[q].setValue(cards[q] % 13); // set its value
-			theCards[q].setVisible(true); // all cards are visible, so far
+			// create a new Card object
+			// set the card's suit
+			// set its value
+			// all cards are visible, so far
+			switch (cards[q] / 13) {
+			case 0:
+				theCards[q] = new Card(cards[q] % 13, Card.Suit.CLUBS, true,
+						true, 0, 0);
+				break;
+			case 1:
+				theCards[q] = new Card(cards[q] % 13, Card.Suit.HEARTS, true,
+						true, 0, 0);
+				break;
+			case 2:
+				theCards[q] = new Card(cards[q] % 13, Card.Suit.DIAMONDS, true,
+						true, 0, 0);
+				break;
+			case 3:
+				theCards[q] = new Card(cards[q] % 13, Card.Suit.SPADES, true,
+						true, 0, 0);
+				break;
+			}
 		}
 		for (int q = 0; q < 3; q++) { // first row
 			theCards[q].setX(2 * Card.WIDTH + q * 3 * Card.WIDTH); // set the
