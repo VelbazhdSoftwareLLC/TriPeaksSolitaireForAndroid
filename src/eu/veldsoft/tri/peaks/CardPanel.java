@@ -54,32 +54,67 @@ class CardPanel extends JPanel implements MouseListener {
 	private String backStyle = "Default"; // style for the back of the cards
 
 	public CardPanel() { // class constructor
-		for (int q = 0; q < 52; q++) { // initialize all the cards
-			// create a new
-			// Card object -
-			// random values
-			// - so it
-			// doesn't throw
-			// NullPointerException...
-			switch (q / 13) {
-			case 0:
-				theCards[q] = new Card(q % 13, Card.Suit.CLUBS, true, true, 0,
-						0);
-				break;
-			case 1:
-				theCards[q] = new Card(q % 13, Card.Suit.HEARTS, true, true, 0,
-						0);
-				break;
-			case 2:
-				theCards[q] = new Card(q % 13, Card.Suit.DIAMONDS, true, true,
-						0, 0);
-				break;
-			case 3:
-				theCards[q] = new Card(q % 13, Card.Suit.SPADES, true, true, 0,
-						0);
-				break;
-			}
+		// initialize all the cards
+		theCards[0] = new Card(Card.Rank.ACE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[1] = new Card(Card.Rank.TWO, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[2] = new Card(Card.Rank.THREE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[3] = new Card(Card.Rank.FOUR, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[4] = new Card(Card.Rank.FIVE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[5] = new Card(Card.Rank.SIX, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[6] = new Card(Card.Rank.SEVEN, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[7] = new Card(Card.Rank.EIGHT, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[8] = new Card(Card.Rank.NINE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[9] = new Card(Card.Rank.TEN, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[10] = new Card(Card.Rank.JACK, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[11] = new Card(Card.Rank.QUEEN, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[12] = new Card(Card.Rank.KING, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[13] = new Card(Card.Rank.ACE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[14] = new Card(Card.Rank.TWO, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[15] = new Card(Card.Rank.THREE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[16] = new Card(Card.Rank.FOUR, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[17] = new Card(Card.Rank.FIVE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[18] = new Card(Card.Rank.SIX, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[19] = new Card(Card.Rank.SEVEN, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[20] = new Card(Card.Rank.EIGHT, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[21] = new Card(Card.Rank.NINE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[22] = new Card(Card.Rank.TEN, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[23] = new Card(Card.Rank.JACK, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[24] = new Card(Card.Rank.QUEEN, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[25] = new Card(Card.Rank.KING, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[26] = new Card(Card.Rank.ACE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[27] = new Card(Card.Rank.TWO, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[28] = new Card(Card.Rank.THREE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[29] = new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[30] = new Card(Card.Rank.FIVE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[31] = new Card(Card.Rank.SIX, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[32] = new Card(Card.Rank.SEVEN, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[33] = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[34] = new Card(Card.Rank.NINE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[35] = new Card(Card.Rank.TEN, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[36] = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[37] = new Card(Card.Rank.QUEEN, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[38] = new Card(Card.Rank.KING, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[39] = new Card(Card.Rank.ACE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[40] = new Card(Card.Rank.TWO, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[41] = new Card(Card.Rank.THREE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[42] = new Card(Card.Rank.FOUR, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[43] = new Card(Card.Rank.FIVE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[44] = new Card(Card.Rank.SIX, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[45] = new Card(Card.Rank.SEVEN, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[46] = new Card(Card.Rank.EIGHT, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[47] = new Card(Card.Rank.NINE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[48] = new Card(Card.Rank.TEN, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[49] = new Card(Card.Rank.JACK, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[50] = new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[51] = new Card(Card.Rank.KING, Card.Suit.SPADES, true, true, 0, 0);
 
+		// create a new
+		// Card object -
+		// random values
+		// - so it
+		// doesn't throw
+		// NullPointerException...
+		for (int q = 0; q < 52; q++) { 
 			theCards[q].setVisible(false);
 		}
 		setPreferredSize(new Dimension(Card.WIDTH * 10, Card.HEIGHT * 4)); // sets
@@ -126,7 +161,7 @@ class CardPanel extends JPanel implements MouseListener {
 				imgURL = TriPeaks.class.getResource("CardSets" + File.separator
 						+ "Fronts" + File.separator + frontFolder
 						+ File.separator + theCards[q].getSuit()
-						+ (theCards[q].getValue() + 1) + ".png"); // get the
+						+ (theCards[q].getRank().getValue() + 1) + ".png"); // get the
 																	// corresponding
 																	// front of
 																	// the card
@@ -142,7 +177,7 @@ class CardPanel extends JPanel implements MouseListener {
 							+ File.separator + "Fronts" + File.separator
 							+ frontFolder + File.separator
 							+ theCards[q].getSuit()
-							+ (theCards[q].getValue() + 1) + ".png"); // get the
+							+ (theCards[q].getRank().getValue() + 1) + ".png"); // get the
 																		// corresponding
 																		// front
 																		// of
@@ -218,30 +253,59 @@ class CardPanel extends JPanel implements MouseListener {
 				return; // the user doesn't like the penalty, don't rededal
 		}
 		int[] cards = randomize(); // randomize the cards
-		for (int q = 0; q < 52; q++) { // initialize all the cards
-			// create a new Card object
-			// set the card's suit
-			// set its value
-			// all cards are visible, so far
-			switch (cards[q] / 13) {
-			case 0:
-				theCards[q] = new Card(cards[q] % 13, Card.Suit.CLUBS, true,
-						true, 0, 0);
-				break;
-			case 1:
-				theCards[q] = new Card(cards[q] % 13, Card.Suit.HEARTS, true,
-						true, 0, 0);
-				break;
-			case 2:
-				theCards[q] = new Card(cards[q] % 13, Card.Suit.DIAMONDS, true,
-						true, 0, 0);
-				break;
-			case 3:
-				theCards[q] = new Card(cards[q] % 13, Card.Suit.SPADES, true,
-						true, 0, 0);
-				break;
-			}
-		}
+		theCards[cards[0]] = new Card(Card.Rank.ACE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[1]] = new Card(Card.Rank.TWO, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[2]] = new Card(Card.Rank.THREE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[3]] = new Card(Card.Rank.FOUR, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[4]] = new Card(Card.Rank.FIVE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[5]] = new Card(Card.Rank.SIX, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[6]] = new Card(Card.Rank.SEVEN, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[7]] = new Card(Card.Rank.EIGHT, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[8]] = new Card(Card.Rank.NINE, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[9]] = new Card(Card.Rank.TEN, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[10]] = new Card(Card.Rank.JACK, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[11]] = new Card(Card.Rank.QUEEN, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[12]] = new Card(Card.Rank.KING, Card.Suit.CLUBS, true, true, 0, 0);
+		theCards[cards[13]] = new Card(Card.Rank.ACE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[14]] = new Card(Card.Rank.TWO, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[15]] = new Card(Card.Rank.THREE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[16]] = new Card(Card.Rank.FOUR, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[17]] = new Card(Card.Rank.FIVE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[18]] = new Card(Card.Rank.SIX, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[19]] = new Card(Card.Rank.SEVEN, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[20]] = new Card(Card.Rank.EIGHT, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[21]] = new Card(Card.Rank.NINE, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[22]] = new Card(Card.Rank.TEN, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[23]] = new Card(Card.Rank.JACK, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[24]] = new Card(Card.Rank.QUEEN, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[25]] = new Card(Card.Rank.KING, Card.Suit.HEARTS, true, true, 0, 0);
+		theCards[cards[26]] = new Card(Card.Rank.ACE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[27]] = new Card(Card.Rank.TWO, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[28]] = new Card(Card.Rank.THREE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[29]] = new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[30]] = new Card(Card.Rank.FIVE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[31]] = new Card(Card.Rank.SIX, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[32]] = new Card(Card.Rank.SEVEN, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[33]] = new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[34]] = new Card(Card.Rank.NINE, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[35]] = new Card(Card.Rank.TEN, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[36]] = new Card(Card.Rank.JACK, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[37]] = new Card(Card.Rank.QUEEN, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[38]] = new Card(Card.Rank.KING, Card.Suit.DIAMONDS, true, true, 0, 0);
+		theCards[cards[39]] = new Card(Card.Rank.ACE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[40]] = new Card(Card.Rank.TWO, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[41]] = new Card(Card.Rank.THREE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[42]] = new Card(Card.Rank.FOUR, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[43]] = new Card(Card.Rank.FIVE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[44]] = new Card(Card.Rank.SIX, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[45]] = new Card(Card.Rank.SEVEN, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[46]] = new Card(Card.Rank.EIGHT, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[47]] = new Card(Card.Rank.NINE, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[48]] = new Card(Card.Rank.TEN, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[49]] = new Card(Card.Rank.JACK, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[50]] = new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, true, 0, 0);
+		theCards[cards[51]] = new Card(Card.Rank.KING, Card.Suit.SPADES, true, true, 0, 0);
+
 		for (int q = 0; q < 3; q++) { // first row
 			theCards[q].setX(2 * Card.WIDTH + q * 3 * Card.WIDTH); // set the
 																	// X-coord
@@ -333,7 +397,7 @@ class CardPanel extends JPanel implements MouseListener {
 	public int[] randomize() { // randomizes an array - we're working with a
 								// 52-element array, so it puts the numbers 0-51
 								// in random order
-		int[] retVal = new int[52]; // the array for the numbers
+		int[] retVal = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51}; // the array for the numbers
 		boolean[] check = new boolean[52]; // the checking array - which numbers
 											// have been used
 		int[] pass; // array to pick the random item from
@@ -409,7 +473,7 @@ class CardPanel extends JPanel implements MouseListener {
 								// card won't be checked
 				isAdjacent = true; // the card is adjacent automatically
 			} else { // no cheat - check card
-				isAdjacent = theCards[q].isAdjacentTo(theCards[disIndex]); // check
+				isAdjacent = theCards[q].getRank().isAdjacentTo(theCards[disIndex].getRank()); // check
 																			// if
 																			// the
 																			// card

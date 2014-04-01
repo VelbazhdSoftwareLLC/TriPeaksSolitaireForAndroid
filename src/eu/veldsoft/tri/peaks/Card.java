@@ -8,13 +8,57 @@ import static eu.veldsoft.tri.peaks.Card.Suit.*;
  * @author Todor Balabanov
  */
 class Card {
+
+	/**
+	 * value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
+	 * 
+	 * @author Todor Balabanov
+	 */
+	public static enum Rank {
+		ACE(0, "ace"), TWO(1, "two"), THREE(2, "three"), FOUR(3, "four"), FIVE(
+				4, "five"), SIX(5, "six"), SEVEN(6, "seven"), EIGHT(7, "eight"), NINE(
+				8, "nine"), TEN(9, "ten"), JACK(10, "jack"), QUEEN(11, "queen"), KING(
+				12, "king");
+
+		private final int value;
+		private final String description;
+
+		private Rank(int value, String description) {
+			this.value = value;
+			this.description = description;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public boolean isAdjacentTo(Rank rank) {
+			// TODO Do not use internal numbering.
+
+			if ((this.value + 1) % 13 == rank.value) {
+				return (true);
+			}
+
+			if ((rank.value + 1) % 13 == this.value) {
+				return (true);
+			}
+
+			return (false);
+		}
+
+		@Override
+		public String toString() {
+			return (description);
+		}
+	}
+
 	/**
 	 * the 4 suits
 	 * 
 	 * @author Todor Balabanov
 	 */
 	public static enum Suit {
-		CLUBS("clubs"), HEARTS("hearts"), DIAMONDS("diamands"), SPADES("spades");
+		CLUBS("clubs"), HEARTS("hearts"), DIAMONDS("diamonds"), SPADES("spades");
 
 		private final String description;
 
@@ -43,9 +87,9 @@ class Card {
 	private boolean visible;
 
 	/**
-	 * value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
+	 * Card rank.
 	 */
-	private int rank;
+	private Rank rank;
 
 	/**
 	 * suit of the card, as defined above
@@ -68,7 +112,7 @@ class Card {
 	// }
 
 	// specify all the fields at once
-	public Card(int value, Suit suit, boolean isFaceDown, boolean visible,
+	public Card(Rank value, Suit suit, boolean isFaceDown, boolean visible,
 			int x, int y) {
 		// set the value
 		this.rank = value;
@@ -91,7 +135,7 @@ class Card {
 	}
 
 	// accessor methods for the class
-	public int getValue() {
+	public Rank getRank() {
 		return rank;
 	}
 
@@ -117,18 +161,13 @@ class Card {
 
 	// mutator methods
 	// sets the value of the card
-	public void setValue(int newVal) {
-		// checks if it's a valid value
-		// set the value
-		if ((newVal >= 0) && (newVal < 13))
-			rank = newVal;
+	public void setRank(Rank newVal) {
+		rank = newVal;
 	}
 
 	// sets the suit
 	public void setSuit(Suit newSuit) {
-		if ((newSuit == CLUBS) || (newSuit == HEARTS) || (newSuit == DIAMONDS)
-				|| (newSuit == SPADES))
-			suit = newSuit;
+		suit = newSuit;
 	}
 
 	public void flip() {
@@ -151,54 +190,33 @@ class Card {
 		visible = newVis;
 	}
 
-	// converts the card to a string representation
+	/**
+	 * converts the card to a string representation
+	 * 
+	 * @return
+	 */
+	@Override
 	public String toString() {
-		String val;
-		switch (rank) {
-		case 12:
-			val = "king";
-			break;
-		case 11:
-			val = "queen";
-			break;
-		case 10:
-			val = "jack";
-			break;
-		default:
-			val = rank + "";
-		}
-		String finVal = val + " of " + suit + ": "
+		String finVal = rank + " of " + suit + ": "
 				+ ((isFaceDown) ? "facing down" : "facing up") + ", "
 				+ ((visible) ? "visible" : "invisible") + " :: (" + xCoord
 				+ ", " + yCoord + ")";
 		return finVal;
 	}
 
-	// checks if the value of the card
-	// is 1 off from the given card
-	public boolean isAdjacentTo(Card that) {
-		// this card's value
-		int tempThis = rank;
-
-		// the given card's value
-		int tempThat = that.getValue();
-
-		// check if it's one away
-		if (((tempThis + 1) % 13 == tempThat)
-				|| ((tempThat + 1) % 13 == tempThis))
-			return true;
-		else
-			return false;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 17;
-		result = prime * result + (isFaceDown ? 1231 : 1237);
-		result = prime * result + rank;
+		result = prime
+				* result
+				+ (isFaceDown ? Boolean.TRUE.hashCode() : Boolean.FALSE
+						.hashCode());
+		result = prime * result + ((rank == null) ? 0 : rank.hashCode());
 		result = prime * result + ((suit == null) ? 0 : suit.hashCode());
-		result = prime * result + (visible ? 1231 : 1237);
+		result = prime
+				* result
+				+ (visible ? Boolean.TRUE.hashCode() : Boolean.FALSE.hashCode());
 		result = prime * result + xCoord;
 		result = prime * result + yCoord;
 		return result;
