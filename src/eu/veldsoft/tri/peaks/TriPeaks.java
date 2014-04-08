@@ -91,7 +91,7 @@ public class TriPeaks extends JFrame {
 	/**
 	 * 
 	 */
-	private static final Random PRNG = new Random();
+	static final Random PRNG = new Random();
 
 	/**
 	 * 

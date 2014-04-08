@@ -31,7 +31,7 @@ class HighScoreModel extends AbstractTableModel {
 	 * 
 	 */
 	public static Object[][] defaultPlrs = new Object[10][columnNames.length];
-	
+
 	/**
 	 * 
 	 */

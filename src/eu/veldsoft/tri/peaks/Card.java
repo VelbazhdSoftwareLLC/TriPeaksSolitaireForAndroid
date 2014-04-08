@@ -1,14 +1,11 @@
 package eu.veldsoft.tri.peaks;
 
-import static eu.veldsoft.tri.peaks.Card.Suit.*;
-
 /**
  * defines a card
  * 
  * @author Todor Balabanov
  */
 class Card {
-
 	/**
 	 * value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
 	 * 
@@ -72,8 +69,14 @@ class Card {
 		}
 	}
 
-	// the height and width of the card
+	/**
+	 * 
+	 */
 	public static final int HEIGHT = 86;
+
+	/**
+	 * 
+	 */
 	public static final int WIDTH = 64;
 
 	/**
@@ -106,35 +109,26 @@ class Card {
 	 */
 	private int yCoord;
 
-	// public Card() {
-	// // must initialize manually, later on
-	// this(-1, -1, false, false, 0, 0);
-	// }
-
-	// specify all the fields at once
-	public Card(Rank value, Suit suit, boolean isFaceDown, boolean visible,
+	/**
+	 * specify all the fields at once
+	 * 
+	 * @param rank
+	 * @param suit
+	 * @param isFaceDown
+	 * @param visible
+	 * @param x
+	 * @param y
+	 */
+	public Card(Rank rank, Suit suit, boolean isFaceDown, boolean visible,
 			int x, int y) {
-		// set the value
-		this.rank = value;
-
-		// check if it's a valid suit
-		// set the suit
-		if ((suit == CLUBS) || (suit == HEARTS) || (suit == DIAMONDS)
-				|| (suit == SPADES))
-			this.suit = suit;
-
-		// set the face-down flag
+		this.rank = rank;
+		this.suit = suit;
 		this.isFaceDown = isFaceDown;
-
-		// set the visible flag
 		this.visible = visible;
-
-		// set the coordinates
 		xCoord = x;
 		yCoord = y;
 	}
 
-	// accessor methods for the class
 	public Rank getRank() {
 		return rank;
 	}
@@ -159,13 +153,10 @@ class Card {
 		return visible;
 	}
 
-	// mutator methods
-	// sets the value of the card
 	public void setRank(Rank newVal) {
 		rank = newVal;
 	}
 
-	// sets the suit
 	public void setSuit(Suit newSuit) {
 		suit = newSuit;
 	}
@@ -245,4 +236,4 @@ class Card {
 			return false;
 		return true;
 	}
-} // end class Card
+}
