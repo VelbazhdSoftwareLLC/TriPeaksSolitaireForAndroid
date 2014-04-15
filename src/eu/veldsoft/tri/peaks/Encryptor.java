@@ -73,11 +73,9 @@ class Encryptor {
 			encipher.init(Cipher.ENCRYPT_MODE, key, pSpec);
 
 			// catch all the exceptions that can get thrown.
-		} catch (InvalidAlgorithmParameterException eIAP) {
-		} catch (InvalidKeySpecException eIKS) {
-		} catch (NoSuchPaddingException eNSP) {
-		} catch (NoSuchAlgorithmException eNSA) {
-		} catch (InvalidKeyException eIK) {
+		} catch (InvalidAlgorithmParameterException | InvalidKeySpecException
+				| NoSuchPaddingException | NoSuchAlgorithmException
+				| InvalidKeyException e) {
 		}
 	}
 

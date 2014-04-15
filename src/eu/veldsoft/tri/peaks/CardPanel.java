@@ -102,6 +102,7 @@ class CardPanel extends JPanel implements MouseListener {
 			new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, false, 0, 0),
 			new Card(Card.Rank.KING, Card.Suit.SPADES, true, false, 0, 0) };
 
+	//TODO Replace with EnumSet.
 	private boolean[] cheats = new boolean[NCHEATS];
 
 	private boolean hasCheatedYet = false;
@@ -184,7 +185,7 @@ class CardPanel extends JPanel implements MouseListener {
 			// front of
 			// the card
 			else {// otherwise it's face-down
-				if (!cheats[0])
+				if (cheats[0]==false)
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Backs" + File.separator
 							+ backStyle + ".png"); // get the image for the back
@@ -358,7 +359,9 @@ class CardPanel extends JPanel implements MouseListener {
 		lowScore = 0;
 		highStreak = 0;
 		status = "";
-		cheats = new boolean[cheats.length];
+		for(int i=0; i<cheats.length; i++) {
+			cheats[i] = false;
+		}
 		hasCheatedYet = false;
 
 		repaint(); // repaint the board
@@ -600,7 +603,7 @@ class CardPanel extends JPanel implements MouseListener {
 													// deck card
 				discardIndex = q; // set the index of the dicard pile
 				streak = 0; // reset the streak
-				if (!cheats[2]) { // if the thrid cheat isn't on (no penalty
+				if (cheats[2]==false) { // if the thrid cheat isn't on (no penalty
 									// cheat)
 					score -= 5; // 5-point penalty
 					gameScore -= 5; // to the game score
@@ -622,7 +625,7 @@ class CardPanel extends JPanel implements MouseListener {
 	}
 
 	public int getPenalty() { // return the penalty
-		if (cheats[2])
+		if (cheats[2]==true)
 			return 0; // if the penalty cheat is on, there is no penalty
 		if ((cardsInPlay != 0) && (remCards != 0))
 			return (cardsInPlay * 5); // if there are cards in the deck AND in
@@ -704,7 +707,7 @@ class CardPanel extends JPanel implements MouseListener {
 
 	public boolean isCheating() { // check if the player is currently cheating
 		for (int q = 0; q < cheats.length; q++) { // go through all the cheats
-			if (cheats[q])
+			if (cheats[q]==true)
 				return true; // return true if any cheat is on
 		}
 		return false; // no cheat was found - return false
@@ -745,9 +748,11 @@ class CardPanel extends JPanel implements MouseListener {
 															// the given index
 		if (cheatNum >= cheats.length)
 			return; // if the index is out of bounds
-		if (newState)
+		
+		if (newState==true)
 			hasCheatedYet = true; // if the cheat is turned on, set the
 									// "has cheated" flag
+		
 		cheats[cheatNum] = newState; // set the cheat
 	}
 
