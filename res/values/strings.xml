@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tri Peaks Solitaire</string>
+    <string name="title_activity_lobby">Tri Peaks Lobby</string>
+
+</resources>

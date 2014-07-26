@@ -73,9 +73,7 @@ class Encryptor {
 			encipher.init(Cipher.ENCRYPT_MODE, key, pSpec);
 
 			// catch all the exceptions that can get thrown.
-		} catch (InvalidAlgorithmParameterException | InvalidKeySpecException
-				| NoSuchPaddingException | NoSuchAlgorithmException
-				| InvalidKeyException e) {
+		} catch (Exception e) {
 		}
 	}
 
@@ -104,7 +102,7 @@ class Encryptor {
 			return out;
 
 			// catch all the exceptions
-		} catch (BadPaddingException | IllegalBlockSizeException | IOException e) {
+		} catch (Exception e) {
 		}
 
 		// return null if there was an exception
@@ -133,7 +131,7 @@ class Encryptor {
 			return out;
 
 			// catch all the exceptions
-		} catch (BadPaddingException | IllegalBlockSizeException | IOException eBP) {
+		} catch (Exception e) {
 		}
 
 		// return null if there was an exception
