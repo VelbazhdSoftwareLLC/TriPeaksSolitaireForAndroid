@@ -32,7 +32,6 @@ import javax.swing.table.DefaultTableCellRenderer;
  * 
  * @author Christian d'Heureuse
  */
-
 class CurrencyRenderer extends DefaultTableCellRenderer {
 	/**
 	 * 

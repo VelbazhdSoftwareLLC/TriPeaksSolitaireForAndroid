@@ -26,7 +26,7 @@ package eu.veldsoft.tri.peaks;
  * @author Todor Balabanov
  */
 class Card {
-	
+
 	/**
 	 * value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
 	 * 
@@ -42,7 +42,7 @@ class Card {
 		 * 
 		 */
 		private final int value;
-		
+
 		/**
 		 * 
 		 */
@@ -125,7 +125,7 @@ class Card {
 	 * 
 	 */
 	public static final int HEIGHT = 86;
-	
+
 	/**
 	 * 
 	 */
@@ -320,7 +320,8 @@ class Card {
 	}
 
 	/**
-	 * 
+	 * @param obj
+	 * @return
 	 */
 	@Override
 	public boolean equals(Object obj) {

@@ -227,9 +227,10 @@ class HighScoreModel extends AbstractTableModel {
 				plrScores.add(new Boolean(deced));
 				scoreLists.add(plrScores);
 
-				// Should never happen b/c we
-				// are opening files listed
-				// in a folder...
+				/*
+				 * Should never happen b/c we are opening files listed in a
+				 * folder...
+				 */
 			} catch (FileNotFoundException eFNF) {
 				System.out.println(eFNF.getMessage());
 			} catch (IOException eIO) {

@@ -38,34 +38,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
- * 
- * @author Todor Balabanov
- */
-//TODO Should be in separate file.
-class Constants {
-	
-	/**
-	 * 
-	 */
-	public static final int PEAK_BONUS = 15;
-	
-	/**
-	 * 
-	 */
-	public static final int THREE_PEAKS_BONUS = 15;
-	
-	/**
-	 * 
-	 */
-	public static final int NO_PENALTY_CHEAT = 5;
-	
-	/**
-	 * 
-	 */
-	public static final int CARD_REMOVED_PENALTY = 5;
-}
-
-/**
  * Start Base64 encoding and decoding code.**NOTE*** This is NOT my code. This
  * code was written by Christian d'Heureuse to provide a more standard base64
  * coder that's fast and efficient. As such, I won't provide comments for that
@@ -175,7 +147,6 @@ class CardPanel extends JPanel implements MouseListener {
 	/**
 	 * 
 	 */
-	// TODO Replace with EnumSet.
 	private EnumSet<Cheat> cheats = EnumSet.noneOf(Cheat.class);
 
 	/**
@@ -356,11 +327,12 @@ class CardPanel extends JPanel implements MouseListener {
 						+ "Fronts" + File.separator + frontFolder
 						+ File.separator + deck[q].getSuit()
 						+ (deck[q].getRank().getValue() + 1) + ".png");
-			} else {
+
 				/*
 				 * get the corresponding front of the card otherwise it's
 				 * face-down
 				 */
+			} else {
 
 				/*
 				 * get the image for the back of the card - if the first cheat
@@ -371,11 +343,11 @@ class CardPanel extends JPanel implements MouseListener {
 							+ File.separator + "Backs" + File.separator
 							+ backStyle + ".png");
 
-				} else {
 					/*
 					 * get the corresponding front of the card if the cheat is
 					 * on...
 					 */
+				} else {
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Fronts" + File.separator
 							+ frontFolder + File.separator + deck[q].getSuit()
@@ -514,7 +486,6 @@ class CardPanel extends JPanel implements MouseListener {
 		}
 
 		// TODO Do it in a single master loop.
-
 		/*
 		 * first row
 		 */
@@ -1084,10 +1055,11 @@ class CardPanel extends JPanel implements MouseListener {
 				if (noRight) {
 					deck[q - offset + 1].flip();
 				}
-			} else if ((q >= 28) && (q < 51)) {
+
 				/*
 				 * in the deck move the card to the deck
 				 */
+			} else if ((q >= 28) && (q < 51)) {
 
 				/*
 				 * set the deck's coordinates
@@ -1491,7 +1463,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * 
 	 */
 	public void setDefaults() {
-		frontFolder = "Default";
+		frontFolder = "Shiny";
 		backStyle = "Default";
 		backColor = (Color.GREEN).darker().darker();
 		fontColor = Color.WHITE;

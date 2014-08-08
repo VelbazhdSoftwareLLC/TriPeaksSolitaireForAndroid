@@ -33,7 +33,7 @@ class Base64Coder {
 	 * 
 	 */
 	private static char[] map1 = new char[64];
-	
+
 	/**
 	 * 
 	 */
@@ -48,12 +48,12 @@ class Base64Coder {
 		map1[i++] = '+';
 		map1[i++] = '/';
 	}
-	
+
 	/**
 	 * 
 	 */
 	private static byte[] map2 = new byte[128];
-	
+
 	/**
 	 * 
 	 */
@@ -120,7 +120,7 @@ class Base64Coder {
 	public static String decodeString(String s) {
 		return new String(decode(s));
 	}
-	
+
 	/**
 	 * 
 	 * @param s
@@ -129,7 +129,7 @@ class Base64Coder {
 	public static byte[] decode(String s) {
 		return decode(s.toCharArray());
 	}
-	
+
 	/**
 	 * 
 	 * @param in

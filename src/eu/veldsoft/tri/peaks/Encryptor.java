@@ -20,18 +20,10 @@
 
 package eu.veldsoft.tri.peaks;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -119,16 +111,16 @@ class Encryptor {
 	 * @return
 	 */
 	public String encrypt(String in) {
-		/* 
+		/*
 		 * lots of things that can go wrong
 		 */
 		try {
-			/* 
+			/*
 			 * Convert the string to UTF-8 bytecodes
 			 */
 			byte[] utf8 = in.getBytes("UTF8");
 
-			/* 
+			/*
 			 * have the Cipher encrypt the bytes
 			 */
 			byte[] enBytes = encipher.doFinal(utf8);
@@ -138,23 +130,23 @@ class Encryptor {
 			 */
 			String out = new String(Base64Coder.encode(enBytes));
 
-			/* 
+			/*
 			 * return the encrypted string
 			 */
 			return out;
 
-			/* 
+			/*
 			 * catch all the exceptions
 			 */
 		} catch (Exception e) {
 		}
 
-		/* 
+		/*
 		 * return null if there was an exception
 		 */
 		return null;
 	}
-	
+
 	/**
 	 * decrypts a string
 	 * 
@@ -162,7 +154,7 @@ class Encryptor {
 	 * @return
 	 */
 	public String decrypt(String in) {
-		/* 
+		/*
 		 * lots of things that can go wrong
 		 */
 		try {
@@ -176,23 +168,23 @@ class Encryptor {
 			 */
 			byte[] utf8 = decipher.doFinal(deBytes);
 
-			/* 
+			/*
 			 * create a new string from those bytes
 			 */
 			String out = new String(utf8, "UTF8");
 
-			/* 
+			/*
 			 * return the decrypted string
 			 */
 			return out;
 
-			/* 
+			/*
 			 * catch all the exceptions
 			 */
 		} catch (Exception e) {
 		}
 
-		/* 
+		/*
 		 * return null if there was an exception
 		 */
 		return null;
