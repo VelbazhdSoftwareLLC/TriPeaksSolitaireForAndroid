@@ -67,6 +67,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -612,8 +613,14 @@ public class TriPeaks extends JFrame {
 							}
 						};
 
-						File backsDir = new File("CardSets" + File.separator
-								+ "Backs"); // the folder with the back designs
+						// the folder with the back designs
+						File backsDir = null;
+						try {
+							backsDir = new File(TriPeaks.class.getResource(
+									"CardSets").toURI()
+									+ File.separator + "Backs");
+						} catch (URISyntaxException e1) {
+						}
 						if ((!backsDir.exists()) || (!backsDir.isDirectory())) { // if
 																					// the
 																					// folder
@@ -624,9 +631,13 @@ public class TriPeaks extends JFrame {
 																					// a
 																					// folder
 							JOptionPane.showMessageDialog(TriPeaks.this,
-									"Invalid Structure for Card folders"); // give
-																			// an
-																			// error
+									"Invalid Structure for Card folders: "
+											+ backsDir.getPath() + " "
+											+ backsDir.exists() + " "
+											+ backsDir.isDirectory());
+							// give
+							// an
+							// error
 							return; // stop the execution
 						}
 						File[] backFiles = backsDir.listFiles(); // get the list
@@ -729,8 +740,14 @@ public class TriPeaks extends JFrame {
 							}
 						};
 
-						File frontsDir = new File("CardSets" + File.separator
-								+ "Fronts"); // the folder with the fronts
+						// the folder with the fronts
+						File frontsDir = null;
+						try {
+							frontsDir = new File(TriPeaks.class.getResource(
+									"CardSets").toURI()
+									+ File.separator + "Fronts");
+						} catch (URISyntaxException e1) {
+						}
 						if ((!frontsDir.exists()) || (!frontsDir.isDirectory())) { // if
 																					// the
 																					// folder
@@ -741,8 +758,11 @@ public class TriPeaks extends JFrame {
 																					// a
 																					// folder
 							JOptionPane.showMessageDialog(TriPeaks.this,
-									"Invalid Structure for Card folders"); // error
-																			// message
+									"Invalid Structure for Card folders: "
+											+ frontsDir.getPath() + " "
+											+ frontsDir.exists() + " "
+											+ frontsDir.isDirectory()); // error
+							// message
 							return; // stop the creation of the dialog
 						}
 						File[] frontsDirs = frontsDir.listFiles(); // get the

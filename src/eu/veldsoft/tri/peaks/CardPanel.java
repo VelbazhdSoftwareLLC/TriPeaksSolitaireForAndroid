@@ -769,7 +769,7 @@ class CardPanel extends JPanel implements MouseListener {
 	}
 
 	public void setDefaults() {
-		frontFolder = "Default";
+		frontFolder = "Shiny";
 		backStyle = "Default";
 		backColor = (Color.GREEN).darker().darker();
 		fontColor = Color.WHITE;
