@@ -21,31 +21,46 @@
 package eu.veldsoft.tri.peaks;
 
 /**
- * Start Base64 encoding and decoding code.**NOTE*** This is NOT my code. This
- * code was written by Christian d'Heureuse to provide a more standard base64
- * coder that's fast and efficient. As such, I won't provide comments for that
- * code. Java does NOT provide a Base64 encoder/decoder as part of the API.
  * 
- * @author Christian d'Heureuse
+ * @author Todor Balabanov
  */
-class NewPlayerException extends Exception {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+enum Cheat {
 
 	/**
 	 * 
 	 */
-	public NewPlayerException() {
-		super();
+	CARDS_FACE_UP(0),
+
+	/**
+	 * 
+	 */
+	CLICK_ANY_CARD(1),
+
+	/**
+	 * 
+	 */
+	NO_PENALTY(2);
+
+	/**
+	 * 
+	 */
+	private int index;
+
+	/**
+	 * 
+	 * @param index
+	 */
+	Cheat(int index) {
+		this.index = index;
 	}
 
 	/**
 	 * 
-	 * @param msg
+	 * @return
+	 * 
+	 * @author Todor Balabanov
 	 */
-	public NewPlayerException(String msg) {
-		super(msg);
+	public int getIndex() {
+		return index;
 	}
 }
