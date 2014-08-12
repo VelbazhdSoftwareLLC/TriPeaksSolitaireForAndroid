@@ -3,5 +3,12 @@
 
     <string name="app_name">Tri Peaks Solitaire</string>
     <string name="title_activity_lobby">Tri Peaks Lobby</string>
+    <string name="welcome_to_the_tri_peaks_solitaire_text">Welcome to the Tri Peaks Solitaire!</string>
+    <string name="new_game_caption">New Game</string>
+    <string name="high_scores_caption">High Scores</string>
+    <string name="options_caption">Options</string>
+    <string name="about_us_caption">About Us</string>
+    <string name="exit_caption">Exit</string>
+    <string name="title_activity_game">Game</string>
 
 </resources>
