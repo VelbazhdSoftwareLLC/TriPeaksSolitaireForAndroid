@@ -1,3 +1,23 @@
+/*
+ * This file is a part of Tri Peaks Solitaire for Android
+ *
+ * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
+ * Balabanov, Ina Baltadzhieva
+ *
+ * Tri Peaks Solitaire for Android is free software: you can redistribute it 
+ * and/or modify it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation, either version 3 of the License, 
+ * or (at your option) any later version.
+ *
+ * Tri Peaks Solitaire for Android is distributed in the hope that it will be 
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with 
+ * Tri Peaks Solitaire for Android.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package eu.veldsoft.tri.peaks;
 
 import java.io.BufferedReader;
@@ -11,8 +31,12 @@ import java.util.Iterator;
 import javax.swing.table.AbstractTableModel;
 
 /**
+ * Start Base64 encoding and decoding code.**NOTE*** This is NOT my code. This
+ * code was written by Christian d'Heureuse to provide a more standard base64
+ * coder that's fast and efficient. As such, I won't provide comments for that
+ * code. Java does NOT provide a Base64 encoder/decoder as part of the API.
  * 
- * @author
+ * @author Christian d'Heureuse
  */
 class HighScoreModel extends AbstractTableModel {
 	/**
@@ -145,14 +169,24 @@ class HighScoreModel extends AbstractTableModel {
 		return columnNames[c];
 	}
 
+	/**
+	 * 
+	 */
 	public Object getValueAt(int r, int c) {
 		return data[r][c];
 	}
 
+	/**
+	 * 
+	 */
 	public Class<? extends Object> getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean readAndSetData() {
 		File scoresDir = new File(TriPeaks.SCORES_DIRECTORY);
 		if (!scoresDir.isDirectory())
@@ -193,9 +227,10 @@ class HighScoreModel extends AbstractTableModel {
 				plrScores.add(new Boolean(deced));
 				scoreLists.add(plrScores);
 
-				// Should never happen b/c we
-				// are opening files listed
-				// in a folder...
+				/*
+				 * Should never happen b/c we are opening files listed in a
+				 * folder...
+				 */
 			} catch (FileNotFoundException eFNF) {
 				System.out.println(eFNF.getMessage());
 			} catch (IOException eIO) {

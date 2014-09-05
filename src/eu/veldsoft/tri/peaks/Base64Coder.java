@@ -1,3 +1,23 @@
+/*
+ * This file is a part of Tri Peaks Solitaire for Android
+ *
+ * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
+ * Balabanov, Ina Baltadzhieva
+ *
+ * Tri Peaks Solitaire for Android is free software: you can redistribute it 
+ * and/or modify it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation, either version 3 of the License, 
+ * or (at your option) any later version.
+ *
+ * Tri Peaks Solitaire for Android is distributed in the hope that it will be 
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with 
+ * Tri Peaks Solitaire for Android.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package eu.veldsoft.tri.peaks;
 
 /**
@@ -5,9 +25,18 @@ package eu.veldsoft.tri.peaks;
  * code was written by Christian d'Heureuse to provide a more standard base64
  * coder that's fast and efficient. As such, I won't provide comments for that
  * code. Java does NOT provide a Base64 encoder/decoder as part of the API.
+ * 
+ * @author Christian d'Heureuse
  */
 class Base64Coder {
+	/**
+	 * 
+	 */
 	private static char[] map1 = new char[64];
+
+	/**
+	 * 
+	 */
 	static {
 		int i = 0;
 		for (char c = 'A'; c <= 'Z'; c++)
@@ -20,7 +49,14 @@ class Base64Coder {
 		map1[i++] = '/';
 	}
 
+	/**
+	 * 
+	 */
 	private static byte[] map2 = new byte[128];
+
+	/**
+	 * 
+	 */
 	static {
 		for (int i = 0; i < map2.length; i++)
 			map2[i] = -1;
@@ -28,14 +64,30 @@ class Base64Coder {
 			map2[map1[i]] = (byte) i;
 	}
 
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public static String encodeString(String s) {
 		return new String(encode(s.getBytes()));
 	}
 
+	/**
+	 * 
+	 * @param in
+	 * @return
+	 */
 	public static char[] encode(byte[] in) {
 		return encode(in, in.length);
 	}
 
+	/**
+	 * 
+	 * @param in
+	 * @param iLen
+	 * @return
+	 */
 	public static char[] encode(byte[] in, int iLen) {
 		int oDataLen = (iLen * 4 + 2) / 3;
 		int oLen = ((iLen + 2) / 3) * 4;
@@ -60,14 +112,29 @@ class Base64Coder {
 		return out;
 	}
 
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public static String decodeString(String s) {
 		return new String(decode(s));
 	}
 
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public static byte[] decode(String s) {
 		return decode(s.toCharArray());
 	}
 
+	/**
+	 * 
+	 * @param in
+	 * @return
+	 */
 	public static byte[] decode(char[] in) {
 		int iLen = in.length;
 		if (iLen % 4 != 0)
@@ -111,4 +178,4 @@ class Base64Coder {
 	 */
 	private Base64Coder() {
 	}
-} // end Base64Coder class
+}

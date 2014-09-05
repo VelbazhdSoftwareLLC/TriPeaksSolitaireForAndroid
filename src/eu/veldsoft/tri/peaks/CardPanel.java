@@ -1,3 +1,23 @@
+/*
+ * This file is a part of Tri Peaks Solitaire for Android
+ *
+ * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
+ * Balabanov, Ina Baltadzhieva
+ *
+ * Tri Peaks Solitaire for Android is free software: you can redistribute it 
+ * and/or modify it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation, either version 3 of the License, 
+ * or (at your option) any later version.
+ *
+ * Tri Peaks Solitaire for Android is distributed in the hope that it will be 
+ * useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with 
+ * Tri Peaks Solitaire for Android.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package eu.veldsoft.tri.peaks;
 
 import java.awt.Color;
@@ -10,20 +30,36 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.EnumSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+/**
+ * Start Base64 encoding and decoding code.**NOTE*** This is NOT my code. This
+ * code was written by Christian d'Heureuse to provide a more standard base64
+ * coder that's fast and efficient. As such, I won't provide comments for that
+ * code. Java does NOT provide a Base64 encoder/decoder as part of the API.
+ * 
+ * @author Christian d'Heureuse
+ */
 class CardPanel extends JPanel implements MouseListener {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
 	public static final int NSTATS = 5;
 
+	/**
+	 * 
+	 */
 	public static final int NCHEATS = 3;
 
 	/**
@@ -31,8 +67,14 @@ class CardPanel extends JPanel implements MouseListener {
 	 */
 	private Color backColor = Color.GREEN.darker().darker();
 
+	/**
+	 * 
+	 */
 	private Color fontColor = Color.WHITE;
 
+	/**
+	 * 
+	 */
 	private Font textFont = new Font("Serif", Font.BOLD, 14);
 
 	/**
@@ -102,29 +144,91 @@ class CardPanel extends JPanel implements MouseListener {
 			new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, false, 0, 0),
 			new Card(Card.Rank.KING, Card.Suit.SPADES, true, false, 0, 0) };
 
-	//TODO Replace with EnumSet.
-	private boolean[] cheats = new boolean[NCHEATS];
+	/**
+	 * 
+	 */
+	private EnumSet<Cheat> cheats = EnumSet.noneOf(Cheat.class);
 
+	/**
+	 * 
+	 */
 	private boolean hasCheatedYet = false;
 
-	private int discardIndex = 51; // index of the card in the discard pile
+	/**
+	 * index of the card in the discard pile
+	 */
+	private int discardIndex = 51;
 
-	private int score = 0; // player's overall score
-	private int gameScore = 0; // current game score
-	private int sesScore = 0; // session score
-	private int streak = 0; // streak (number of cards, not the value)
-	private int remCards = 0; // cards remaining in the deck
-	private int cardsInPlay = 0; // cards left on the board (not removed into
-									// the discard pile)
-	private int remPeaks = 3; // peaks remaining (0 is a clear board)
-	private int numGames = 0; // number of player games
-	private int sesGames = 0; // number of session games
-	private int highScore = 0; // highest score
-	private int lowScore = 0; // lowest score
-	private int highStreak = 0; // longest strea
+	/**
+	 * player's overall score
+	 */
+	private int score = 0;
 
-	private String status = ""; // status text (used later)
+	/**
+	 * current game score
+	 */
+	private int gameScore = 0;
 
+	/**
+	 * session score
+	 */
+	private int sessionScore = 0;
+
+	/**
+	 * streak (number of cards, not the value)
+	 */
+	private int streak = 0;
+
+	/**
+	 * cards remaining in the deck
+	 */
+	private int remainingCards = 0;
+
+	/**
+	 * cards left on the board (not removed into the discard pile)
+	 */
+	private int cardsInPlay = 0;
+
+	/**
+	 * peaks remaining (0 is a clear board)
+	 */
+	private int remainingPeaks = 3;
+
+	/**
+	 * number of player games
+	 */
+	private int numberOfGames = 0;
+
+	/**
+	 * number of session games
+	 */
+	private int numberOfSessionGames = 0;
+
+	/**
+	 * highest score
+	 */
+	private int highScore = 0;
+
+	/**
+	 * lowest score
+	 */
+	private int lowScore = 0;
+
+	/**
+	 * longest streak
+	 */
+	private int highStreak = 0;
+
+	/**
+	 * status text (used later)
+	 */
+	private String status = "";
+
+	/**
+	 * Deck suffling.
+	 * 
+	 * @author Todor Balabanov
+	 */
 	private void shuffle() {
 		for (int last = deck.length - 1, r = -1; last > 0; last--) {
 			r = TriPeaks.PRNG.nextInt(last + 1);
@@ -134,142 +238,245 @@ class CardPanel extends JPanel implements MouseListener {
 		}
 	}
 
-	public CardPanel() { // class constructor
-		setPreferredSize(new Dimension(Card.WIDTH * 10, Card.HEIGHT * 4)); // sets
-																			// the
-																			// size
-																			// of
-																			// the
-																			// panel
-																			// (10
-																			// cards
-																			// by
-																			// 4
-																			// cards)
-		addMouseListener(this); // adds a mouse-listener to the board
+	/**
+	 * class constructor
+	 */
+	public CardPanel() {
+		/*
+		 * sets the size of the panel (10 cards by 4 cards)
+		 */
+		setPreferredSize(new Dimension(Card.WIDTH * 10, Card.HEIGHT * 4));
+
+		/*
+		 * adds a mouse-listener to the board
+		 */
+		addMouseListener(this);
 	}
 
-	public void paint(Graphics g) { // custom paint method
-		super.paintComponent(g); // paints the JPanel
-		g.setColor(backColor); // use the background color
-		g.fillRect(0, 0, getSize().width, getSize().height); // draw the
-																// background
-		if (hasCheatedYet) { // if the user has ever cheated
+	/**
+	 * custom paint method
+	 */
+	public void paint(Graphics g) {
+		/*
+		 * paints the JPanel
+		 */
+		super.paintComponent(g);
+
+		/*
+		 * use the background color
+		 */
+		g.setColor(backColor);
+		g.fillRect(0, 0, getSize().width, getSize().height);
+
+		/*
+		 * draw the background
+		 */
+		if (hasCheatedYet) {
+			/*
+			 * if the user has ever cheated set the color - white, somewhat
+			 * transparent
+			 */
 			g.setColor(new Color(fontColor.getRed(), fontColor.getGreen(),
-					fontColor.getBlue(), 80)); // set the color - white,
-												// somewhat transparent
-			g.setFont(new Font("SansSerif", Font.BOLD, 132)); // set the font -
-																// big and fat
-			g.drawString("CHEATER", 0, getSize().height - 5); // print "CHEATER"
-																// on the bottom
-																// edge of the
-																// board
+					fontColor.getBlue(), 80));
+
+			/*
+			 * set the font - big and fat
+			 */
+			g.setFont(new Font("SansSerif", Font.BOLD, 132));
+
+			/*
+			 * print "CHEATER" on the bottom edge of the board
+			 */
+			g.drawString("CHEATER", 0, getSize().height - 5);
 		}
 
-		for (int q = 0; q < 52; q++) { // go through each card
-			if (deck[q] == null)
-				continue; // if a card is null (i.e. program was just started,
-							// cards not initialized yet), skip it
-			if (!deck[q].isVisible())
-				continue; // if a card isn't visible, skip it
-			BufferedImage img = null; // image to be created
-			URL imgURL = null; // URL of the image
+		/*
+		 * go through each card
+		 */
+		for (int q = 0; q < 52; q++) {
+			/*
+			 * if a card is null (i.e. program was just started, cards not
+			 * initialized yet), skip it
+			 */
+			if (deck[q] == null) {
+				continue;
+			}
 
-			if (!deck[q].isFacingDown()) // if it's face-up
+			/*
+			 * if a card isn't visible, skip it
+			 */
+			if (!deck[q].isVisible()) {
+				continue;
+			}
+
+			/*
+			 * image to be created
+			 */
+			BufferedImage img = null;
+
+			/*
+			 * URL of the image
+			 */
+			URL imgURL = null;
+
+			/*
+			 * if it's face-up
+			 */
+			if (!deck[q].isFacingDown()) {
 				imgURL = TriPeaks.class.getResource("CardSets" + File.separator
 						+ "Fronts" + File.separator + frontFolder
 						+ File.separator + deck[q].getSuit()
-						+ (deck[q].getRank().getValue() + 1) + ".png"); // get
-																		// the
-			// corresponding
-			// front of
-			// the card
-			else {// otherwise it's face-down
-				if (cheats[0]==false)
+						+ (deck[q].getRank().getValue() + 1) + ".png");
+
+				/*
+				 * get the corresponding front of the card otherwise it's
+				 * face-down
+				 */
+			} else {
+
+				/*
+				 * get the image for the back of the card - if the first cheat
+				 * isn't on
+				 */
+				if (cheats.contains(Cheat.CARDS_FACE_UP) == false) {
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Backs" + File.separator
-							+ backStyle + ".png"); // get the image for the back
-													// of the card - if the
-													// first cheat isn't on
-				else
+							+ backStyle + ".png");
+
+					/*
+					 * get the corresponding front of the card if the cheat is
+					 * on...
+					 */
+				} else {
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Fronts" + File.separator
 							+ frontFolder + File.separator + deck[q].getSuit()
-							+ (deck[q].getRank().getValue() + 1) + ".png"); // get
-																			// the
-				// corresponding
-				// front
-				// of
-				// the
-				// card
-				// if
-				// the
-				// cheat
-				// is
-				// on...
+							+ (deck[q].getRank().getValue() + 1) + ".png");
+				}
 			}
-			if (imgURL == null)
+
+			if (imgURL == null) {
 				continue;
+			}
+
 			try {
-				img = ImageIO.read(imgURL); // try to read the image
+				/*
+				 * try to read the image
+				 */
+				img = ImageIO.read(imgURL);
 			} catch (IOException eIO) {
-				System.out.println("Error reading card image"); // There's an
-																// error
-																// (probably
-																// because the
-																// card doesn't
-																// exist.
+				/*
+				 * There's an error (probably because the card doesn't exist.
+				 */
+				System.out.println("Error reading card image");
 			}
-			if (img == null)
+
+			if (img == null) {
 				continue;
-			int startX = deck[q].getX() - ((int) Card.WIDTH / 2); // left
-																	// edge
-																	// of
-																	// the
-																	// laft
-			int startY = deck[q].getY() - ((int) Card.HEIGHT / 2); // top of
-																	// the
-																	// card
-			int endX = startX + Card.WIDTH; // right
-			int endY = startY + Card.HEIGHT; // bottom
+			}
+
+			/*
+			 * left edge of the loft
+			 */
+			int startX = deck[q].getX() - ((int) Card.WIDTH / 2);
+
+			/*
+			 * top of the card
+			 */
+			int startY = deck[q].getY() - ((int) Card.HEIGHT / 2);
+
+			/*
+			 * right
+			 */
+			int endX = startX + Card.WIDTH;
+
+			/*
+			 * bottom
+			 */
+			int endY = startY + Card.HEIGHT;
+
+			/*
+			 * draws the image on the panel - resizing/scaling if necessary
+			 */
 			g.drawImage(img, startX, startY, endX, endY, 0, 0,
-					img.getWidth(null), img.getHeight(null), null); // draws the
-																	// image on
-																	// the panel
-																	// -
-																	// resizing/scaling
-																	// if
-																	// necessary
+					img.getWidth(null), img.getHeight(null), null);
 		}
+
+		/*
+		 * The won/lost string
+		 */
 		String scoreStr = (score < 0) ? "Lost $" + (-1) * score : "Won $"
-				+ score; // The won/lost string
-		String remStr = remCards + ((remCards == 1) ? " card" : " cards")
-				+ " remaining"; // display how many cards are remaining
-		g.setColor(fontColor); // the text is white
-		g.setFont(textFont); // set the font for the text
-		g.drawString(scoreStr, 5, Card.HEIGHT * 3); // put the score on the
-													// panel
-		g.drawString(remStr, 5, Card.HEIGHT * 3 + 25); // put the remaining
-														// cards on the panel
-		g.drawString(status, 5, getSize().height - 10); // print the status
-														// message.
-		status = ""; // reset the status message
+				+ score;
+
+		/*
+		 * display how many cards are remaining
+		 */
+		String remStr = remainingCards
+				+ ((remainingCards == 1) ? " card" : " cards") + " remaining";
+
+		/*
+		 * the text is white
+		 */
+		g.setColor(fontColor);
+
+		/*
+		 * set the font for the text
+		 */
+		g.setFont(textFont);
+
+		/*
+		 * put the score on the panel
+		 */
+		g.drawString(scoreStr, 5, Card.HEIGHT * 3);
+
+		/*
+		 * put the remaining cards on the panel
+		 */
+		g.drawString(remStr, 5, Card.HEIGHT * 3 + 25);
+
+		/*
+		 * print the status message.
+		 */
+		g.drawString(status, 5, getSize().height - 10);
+
+		/*
+		 * reset the status message
+		 */
+		status = "";
 	}
 
-	public void redeal() { // redeals the cards
-		int penalty = getPenalty(); // get the penalty for redealing
-		if (penalty != 0) { // if there is a penalty
+	/**
+	 * redeals the cards
+	 */
+	public void redeal() {
+		/*
+		 * get the penalty for redealing
+		 */
+		int penalty = getPenalty();
+
+		/*
+		 * if there is a penalty
+		 */
+		if (penalty != 0) {
+			/*
+			 * show a confirmation message
+			 */
 			int uI = JOptionPane.showConfirmDialog(this,
 					"Are you sure you want to redeal?\nRedealing now results in a penalty of $"
 							+ penalty + "!", "Confirm Redeal",
-					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE); // show
-																				// a
-																				// confimation
-																				// message
-			if (uI == JOptionPane.YES_OPTION)
-				doPenalty(penalty); // do the penalty if the user agreed
-			else
-				return; // the user doesn't like the penalty, don't rededal
+					JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+			/*
+			 * do the penalty if the user agreed
+			 */
+			if (uI == JOptionPane.YES_OPTION) {
+				doPenalty(penalty);
+			} else {
+				/*
+				 * the user doesn't like the penalty, don't redeal
+				 */
+				return;
+			}
 		}
 
 		shuffle();
@@ -278,97 +485,215 @@ class CardPanel extends JPanel implements MouseListener {
 			card.setVisible(true);
 		}
 
-		for (int q = 0; q < 3; q++) { // first row
-			deck[q].setX(2 * Card.WIDTH + q * 3 * Card.WIDTH); // set the
-																// X-coord
-			deck[q].setY((int) Card.HEIGHT / 2); // set the Y-coord for the
-													// card
-			deck[q].flip(true); // make it face-down
+		// TODO Do it in a single master loop.
+		/*
+		 * first row
+		 */
+		for (int q = 0; q < 3; q++) {
+			/*
+			 * set the X-coord
+			 */
+			deck[q].setX(2 * Card.WIDTH + q * 3 * Card.WIDTH);
+
+			/*
+			 * set the Y-coord for the card
+			 */
+			deck[q].setY((int) Card.HEIGHT / 2);
+
+			/*
+			 * make it face-down
+			 */
+			deck[q].flip(true);
 		}
-		for (int q = 0; q < 6; q++) { // second row
+
+		/*
+		 * second row
+		 */
+		for (int q = 0; q < 6; q++) {
+			/*
+			 * set the coords
+			 */
 			deck[q + 3].setX(3 * ((int) Card.WIDTH / 2) + q * Card.WIDTH
-					+ ((int) q / 2) * Card.WIDTH); // set the coords
+					+ ((int) q / 2) * Card.WIDTH);
 			deck[q + 3].setY(Card.HEIGHT);
-			deck[q + 3].flip(true); // face-down
+
+			/*
+			 * face-down
+			 */
+			deck[q + 3].flip(true);
 		}
-		for (int q = 0; q < 9; q++) { // third row
-			deck[q + 9].setX(Card.WIDTH + q * Card.WIDTH); // set the coords
+
+		/*
+		 * third row
+		 */
+		for (int q = 0; q < 9; q++) {
+			/*
+			 * set the coords
+			 */
+			deck[q + 9].setX(Card.WIDTH + q * Card.WIDTH);
 			deck[q + 9].setY(3 * ((int) Card.HEIGHT / 2));
-			deck[q + 9].flip(true); // face-down
+
+			/*
+			 * face-down
+			 */
+			deck[q + 9].flip(true);
 		}
-		for (int q = 0; q < 10; q++) { // fourth row
-			deck[q + 18].setX(((int) Card.WIDTH / 2) + q * Card.WIDTH); // set
-																		// the
-																		// coords
+
+		/*
+		 * fourth row
+		 */
+		for (int q = 0; q < 10; q++) {
+			/*
+			 * set the coords
+			 */
+			deck[q + 18].setX(((int) Card.WIDTH / 2) + q * Card.WIDTH);
 			deck[q + 18].setY(2 * Card.HEIGHT);
-			deck[q + 18].flip(false); // face-up
+
+			/*
+			 * face-up
+			 */
+			deck[q + 18].flip(false);
 		}
-		for (int q = 28; q < 51; q++) { // the deck
-			deck[q].setX(7 * ((int) Card.WIDTH / 2)); // same coords for all
-														// of them
+
+		/*
+		 * the deck
+		 */
+		for (int q = 28; q < 51; q++) {
+			/*
+			 * same coords for all of them
+			 */
+			deck[q].setX(7 * ((int) Card.WIDTH / 2));
 			deck[q].setY(13 * ((int) Card.HEIGHT / 4));
-			deck[q].flip(true); // they're all face-down
-			deck[q].setVisible(false); // they're invisible
+
+			/*
+			 * they're all face-down
+			 */
+			deck[q].flip(true);
+
+			/*
+			 * they're invisible
+			 */
+			deck[q].setVisible(false);
 		}
-		deck[50].setVisible(true); // only the top one is visible (faster
-									// repaint)
+		/*
+		 * only the top one is visible (faster repaint)
+		 */
+		deck[50].setVisible(true);
 
-		deck[51].setX(13 * ((int) Card.WIDTH / 2)); // discard pile
-		deck[51].setY(13 * ((int) Card.HEIGHT / 4)); // set the coords
-		deck[51].flip(false); // face-up
+		/*
+		 * discard pile set the coords
+		 */
+		deck[51].setX(13 * ((int) Card.WIDTH / 2));
+		deck[51].setY(13 * ((int) Card.HEIGHT / 4));
 
-		remCards = 23; // 23 cards left in the deck
-		cardsInPlay = 28; // all 28 cards are in play
-		remPeaks = 3; // all three peaks are there
-		streak = 0; // the streak is reset
-		gameScore = 0; // the game score is reset
-		discardIndex = 51; // the discard pile index is back to 51
-		numGames++; // increment the number of games played
-		sesGames++; // increment the number of session games
+		/*
+		 * face-up
+		 */
+		deck[51].flip(false);
 
-		repaint(); // repaint the board
-		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this); // get
-																				// the
-																				// frame
-																				// that
-																				// contains
-																				// the
-																				// board
-		theFrame.updateStats(); // update the stats labels
+		// TODO Add GameState class for all controlling variables.
+
+		/*
+		 * 23 cards left in the deck
+		 */
+		remainingCards = 23;
+
+		/*
+		 * all 28 cards are in play
+		 */
+		cardsInPlay = 28;
+
+		/*
+		 * all three peaks are there
+		 */
+		remainingPeaks = 3;
+
+		/*
+		 * the streak is reset
+		 */
+		streak = 0;
+
+		/*
+		 * the game score is reset
+		 */
+		gameScore = 0;
+
+		/*
+		 * the discard pile index is back to 51
+		 */
+		discardIndex = 51;
+
+		/*
+		 * increment the number of games played
+		 */
+		numberOfGames++;
+
+		/*
+		 * increment the number of session games
+		 */
+		numberOfSessionGames++;
+
+		/*
+		 * repaint the board
+		 */
+		repaint();
+
+		/*
+		 * get the frame that contains the board
+		 */
+		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this);
+
+		/*
+		 * update the stats labels
+		 */
+		theFrame.updateStats();
 	}
 
-	public void reset() { // resets everything
-		// go through every card
-		// make all the cards invisible
+	/**
+	 * resets everything
+	 */
+	public void reset() {
+		/*
+		 * go through every card make all the cards invisible
+		 */
 		for (Card card : deck) {
 			card.setVisible(false);
 		}
-		discardIndex = 51; // essentially the same thing as the default values
-							// for
-							// the fields
+
+		/*
+		 * essentially the same thing as the default values for the fields
+		 */
+		discardIndex = 51;
 		score = 0;
 		gameScore = 0;
-		sesScore = 0;
+		sessionScore = 0;
 		streak = 0;
-		remCards = 0;
+		remainingCards = 0;
 		cardsInPlay = 0;
-		remPeaks = 3;
-		numGames = 0;
-		sesGames = 0;
+		remainingPeaks = 3;
+		numberOfGames = 0;
+		numberOfSessionGames = 0;
 		highScore = 0;
 		lowScore = 0;
 		highStreak = 0;
 		status = "";
-		for(int i=0; i<cheats.length; i++) {
-			cheats[i] = false;
-		}
+		cheats.clear();
 		hasCheatedYet = false;
 
-		repaint(); // repaint the board
-		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this); // get
-																				// the
-																				// frame
-		theFrame.updateStats(); // update the stats labels
+		/*
+		 * repaint the board
+		 */
+		repaint();
+
+		/*
+		 * get the frame
+		 */
+		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this);
+
+		/*
+		 * update the stats labels
+		 */
+		theFrame.updateStats();
 	}
 
 	/**
@@ -412,14 +737,17 @@ class CardPanel extends JPanel implements MouseListener {
 			 * left edge of the card
 			 */
 			startX = deck[q].getX() - ((int) Card.WIDTH / 2);
+
 			/*
 			 * top edge of the card
 			 */
 			startY = deck[q].getY() - ((int) Card.HEIGHT / 2);
+
 			/*
 			 * right edge of the card
 			 */
 			endX = deck[q].getX() + ((int) Card.WIDTH / 2);
+
 			/*
 			 * bottom edge of the card
 			 */
@@ -450,7 +778,7 @@ class CardPanel extends JPanel implements MouseListener {
 			 * if the second cheat is used, the value of the card won't be
 			 * checked
 			 */
-			if (cheats[1] == true) {
+			if (cheats.contains(Cheat.CLICK_ANY_CARD) == true) {
 				/*
 				 * the card is adjacent automatically
 				 */
@@ -472,10 +800,12 @@ class CardPanel extends JPanel implements MouseListener {
 				 * put the card in the discard pile
 				 */
 				deck[q].setX(deck[discardIndex].getX());
+
 				/*
 				 * set the discard pile's card's coords
 				 */
 				deck[q].setY(deck[discardIndex].getY());
+
 				/*
 				 * hide the previously discarded card - makes the repaint faster
 				 */
@@ -486,314 +816,697 @@ class CardPanel extends JPanel implements MouseListener {
 				 */
 				discardIndex = q;
 
-				streak++; // increment the strea
-				cardsInPlay--; // decrement the number of cards in play
-				score += streak; // add the streak to the score
-				gameScore += streak; // and to the current game's score
-				sesScore += streak; // and to the session score
-				
-				if (streak > highStreak)
-					highStreak = streak; // set the high streak if it's higher
-				if (gameScore > highScore)
-					highScore = gameScore; // set the high score if it's higher
+				/*
+				 * increment the strea
+				 */
+				streak++;
 
-				if (q < 3) { // if it was a peak
-					remPeaks--; // there's one less peak
-					score += 15; // add a 15-point bonus
-					gameScore += 15; // and to the game score
-					sesScore += 15; // and to the session score
-					if (remPeaks == 0) { // if all the peaks are gone
-						score += 15; // add another 15-point bonus (for a total
-										// of 30 bonus points)
-						gameScore += 15; // and to the game score
-						sesScore += 15; // and to the session score
-						status = "You have Tri-Conquered! You get a bonus of $30"; // set
-																					// the
-																					// status
-																					// message
-						for (int w = 28; w < (remCards + 28); w++) { // the
-																		// remaining
-																		// deck
-							deck[w].setVisible(false); // hide the deck (so
-														// you can't take
-														// cards from the
-														// deck after you
-														// clear the board
+				/*
+				 * decrement the number of cards in play
+				 */
+				cardsInPlay--;
+
+				/*
+				 * add the streak to the score
+				 */
+				score += streak;
+
+				/*
+				 * and to the current game's score
+				 */
+				gameScore += streak;
+
+				/*
+				 * and to the session score
+				 */
+				sessionScore += streak;
+
+				/*
+				 * set the high streak if it's higher
+				 */
+				if (streak > highStreak) {
+					highStreak = streak;
+				}
+
+				/*
+				 * set the high score if it's higher
+				 */
+				if (gameScore > highScore) {
+					highScore = gameScore;
+				}
+
+				/*
+				 * if it was a peak
+				 */
+				if (q < 3) {
+					/*
+					 * there's one less peak
+					 */
+					remainingPeaks--;
+
+					/*
+					 * add a 15-point bonus
+					 */
+					score += Constants.PEAK_BONUS;
+
+					/*
+					 * and to the game score
+					 */
+					gameScore += Constants.PEAK_BONUS;
+
+					/*
+					 * and to the session score
+					 */
+					sessionScore += Constants.PEAK_BONUS;
+
+					/*
+					 * if all the peaks are gone
+					 */
+					if (remainingPeaks == 0) {
+						/*
+						 * add another 15-point bonus (for a total of 30 bonus
+						 * points)
+						 */
+						score += Constants.THREE_PEAKS_BONUS;
+
+						/*
+						 * and to the game score
+						 */
+						gameScore += Constants.THREE_PEAKS_BONUS;
+
+						/*
+						 * and to the session score
+						 */
+						sessionScore += Constants.THREE_PEAKS_BONUS;
+
+						/*
+						 * set the status message
+						 */
+						status = "You have Tri-Conquered! You get a bonus of $30";
+
+						/*
+						 * the remaining deck
+						 */
+						for (int w = 28; w < (remainingCards + 28); w++) {
+							/*
+							 * hide the deck (so you can't take cards from the
+							 * deck after you clear the board
+							 */
+							deck[w].setVisible(false);
 						}
-					} else
-						status = "You have reached a peak! You get a bonus of $15"; // set
-																					// the
-																					// status
-																					// message
+					} else {
+						/*
+						 * set the status message
+						 */
+						status = "You have reached a peak! You get a bonus of $15";
+					}
 
-					if (gameScore > highScore)
-						highScore = gameScore; // set the high score if the
-												// score is higher
-					break; // "consume" the mouse click - don't go through the
-							// rest of the cards
+					/*
+					 * set the high score if the score is higher
+					 */
+					if (gameScore > highScore) {
+						highScore = gameScore;
+					}
+
+					/*
+					 * "consume" the mouse click - don't go through the rest of
+					 * the cards
+					 */
+					break;
 				}
-				boolean noLeft, noRight; // check values for checking whether or
-											// not a card has a card to the left
-											// or right
-				noLeft = noRight = false; // starts out as having both
+
+				/*
+				 * check values for checking whether or not a card has a card to
+				 * the left or right
+				 */
+				boolean noLeft, noRight;
+
+				/*
+				 * starts out as having both
+				 */
+				noLeft = noRight = false;
+
+				/*
+				 * if the card isn't a left end
+				 */
 				if ((q != 3) && (q != 9) && (q != 18) && (q != 5) && (q != 7)
-						&& (q != 12) && (q != 15)) { // if the card isn't a left
-														// end
-					if (!deck[q - 1].isVisible())
-						noLeft = true; // check if the left-adjacent card is
-										// visible
+						&& (q != 12) && (q != 15)) {
+					/*
+					 * check if the left-adjacent card is visible
+					 */
+					if (!deck[q - 1].isVisible()) {
+						noLeft = true;
+					}
 				}
+
+				/*
+				 * if the card isn't a right end
+				 */
 				if ((q != 4) && (q != 6) && (q != 8) && (q != 17) && (q != 27)
-						&& (q != 11) && (q != 14)) { // if the card isn't a
-														// right end
-					if (!deck[q + 1].isVisible())
-						noRight = true; // check if the right-adjacent card is
-										// visible
+						&& (q != 11) && (q != 14)) {
+					/*
+					 * check if the right-adjacent card is visible
+					 */
+					if (!deck[q + 1].isVisible()) {
+						noRight = true;
+					}
 				}
-				// some of the cards in the third row are considered to be edge
-				// cards because not all pairs of adjacent cards in the third
-				// row uncover another card
-				if ((!noLeft) && (!noRight))
-					break; // if both the left and right cards are present,
-							// don't do anything
-				int offset = -1; // the "offset" is the difference in the
-									// indeces of the right card of the adjacent
-									// pair and the card that pair will uncover
-				if ((q >= 18) && (q <= 27)) { // 4th row
+
+				/*
+				 * some of the cards in the third row are considered to be edge
+				 * cards because not all pairs of adjacent cards in the third
+				 * row uncover another card
+				 */
+				if ((!noLeft) && (!noRight)) {
+					/*
+					 * if both the left and right cards are present, don't do
+					 * anything
+					 */
+					break;
+				}
+
+				/*
+				 * the "offset" is the difference in the indeces of the right
+				 * card of the adjacent pair and the card that pair will uncover
+				 */
+				int offset = -1;
+
+				if ((q >= 18) && (q <= 27)) {
+					/*
+					 * 4th row
+					 */
 					offset = 10;
-				} else if ((q >= 9) && (q <= 11)) { // first 3 of 3rd row
+				} else if ((q >= 9) && (q <= 11)) {
+					/*
+					 * first 3 of 3rd row
+					 */
 					offset = 7;
-				} else if ((q >= 12) && (q <= 14)) { // second 3 of third row
+				} else if ((q >= 12) && (q <= 14)) {
+					/*
+					 * second 3 of third row
+					 */
 					offset = 8;
-				} else if ((q >= 15) && (q <= 17)) { // last 3 of third row
+				} else if ((q >= 15) && (q <= 17)) {
+					/*
+					 * last 3 of third row
+					 */
 					offset = 9;
-				} else if ((q >= 3) && (q <= 4)) { // first 2 of second row
+				} else if ((q >= 3) && (q <= 4)) {
+					/*
+					 * first 2 of second row
+					 */
 					offset = 4;
-				} else if ((q >= 5) && (q <= 6)) { // second 2 of second row
+				} else if ((q >= 5) && (q <= 6)) {
+					/*
+					 * second 2 of second row
+					 */
 					offset = 5;
-				} else if ((q >= 7) && (q <= 8)) { // last 2 of second row
+				} else if ((q >= 7) && (q <= 8)) {
+					/*
+					 * last 2 of second row
+					 */
 					offset = 6;
 				}
-				// the first row isn't here because the peaks are special and
-				// were already taken care of above
-				if (offset == -1)
-					break; // if the offset didn't get set, don't do anything
-							// (offset should get set, but just in case)
-				if (noLeft)
-					deck[q - offset].flip(); // if the left card is missing,
-												// use the current card as
-												// the right one
-				if (noRight)
-					deck[q - offset + 1].flip(); // if the right card is
-													// missing, use the
-													// missing card as the
-													// right one
-			} else if ((q >= 28) && (q < 51)) { // in the deck
-				deck[q].setX(deck[discardIndex].getX()); // move the card to
-															// the deck
-				deck[q].setY(deck[discardIndex].getY()); // set the deck's
-															// coordinates
-				deck[discardIndex].setVisible(false); // hide the previously
-														// discarded card (for
-														// faster repaint)
-				deck[q].flip(); // flip the deck card
-				if (q != 28)
-					deck[q - 1].setVisible(true); // show the next deck card
-													// if it's not the last
-													// deck card
-				discardIndex = q; // set the index of the dicard pile
-				streak = 0; // reset the streak
-				if (cheats[2]==false) { // if the thrid cheat isn't on (no penalty
-									// cheat)
-					score -= 5; // 5-point penalty
-					gameScore -= 5; // to the game score
-					sesScore -= 5; // and the session score
+
+				/*
+				 * the first row isn't here because the peaks are special and
+				 * were already taken care of above
+				 */
+				if (offset == -1) {
+					/*
+					 * if the offset didn't get set, don't do anything (offset
+					 * should get set, but just in case)
+					 */
+					break;
 				}
-				if (gameScore < lowScore)
-					lowScore = gameScore; // set the low score if score is lower
-				remCards--; // decrement the number of cards in the deck
+
+				/*
+				 * if the left card is missing, use the current card as the
+				 * right one
+				 */
+				if (noLeft) {
+					deck[q - offset].flip();
+				}
+
+				/*
+				 * if the right card is missing, use the missing card as the
+				 * right one
+				 */
+				if (noRight) {
+					deck[q - offset + 1].flip();
+				}
+
+				/*
+				 * in the deck move the card to the deck
+				 */
+			} else if ((q >= 28) && (q < 51)) {
+
+				/*
+				 * set the deck's coordinates
+				 */
+				deck[q].setX(deck[discardIndex].getX());
+				deck[q].setY(deck[discardIndex].getY());
+
+				/*
+				 * hide the previously discarded card (for faster repaint)
+				 */
+				deck[discardIndex].setVisible(false);
+
+				/*
+				 * flip the deck card
+				 */
+				deck[q].flip();
+
+				/*
+				 * show the next deck card if it's not the last deck card
+				 */
+				if (q != 28) {
+					deck[q - 1].setVisible(true);
+				}
+
+				/*
+				 * set the index of the dicard pile
+				 */
+				discardIndex = q;
+
+				/*
+				 * reset the streak
+				 */
+				streak = 0;
+
+				/*
+				 * if the third cheat isn't on (no penalty cheat)
+				 */
+				if (cheats.contains(Cheat.NO_PENALTY) == false) {
+					// TODO Call doPenalty() function.
+
+					/*
+					 * 5-point penalty
+					 */
+					score -= Constants.NO_PENALTY_CHEAT;
+
+					/*
+					 * to the game score
+					 */
+					gameScore -= Constants.NO_PENALTY_CHEAT;
+
+					/*
+					 * and the session score
+					 */
+					sessionScore -= Constants.NO_PENALTY_CHEAT;
+				}
+
+				/*
+				 * set the low score if score is lower
+				 */
+				if (gameScore < lowScore) {
+					lowScore = gameScore;
+				}
+
+				/*
+				 * decrement the number of cards in the deck
+				 */
+				remainingCards--;
 			}
-			break; // "consume" the click - don't go through the rest of the
-					// cards
+
+			/*
+			 * "consume" the click - don't go through the rest of the cards
+			 */
+			break;
 		}
-		repaint(); // repaint the board
-		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this); // get
-																				// the
-																				// containing
-																				// frame
-		theFrame.updateStats(); // update the stats labels
+
+		/*
+		 * repaint the board
+		 */
+		repaint();
+
+		/*
+		 * get the containing frame
+		 */
+		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this);
+
+		/*
+		 * update the stats labels
+		 */
+		theFrame.updateStats();
 	}
 
-	public int getPenalty() { // return the penalty
-		if (cheats[2]==true)
-			return 0; // if the penalty cheat is on, there is no penalty
-		if ((cardsInPlay != 0) && (remCards != 0))
-			return (cardsInPlay * 5); // if there are cards in the deck AND in
-										// play, the penalty is $5 for every
-										// card removed
-		else
-			return 0; // otherwise the penalty is 0
+	/**
+	 * return the penalty
+	 * 
+	 * @return
+	 */
+	public int getPenalty() {
+		/*
+		 * if the penalty cheat is on, there is no penalty
+		 */
+		if (cheats.contains(Cheat.NO_PENALTY) == true) {
+			return 0;
+		}
+
+		/*
+		 * if there are cards in the deck AND in play, the penalty is $5 for
+		 * every card removed
+		 */
+		if ((cardsInPlay != 0) && (remainingCards != 0)) {
+			return (cardsInPlay * Constants.CARD_REMOVED_PENALTY);
+		} else {
+			/*
+			 * otherwise the penalty is 0
+			 */
+			return 0;
+		}
 	}
 
-	public void doPenalty(int penalty) { // perform the penalty - penalty
-											// doesn't affect the low score
-		score -= penalty; // subtract the penalty
-		sesScore -= penalty; // from the session score
-		gameScore -= penalty; // and from the game score
+	/**
+	 * perform the penalty - penalty doesn't affect the low score
+	 * 
+	 * @param penalty
+	 */
+	public void doPenalty(int penalty) {
+		/*
+		 * subtract the penalty
+		 */
+		score -= penalty;
+
+		/*
+		 * from the session score
+		 */
+		sessionScore -= penalty;
+
+		/*
+		 * and from the game score
+		 */
+		gameScore -= penalty;
 	}
 
-	public String getCardFront() { // returns the current front style
+	/**
+	 * returns the current front style
+	 * 
+	 * @return
+	 */
+	public String getCardFront() {
 		return frontFolder;
 	}
 
-	public String getCardBack() { // returns the current back style
+	/**
+	 * returns the current back style
+	 * 
+	 * @return
+	 */
+	public String getCardBack() {
 		return backStyle;
 	}
 
-	public Color getBackColor() { // returns the background color
+	/**
+	 * returns the background color
+	 * 
+	 * @return
+	 */
+	public Color getBackColor() {
 		return backColor;
 	}
 
-	public int getScore() { // returns the player's overall score
+	/**
+	 * returns the player's overall score
+	 * 
+	 * @return
+	 */
+	public int getScore() {
 		return score;
 	}
 
-	public int getGameScore() { // returns the current game score
+	/**
+	 * returns the current game score
+	 * 
+	 * @return
+	 */
+	public int getGameScore() {
 		return gameScore;
 	}
 
-	public int getStreak() { // returns the current sreak
+	/**
+	 * returns the current streak
+	 * 
+	 * @return
+	 */
+	public int getStreak() {
 		return streak;
 	}
 
-	public int getNumGames() { // returns the number of games played
-		return numGames;
+	/**
+	 * returns the number of games played
+	 * 
+	 * @return
+	 */
+	public int getNumGames() {
+		return numberOfGames;
 	}
 
-	public int getHighScore() { // returns the high score
+	/**
+	 * returns the high score
+	 * 
+	 * @return
+	 */
+	public int getHighScore() {
 		return highScore;
 	}
 
-	public int getLowScore() { // returns the low score
+	/**
+	 * returns the low score
+	 * 
+	 * @return
+	 */
+	public int getLowScore() {
 		return lowScore;
 	}
 
-	public int getHighStreak() { // returns the longest streak
+	/**
+	 * returns the longest streak
+	 * 
+	 * @return
+	 */
+	public int getHighStreak() {
 		return highStreak;
 	}
 
-	public int getSesScore() { // returns the session score
-		return sesScore;
+	/**
+	 * returns the session score
+	 * 
+	 * @return
+	 */
+	public int getSessionScore() {
+		return sessionScore;
 	}
 
-	public int getSesGames() { // returns the number of session games
-		return sesGames;
+	/**
+	 * returns the number of session games
+	 * 
+	 * @return
+	 */
+	public int getSessionGames() {
+		return numberOfSessionGames;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Color getFontColor() {
 		return fontColor;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Font getTextFont() {
 		return textFont;
 	}
 
-	public int[] getAllStats() { // returns all the stats in an array
-		int[] retVal = { getScore(), getGameScore(), getSesScore(),
-				getStreak(), getNumGames(), getSesGames(), getHighScore(),
-				getLowScore(), getHighStreak() }; // the array of stats
+	/**
+	 * returns all the stats in an array
+	 * 
+	 * @return
+	 */
+	public int[] getAllStats() {
+		/*
+		 * the array of stats
+		 */
+		int[] retVal = { getScore(), getGameScore(), getSessionScore(),
+				getStreak(), getNumGames(), getSessionGames(), getHighScore(),
+				getLowScore(), getHighStreak() };
+
 		return retVal;
 	}
 
-	public boolean isCheating() { // check if the player is currently cheating
-		for (int q = 0; q < cheats.length; q++) { // go through all the cheats
-			if (cheats[q]==true)
-				return true; // return true if any cheat is on
-		}
-		return false; // no cheat was found - return false
+	/**
+	 * check if the player is currently cheating
+	 * 
+	 * @return
+	 */
+	public boolean isCheating() {
+		return (cheats.isEmpty());
 	}
 
-	public boolean hasCheated() { // checks if player has ever cheated
+	/**
+	 * checks if player has ever cheated
+	 * 
+	 * @return
+	 */
+	public boolean hasCheated() {
 		return hasCheatedYet;
 	}
 
-	public boolean[] getCheats() { // returns all the cheats
-		return cheats; // return the cheats array
+	/**
+	 * returns all the cheats
+	 * 
+	 * @return
+	 */
+	public EnumSet<Cheat> getCheats() {
+		/*
+		 * return the cheats array
+		 */
+		return cheats;
 	}
 
-	public void setStats(int[] stats) { // sets all the stats based on the array
-										// values
-		score = stats[0]; // the programmer knows the order of the stats to be
-							// passed into this method:
-		highScore = stats[1]; // overall score, high score, low score, number of
-								// games, and longest streak
+	/**
+	 * sets all the stats based on the array values
+	 * 
+	 * @param stats
+	 */
+	public void setStats(int[] stats) {
+		/*
+		 * the programmer knows the order of the stats to be passed into this
+		 * method:
+		 */
+		score = stats[0];
+
+		/*
+		 * overall score, high score, low score, number ofgames, and longest
+		 * streak
+		 */
+		highScore = stats[1];
 		lowScore = stats[2];
-		numGames = stats[3];
+		numberOfGames = stats[3];
 		highStreak = stats[4];
 	}
 
-	public void setCardFront(String front) { // sets the front style
+	/**
+	 * sets the front style
+	 * 
+	 * @param front
+	 */
+	public void setCardFront(String front) {
 		frontFolder = front;
 	}
 
-	public void setCardBack(String back) { // sets the back style
+	/**
+	 * sets the back style
+	 * 
+	 * @param back
+	 */
+	public void setCardBack(String back) {
 		backStyle = back;
 	}
 
-	public void setBackColor(Color newColor) { // sets the background color
+	/**
+	 * sets the background color
+	 * 
+	 * @param newColor
+	 */
+	public void setBackColor(Color newColor) {
 		backColor = newColor;
 	}
 
-	public void setCheat(int cheatNum, boolean newState) { // set a cheat with
-															// the given index
-		if (cheatNum >= cheats.length)
-			return; // if the index is out of bounds
-		
-		if (newState==true)
-			hasCheatedYet = true; // if the cheat is turned on, set the
-									// "has cheated" flag
-		
-		cheats[cheatNum] = newState; // set the cheat
+	/**
+	 * set a cheat with the given index
+	 * 
+	 * @param cheat
+	 * @param newState
+	 */
+	public void setCheat(Cheat cheat, boolean newState) {
+		if (cheats.contains(cheat) == false && newState == true) {
+			cheats.add(cheat);
+		} else if (cheats.contains(cheat) == true && newState == false) {
+			cheats.remove(cheat);
+		}
+
+		/*
+		 * if the cheat is turned on, set the "has cheated" flag
+		 */
+		if (newState == true) {
+			hasCheatedYet = true;
+		}
 	}
 
-	public void setCheats(boolean[] newCheats) { // set all the cheats in a
-													// given array
-		for (int q = 0; q < cheats.length; q++)
-			setCheat(q, newCheats[q]); // go through the array and set the
-										// cheats
+	/**
+	 * set all the cheats in a given array
+	 * 
+	 * @param newCheats
+	 */
+	public void setCheats(EnumSet<Cheat> newCheats) {
+		cheats.clear();
+		cheats.addAll(newCheats);
 	}
 
-	public void setCheated(boolean hasCheatedYet) { // set the cheated status
-													// for the player.
+	/**
+	 * set the cheated status for the player.
+	 * 
+	 * @param hasCheatedYet
+	 */
+	public void setCheated(boolean hasCheatedYet) {
 		this.hasCheatedYet = hasCheatedYet;
 	}
 
+	/**
+	 * 
+	 */
 	public void setDefaults() {
-		frontFolder = "Default";
+		frontFolder = "Shiny";
 		backStyle = "Default";
 		backColor = (Color.GREEN).darker().darker();
 		fontColor = Color.WHITE;
 		textFont = new Font("Serif", Font.BOLD, 14);
 	}
 
+	/**
+	 * 
+	 * @param newColor
+	 */
 	public void setFontColor(Color newColor) {
 		fontColor = newColor;
 	}
 
+	/**
+	 * 
+	 * @param newFont
+	 */
 	public void setTextFont(Font newFont) {
 		textFont = newFont;
 	}
 
-	// not used, but necessary to implement MouseListener
+	/**
+	 * not used, but necessary to implement MouseListener
+	 */
 	public void mouseEntered(MouseEvent e) {
 	}
 
+	/**
+	 * 
+	 */
 	public void mouseExited(MouseEvent e) {
 	}
 
+	/**
+	 * 
+	 */
 	public void mousePressed(MouseEvent e) {
 	}
 
+	/**
+	 * 
+	 */
 	public void mouseReleased(MouseEvent e) {
 	}
-} 
+}
