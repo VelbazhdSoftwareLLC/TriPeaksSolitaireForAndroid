@@ -34,12 +34,12 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 class CurrencyRenderer extends DefaultTableCellRenderer {
 	/**
-	 * 
+	 * Serialization UID.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Constructor.
 	 */
 	public CurrencyRenderer() {
 		super();

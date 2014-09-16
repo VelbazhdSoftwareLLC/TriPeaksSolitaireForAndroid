@@ -45,7 +45,7 @@ class HighScoreModel extends AbstractTableModel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Statistics labels.
 	 */
 	public static final String[] columnNames = { "Player Name", "Score",
 			"Average", "Most Won", "Most Lost", "Longest Streak", "# of games",
@@ -54,91 +54,91 @@ class HighScoreModel extends AbstractTableModel {
 	/**
 	 * 
 	 */
-	public static Object[][] defaultPlrs = new Object[10][columnNames.length];
+	public static Object[][] defaultPlayers = new Object[10][columnNames.length];
 
 	/**
 	 * 
 	 */
 	static {
-		defaultPlrs[0][0] = "The Game";
-		defaultPlrs[0][1] = new Integer(50000);
-		defaultPlrs[0][2] = new Integer(150);
-		defaultPlrs[0][3] = new Integer(-90);
-		defaultPlrs[0][4] = new Integer(3500);
-		defaultPlrs[0][5] = new Integer(17);
-		defaultPlrs[0][6] = new Boolean(false);
+		defaultPlayers[0][0] = "The Game";
+		defaultPlayers[0][1] = new Integer(50000);
+		defaultPlayers[0][2] = new Integer(150);
+		defaultPlayers[0][3] = new Integer(-90);
+		defaultPlayers[0][4] = new Integer(3500);
+		defaultPlayers[0][5] = new Integer(17);
+		defaultPlayers[0][6] = new Boolean(false);
 
-		defaultPlrs[1][0] = "Bob";
-		defaultPlrs[1][1] = new Integer(26392);
-		defaultPlrs[1][2] = new Integer(160);
-		defaultPlrs[1][3] = new Integer(-70);
-		defaultPlrs[1][4] = new Integer(2501);
-		defaultPlrs[1][5] = new Integer(18);
-		defaultPlrs[1][6] = new Boolean(false);
+		defaultPlayers[1][0] = "Bob";
+		defaultPlayers[1][1] = new Integer(26392);
+		defaultPlayers[1][2] = new Integer(160);
+		defaultPlayers[1][3] = new Integer(-70);
+		defaultPlayers[1][4] = new Integer(2501);
+		defaultPlayers[1][5] = new Integer(18);
+		defaultPlayers[1][6] = new Boolean(false);
 
-		defaultPlrs[2][0] = "Linus T.";
-		defaultPlrs[2][1] = new Integer(10000);
-		defaultPlrs[2][2] = new Integer(157);
-		defaultPlrs[2][3] = new Integer(-77);
-		defaultPlrs[2][4] = new Integer(721);
-		defaultPlrs[2][5] = new Integer(15);
-		defaultPlrs[2][6] = new Boolean(false);
+		defaultPlayers[2][0] = "Linus T.";
+		defaultPlayers[2][1] = new Integer(10000);
+		defaultPlayers[2][2] = new Integer(157);
+		defaultPlayers[2][3] = new Integer(-77);
+		defaultPlayers[2][4] = new Integer(721);
+		defaultPlayers[2][5] = new Integer(15);
+		defaultPlayers[2][6] = new Boolean(false);
 
-		defaultPlrs[3][0] = "Who am I";
-		defaultPlrs[3][1] = new Integer(9876);
-		defaultPlrs[3][2] = new Integer(200);
-		defaultPlrs[3][3] = new Integer(-50);
-		defaultPlrs[3][4] = new Integer(607);
-		defaultPlrs[3][5] = new Integer(20);
-		defaultPlrs[3][6] = new Boolean(false);
+		defaultPlayers[3][0] = "Who am I";
+		defaultPlayers[3][1] = new Integer(9876);
+		defaultPlayers[3][2] = new Integer(200);
+		defaultPlayers[3][3] = new Integer(-50);
+		defaultPlayers[3][4] = new Integer(607);
+		defaultPlayers[3][5] = new Integer(20);
+		defaultPlayers[3][6] = new Boolean(false);
 
-		defaultPlrs[4][0] = "Random";
-		defaultPlrs[4][1] = new Integer(7694);
-		defaultPlrs[4][2] = new Integer(404);
-		defaultPlrs[4][3] = new Integer(0);
-		defaultPlrs[4][4] = new Integer(20);
-		defaultPlrs[4][5] = new Integer(24);
-		defaultPlrs[4][6] = new Boolean(true);
+		defaultPlayers[4][0] = "Random";
+		defaultPlayers[4][1] = new Integer(7694);
+		defaultPlayers[4][2] = new Integer(404);
+		defaultPlayers[4][3] = new Integer(0);
+		defaultPlayers[4][4] = new Integer(20);
+		defaultPlayers[4][5] = new Integer(24);
+		defaultPlayers[4][6] = new Boolean(true);
 
-		defaultPlrs[5][0] = "The CardMan";
-		defaultPlrs[5][1] = new Integer(5000);
-		defaultPlrs[5][2] = new Integer(137);
-		defaultPlrs[5][3] = new Integer(-61);
-		defaultPlrs[5][4] = new Integer(544);
-		defaultPlrs[5][5] = new Integer(13);
-		defaultPlrs[5][6] = new Boolean(false);
+		defaultPlayers[5][0] = "The CardMan";
+		defaultPlayers[5][1] = new Integer(5000);
+		defaultPlayers[5][2] = new Integer(137);
+		defaultPlayers[5][3] = new Integer(-61);
+		defaultPlayers[5][4] = new Integer(544);
+		defaultPlayers[5][5] = new Integer(13);
+		defaultPlayers[5][6] = new Boolean(false);
 
-		defaultPlrs[6][0] = "The Sun";
-		defaultPlrs[6][1] = new Integer(3000);
-		defaultPlrs[6][2] = new Integer(128);
-		defaultPlrs[6][3] = new Integer(-40);
-		defaultPlrs[6][4] = new Integer(321);
-		defaultPlrs[6][5] = new Integer(16);
-		defaultPlrs[6][6] = new Boolean(false);
+		defaultPlayers[6][0] = "The Sun";
+		defaultPlayers[6][1] = new Integer(3000);
+		defaultPlayers[6][2] = new Integer(128);
+		defaultPlayers[6][3] = new Integer(-40);
+		defaultPlayers[6][4] = new Integer(321);
+		defaultPlayers[6][5] = new Integer(16);
+		defaultPlayers[6][6] = new Boolean(false);
 
-		defaultPlrs[7][0] = "CPU";
-		defaultPlrs[7][1] = new Integer(1732);
-		defaultPlrs[7][2] = new Integer(100);
-		defaultPlrs[7][3] = new Integer(-79);
-		defaultPlrs[7][4] = new Integer(109);
-		defaultPlrs[7][5] = new Integer(12);
-		defaultPlrs[7][6] = new Boolean(false);
+		defaultPlayers[7][0] = "CPU";
+		defaultPlayers[7][1] = new Integer(1732);
+		defaultPlayers[7][2] = new Integer(100);
+		defaultPlayers[7][3] = new Integer(-79);
+		defaultPlayers[7][4] = new Integer(109);
+		defaultPlayers[7][5] = new Integer(12);
+		defaultPlayers[7][6] = new Boolean(false);
 
-		defaultPlrs[8][0] = "Your Creator";
-		defaultPlrs[8][1] = new Integer(1000);
-		defaultPlrs[8][2] = new Integer(99);
-		defaultPlrs[8][3] = new Integer(-96);
-		defaultPlrs[8][4] = new Integer(80);
-		defaultPlrs[8][5] = new Integer(9);
-		defaultPlrs[8][6] = new Boolean(false);
+		defaultPlayers[8][0] = "Your Creator";
+		defaultPlayers[8][1] = new Integer(1000);
+		defaultPlayers[8][2] = new Integer(99);
+		defaultPlayers[8][3] = new Integer(-96);
+		defaultPlayers[8][4] = new Integer(80);
+		defaultPlayers[8][5] = new Integer(9);
+		defaultPlayers[8][6] = new Boolean(false);
 
-		defaultPlrs[9][0] = "Bright One";
-		defaultPlrs[9][1] = new Integer(500);
-		defaultPlrs[9][2] = new Integer(73);
-		defaultPlrs[9][3] = new Integer(-109);
-		defaultPlrs[9][4] = new Integer(25);
-		defaultPlrs[9][5] = new Integer(10);
-		defaultPlrs[9][6] = new Boolean(false);
+		defaultPlayers[9][0] = "Bright One";
+		defaultPlayers[9][1] = new Integer(500);
+		defaultPlayers[9][2] = new Integer(73);
+		defaultPlayers[9][3] = new Integer(-109);
+		defaultPlayers[9][4] = new Integer(25);
+		defaultPlayers[9][5] = new Integer(10);
+		defaultPlayers[9][6] = new Boolean(false);
 	}
 
 	/**
@@ -248,7 +248,7 @@ class HighScoreModel extends AbstractTableModel {
 		for (int q = 0; q < remDefPlrs; q++) {
 			tempList = new ArrayList<Object>();
 			for (int w = 0; w < getColumnCount(); w++)
-				tempList.add(defaultPlrs[q][w]);
+				tempList.add(defaultPlayers[q][w]);
 			scoreLists.add(tempList);
 		}
 		data = new Object[scoreLists.size()][getColumnCount()];
