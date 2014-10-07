@@ -629,8 +629,10 @@ public class TriPeaks extends JFrame {
 
 				JPanel searchPanel = new JPanel(new FlowLayout());
 
-				// searchPanel.setLayout(new BoxLayout(searchPanel,
-				// BoxLayout.LINE_AXIS));
+				/*
+				 * searchPanel.setLayout(new
+				 * BoxLayout(searchPanel,BoxLayout.LINE_AXIS));
+				 */
 
 				searchPanel.setBorder(BorderFactory.createTitledBorder(
 						BorderFactory.createEtchedBorder(),
@@ -1387,43 +1389,43 @@ public class TriPeaks extends JFrame {
 				 * show a color chooser, with the current color as the default
 				 */
 				Color newColor = JColorChooser.showDialog(TriPeaks.this,
-				"Choose Background Color", board.getBackColor());
+						"Choose Background Color", board.getBackColor());
 
 				/*
 				 * if the user didn't click Cancel, set the color
 				 */
-				if (newColor != null){
+				if (newColor != null) {
 					board.setBackColor(newColor);
 				}
-				
+
 				/*
 				 * repaint the baord.
 				 */
 				board.repaint();
 			}
 		});
-		
+
 		/*
 		 * add the item to the menu
 		 */
 		optionMenu.add(boardColor);
-		
+
 		/*
 		 * change the font of the text on the board
 		 */
 		JMenuItem fontSelect = new JMenuItem("Text Font");
-		
+
 		/*
 		 * Alt+F
 		 */
 		fontSelect.setMnemonic(KeyEvent.VK_F);
-		
+
 		/*
 		 * tool-tip text
 		 */
 		fontSelect.getAccessibleContext().setAccessibleDescription(
 				"Change the font of the text on the board");
-		
+
 		fontSelect.addActionListener(new ActionListener() {
 
 			/*
@@ -1435,94 +1437,94 @@ public class TriPeaks extends JFrame {
 				 */
 				final JDialog fontDialog = new JDialog(TriPeaks.this,
 						"Choose Board Font", true);
-				
+
 				/*
 				 * get the old color - in order to revert
 				 */
 				final Color oldColor = board.getFontColor();
-				
+
 				/*
 				 * get the old color
 				 */
 				final Font oldFont = board.getTextFont();
-				
+
 				/*
 				 * a panel to hold everything
 				 */
 				JPanel contentPanel = new JPanel();
-				
+
 				/*
 				 * align stuff on the y-axis
 				 */
 				contentPanel.setLayout(new BoxLayout(contentPanel,
 						BoxLayout.PAGE_AXIS));
-				
+
 				/*
 				 * a title
 				 */
 				JLabel title = new JLabel("Font Chooser");
-				
+
 				/*
 				 * make it big & bold
 				 */
 				title.setFont(new Font("Serif", Font.BOLD, 20));
-				
+
 				/*
 				 * center it
 				 */
 				title.setAlignmentX(Component.CENTER_ALIGNMENT);
-				
+
 				/*
 				 * give it 5 pixels padding on each side
 				 */
 				title.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-				
+
 				/*
 				 * add it to the main panel
 				 */
 				contentPanel.add(title);
-				
+
 				/*
 				 * the selection panel
 				 */
 				JPanel selPanel = new JPanel(new FlowLayout());
-				
+
 				/*
 				 * add it to the main panel
 				 */
 				contentPanel.add(selPanel);
-				
+
 				/*
 				 * a preview label - very important. All values are "stored" in
 				 * it because any change is reflected in the label
 				 */
 				final JLabel preview = new JLabel("TriPeaks = Good Game");
-				
+
 				/*
 				 * set the old font (current)
 				 */
 				preview.setFont(oldFont);
-				
+
 				/*
 				 * make the label opaque
 				 */
 				preview.setOpaque(true);
-				
+
 				/*
 				 * set the color of the text
 				 */
 				preview.setForeground(oldColor);
-				
+
 				/*
 				 * set the background as the background color of the board
 				 */
 				preview.setBackground(board.getBackColor());
-				
+
 				/*
 				 * give it 3 px. padding on each side
 				 */
 				preview.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-				
+
 				/*
 				 * center-align it
 				 */
@@ -1534,12 +1536,12 @@ public class TriPeaks extends JFrame {
 				final String[] fonts = GraphicsEnvironment
 						.getLocalGraphicsEnvironment()
 						.getAvailableFontFamilyNames();
-				
+
 				/*
 				 * initial selection index
 				 */
 				int selIndex = 0;
-				
+
 				/*
 				 * go through available fonts
 				 */
@@ -1551,12 +1553,12 @@ public class TriPeaks extends JFrame {
 						selIndex = q;
 					}
 				}
-				
+
 				/*
 				 * a list for the fonts
 				 */
 				JList<Object> fontList = new JList<Object>(fonts);
-				
+
 				/*
 				 * add a list selection listener (when the selection changes)
 				 */
@@ -1567,30 +1569,29 @@ public class TriPeaks extends JFrame {
 					 */
 					public void valueChanged(ListSelectionEvent evt) {
 						/*
-						 * if the user isn't done selecting, don't do
-						 * anything
+						 * if the user isn't done selecting, don't do anything
 						 */
 						if (evt.getValueIsAdjusting()) {
 							return;
 						}
-						
+
 						/*
 						 * get the new selection index
 						 */
 						int selected = evt.getLastIndex();
-						
+
 						/*
 						 * get the bold and italic status of the preview
 						 */
 						int bold = (preview.getFont().isBold()) ? Font.BOLD : 0;
 						int ital = (preview.getFont().isItalic()) ? Font.ITALIC
 								: 0;
-						
+
 						/*
 						 * get the font size of the preview
 						 */
 						int size = preview.getFont().getSize();
-						
+
 						/*
 						 * set the new font
 						 */
@@ -1598,96 +1599,96 @@ public class TriPeaks extends JFrame {
 								size));
 					}
 				});
-				
+
 				/*
 				 * only one font can be selected
 				 */
 				fontList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				
+
 				/*
 				 * set the initial selection index
 				 */
 				fontList.setSelectedIndex(selIndex);
-				
+
 				/*
 				 * give it a vertical orientation (all in one column)
 				 */
 				fontList.setLayoutOrientation(JList.VERTICAL);
-				
+
 				/*
 				 * 10 items are visible
 				 */
 				fontList.setVisibleRowCount(10);
-				
+
 				/*
 				 * give the list scroll bars
 				 */
 				JScrollPane fontScroll = new JScrollPane(fontList);
-				
+
 				/*
 				 * give the scroll pane an etched border with the title "Font"
 				 */
 				fontScroll.setBorder(BorderFactory.createTitledBorder(
 						BorderFactory.createEtchedBorder(), "Font"));
-				
+
 				/*
 				 * add it to the selection panel
 				 */
 				selPanel.add(fontScroll);
-				
+
 				/*
 				 * scroll so the initial selection is visible
 				 */
 				fontList.ensureIndexIsVisible(selIndex);
-				
+
 				/*
 				 * a panel for other stuff
 				 */
 				JPanel otrPanel = new JPanel();
-				
+
 				/*
 				 * align stuff on the y-axis
 				 */
 				otrPanel.setLayout(new BoxLayout(otrPanel, BoxLayout.PAGE_AXIS));
-				
+
 				/*
 				 * give the panel a border (etched, with title)
 				 */
 				otrPanel.setBorder(BorderFactory.createTitledBorder(
 						BorderFactory.createEtchedBorder(), "Other Options"));
-				
+
 				/*
 				 * add it to the selection panel
 				 */
 				selPanel.add(otrPanel);
-				
+
 				/*
 				 * a label for the size spinner
 				 */
 				JLabel sizeLabel = new JLabel("Size:");
-				
+
 				/*
 				 * left-align it.
 				 */
 				sizeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-				
+
 				/*
 				 * add it to the panel
 				 */
 				otrPanel.add(sizeLabel);
-				
+
 				/*
 				 * create a spinner model - from 8 to 18 by 1's, starting at the
 				 * current size.
 				 */
 				SpinnerModel sizeSpinModel = new SpinnerNumberModel(oldFont
 						.getSize(), 8, 18, 1);
-				
+
 				/*
 				 * the spinner (final because it's accessed in a nested class
 				 */
 				final JSpinner sizeSpin = new JSpinner(sizeSpinModel);
-				
+
 				/*
 				 * add a listener for changes
 				 */
@@ -1702,7 +1703,7 @@ public class TriPeaks extends JFrame {
 						 */
 						SpinnerNumberModel model = (SpinnerNumberModel) sizeSpin
 								.getModel();
-						
+
 						/*
 						 * get the font, bold, and italic status from the
 						 * preview
@@ -1711,51 +1712,51 @@ public class TriPeaks extends JFrame {
 						int bold = (preview.getFont().isBold()) ? Font.BOLD : 0;
 						int ital = (preview.getFont().isItalic()) ? Font.ITALIC
 								: 0;
-						
+
 						/*
 						 * get the new size from the spinner model
 						 */
 						int size = model.getNumber().intValue();
-						
+
 						/*
 						 * set the font on the preview
 						 */
 						preview.setFont(new Font(fontName, bold | ital, size));
 					}
 				});
-				
+
 				/*
 				 * get the text field part of the spinner
 				 */
 				JFormattedTextField textField = ((JSpinner.DefaultEditor) sizeSpin
 						.getEditor()).getTextField();
-				
+
 				/*
 				 * 4 columns is more that adequate
 				 */
 				textField.setColumns(4);
-				
+
 				/*
 				 * left-align the number
 				 */
 				textField.setHorizontalAlignment(JTextField.LEFT);
-				
+
 				/*
 				 * left-align the spinner
 				 */
 				sizeSpin.setAlignmentX(Component.LEFT_ALIGNMENT);
-				
+
 				/*
 				 * add it to the panel
 				 */
 				otrPanel.add(sizeSpin);
-				
+
 				/*
 				 * a checkbox for the bold status, with the old status as the
 				 * default
 				 */
 				JCheckBox boldCheck = new JCheckBox("Bold", oldFont.isBold());
-				
+
 				/*
 				 * add a listener
 				 */
@@ -1769,7 +1770,7 @@ public class TriPeaks extends JFrame {
 						 * get the stuff from the preview panel (except bold)
 						 */
 						String fontName = preview.getFont().getFamily();
-						
+
 						/*
 						 * set it to bold if the checkbox was checked
 						 */
@@ -1778,30 +1779,30 @@ public class TriPeaks extends JFrame {
 						int ital = (preview.getFont().isItalic()) ? Font.ITALIC
 								: 0;
 						int size = preview.getFont().getSize();
-						
+
 						/*
 						 * set the new font
 						 */
 						preview.setFont(new Font(fontName, bold | ital, size));
 					}
 				});
-				
+
 				/*
 				 * left-align the checkbox
 				 */
 				boldCheck.setAlignmentX(Component.LEFT_ALIGNMENT);
-				
+
 				/*
 				 * add it to the panel
 				 */
 				otrPanel.add(boldCheck);
-				
+
 				/*
 				 * a checkbox for the italic status - same as above
 				 */
 				JCheckBox italCheck = new JCheckBox("Italic", oldFont
 						.isItalic());
-				
+
 				italCheck.addItemListener(new ItemListener() {
 
 					/*
@@ -1816,15 +1817,15 @@ public class TriPeaks extends JFrame {
 						preview.setFont(new Font(fontName, bold | ital, size));
 					}
 				});
-				
+
 				italCheck.setAlignmentX(Component.LEFT_ALIGNMENT);
 				otrPanel.add(italCheck);
-				
+
 				/*
 				 * a button to select the text color
 				 */
 				final JButton colorBut = new JButton("Font Color");
-				
+
 				/*
 				 * add an action listener
 				 */
@@ -1841,7 +1842,7 @@ public class TriPeaks extends JFrame {
 						Color newColor = JColorChooser.showDialog(
 								TriPeaks.this, "Choose Font Color",
 								preview.getForeground());
-						
+
 						/*
 						 * if the user didn't click 'Cancel'
 						 */
@@ -1850,7 +1851,7 @@ public class TriPeaks extends JFrame {
 							 * set the text color on the button
 							 */
 							colorBut.setForeground(newColor);
-							
+
 							/*
 							 * and on the preview label
 							 */
@@ -1858,71 +1859,71 @@ public class TriPeaks extends JFrame {
 						}
 					}
 				});
-				
+
 				/*
 				 * set the default text color
 				 */
 				colorBut.setForeground(oldColor);
-				
+
 				/*
 				 * set the background color of the button
 				 */
 				colorBut.setBackground(board.getBackColor());
-				
+
 				/*
 				 * left-align the button
 				 */
 				colorBut.setAlignmentX(Component.LEFT_ALIGNMENT);
-				
+
 				/*
 				 * add it to the panel
 				 */
 				otrPanel.add(colorBut);
-				
+
 				/*
 				 * a panel for the preview label (so the label's background
 				 * color works properly)
 				 */
 				JPanel previewPanel = new JPanel();
-				
+
 				/*
 				 * align stuff on the y-axis
 				 */
 				previewPanel.setLayout(new BoxLayout(previewPanel,
 						BoxLayout.PAGE_AXIS));
-				
+
 				/*
 				 * add the label to it
 				 */
 				previewPanel.add(preview);
-				
+
 				/*
 				 * give it an etched, titled border.
 				 */
 				previewPanel.setBorder(BorderFactory.createTitledBorder(
 						BorderFactory.createEtchedBorder(), "Preview"));
-				
+
 				/*
 				 * add it to the main panel
 				 */
 				contentPanel.add(previewPanel);
-				
+
 				/*
 				 * a panel to hold the buttons
 				 */
 				JPanel buttonPanel = new JPanel(new FlowLayout());
-				
+
 				/*
 				 * OK button
 				 */
 				JButton closeButton = new JButton("OK");
-				
+
 				/*
 				 * tool-tip text
 				 */
 				closeButton.getAccessibleContext().setAccessibleDescription(
 						"Apply the font and close");
-				
+
 				closeButton.addActionListener(new ActionListener() {
 
 					/*
@@ -1933,45 +1934,45 @@ public class TriPeaks extends JFrame {
 						 * set the font color
 						 */
 						board.setFontColor(preview.getForeground());
-						
+
 						/*
 						 * set the font
 						 */
 						board.setTextFont(preview.getFont());
-						
+
 						/*
 						 * repaint the board
 						 */
 						board.repaint();
-						
+
 						/*
 						 * hide the dialog
 						 */
 						fontDialog.setVisible(false);
-						
+
 						/*
 						 * dispose of it
 						 */
 						fontDialog.dispose();
 					}
 				});
-				
+
 				/*
 				 * add it to the panel
 				 */
 				buttonPanel.add(closeButton);
-				
+
 				/*
 				 * revert button
 				 */
 				JButton revertButton = new JButton("Cancel");
-				
+
 				/*
 				 * tool-tip
 				 */
 				revertButton.getAccessibleContext().setAccessibleDescription(
 						"Revert to the previously used font");
-				
+
 				revertButton.addActionListener(new ActionListener() {
 
 					/*
@@ -1980,40 +1981,40 @@ public class TriPeaks extends JFrame {
 					public void actionPerformed(ActionEvent evt) {
 						board.setFontColor(oldColor);
 						board.setTextFont(oldFont);
-						
+
 						/*
 						 * repaint the board
 						 */
 						board.repaint();
-						
+
 						/*
 						 * hide the dialog
 						 */
 						fontDialog.setVisible(false);
-						
+
 						/*
 						 * dispose of it
 						 */
 						fontDialog.dispose();
 					}
 				});
-				
+
 				/*
 				 * add it to the panel
 				 */
 				buttonPanel.add(revertButton);
-				
+
 				/*
 				 * apply changes button
 				 */
 				JButton applyButton = new JButton("Apply");
-				
+
 				/*
 				 * tool-up
 				 */
 				applyButton.getAccessibleContext().setAccessibleDescription(
 						"Apply the new Font");
-				
+
 				applyButton.addActionListener(new ActionListener() {
 
 					/*
@@ -2025,52 +2026,52 @@ public class TriPeaks extends JFrame {
 						 */
 						board.setFontColor(preview.getForeground());
 						board.setTextFont(preview.getFont());
-						
+
 						/*
 						 * repaint the board
 						 */
 						board.repaint();
 					}
 				});
-				
+
 				/*
 				 * add it to the panel
 				 */
 				buttonPanel.add(applyButton);
-				
+
 				/*
 				 * add the button panel to the main panel
 				 */
 				contentPanel.add(buttonPanel);
-				
+
 				/*
 				 * set the main panel for the dialog
 				 */
 				fontDialog.setContentPane(contentPanel);
-				
+
 				/*
 				 * pack the dialog
 				 */
 				fontDialog.pack();
 				fontDialog.setResizable(false);
-				
+
 				/*
 				 * center it relative to the frame
 				 */
 				fontDialog.setLocationRelativeTo(TriPeaks.this);
-				
+
 				/*
 				 * show it.
 				 */
 				fontDialog.setVisible(true);
 			}
 		});
-		
+
 		/*
 		 * add the item to the menu.
 		 */
 		optionMenu.add(fontSelect);
-		
+
 		/*
 		 * a checkbox to show/hide stats (show by default)
 		 */
@@ -2079,7 +2080,7 @@ public class TriPeaks extends JFrame {
 				ActionEvent.ALT_MASK));
 		statsCheck.getAccessibleContext().setAccessibleDescription(
 				"Show / Hide stats");
-		
+
 		/*
 		 * add an Item-event listener - changes to the item
 		 */
@@ -2112,23 +2113,23 @@ public class TriPeaks extends JFrame {
 				pack();
 			}
 		});
-		
+
 		/*
 		 * add it to the menu
 		 */
 		optionMenu.add(statsCheck);
-		
+
 		/*
 		 * Resets settings to their defaults
 		 */
 		JMenuItem resetDefs = new JMenuItem("Reset Defaults");
-		
+
 		/*
 		 * set the tooltip text
 		 */
 		resetDefs.getAccessibleContext().setAccessibleDescription(
 				"Reset the settings to their default values");
-		
+
 		/*
 		 * add action listener
 		 */
@@ -2145,7 +2146,7 @@ public class TriPeaks extends JFrame {
 						"Are you sure you want to reset ALL settings?",
 						"Confirm Reset", JOptionPane.YES_NO_OPTION,
 						JOptionPane.WARNING_MESSAGE);
-				
+
 				/*
 				 * if the user chose 'yes'
 				 */
@@ -2165,17 +2166,17 @@ public class TriPeaks extends JFrame {
 				}
 			}
 		});
-		
+
 		/*
 		 * add it to the menu
 		 */
 		optionMenu.add(resetDefs);
-		
+
 		/*
 		 * a menu with cheats
 		 */
 		JMenu cheatMenu = new JMenu("Cheats");
-		
+
 		/*
 		 * add a menu listener to it
 		 */
@@ -2196,7 +2197,7 @@ public class TriPeaks extends JFrame {
 									"Cheat Warning!",
 									JOptionPane.WARNING_MESSAGE);
 				}
-				
+
 				seenWarn = true;
 			}
 
@@ -2212,18 +2213,18 @@ public class TriPeaks extends JFrame {
 			public void menuCanceled(MenuEvent e) {
 			}
 		});
-		
+
 		/*
 		 * add it to the menu bar
 		 */
 		menuBar.add(cheatMenu);
-		
+
 		/*
 		 * cheat 1 - all cards appear face-up (doesn't actually make them
 		 * face-up)
 		 */
 		cheatItems[0] = new JCheckBoxMenuItem("Cards face up");
-		
+
 		/*
 		 * add item listener
 		 */
@@ -2238,14 +2239,13 @@ public class TriPeaks extends JFrame {
 				 */
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					board.setCheat(Cheat.CARDS_FACE_UP, true);
-				}
-				else {
+				} else {
 					/*
 					 * if it was unchecked, disable the cheat
 					 */
 					board.setCheat(Cheat.CARDS_FACE_UP, false);
 				}
-				
+
 				/*
 				 * repaint the board
 				 */
@@ -2256,12 +2256,12 @@ public class TriPeaks extends JFrame {
 				setTitle("TriPeaks - Cheat Mode");
 			}
 		});
-		
+
 		/*
 		 * same thing for the rest of the cheats
 		 */
 		cheatMenu.add(cheatItems[0]);
-		
+
 		/*
 		 * cheat 2 - click any card that's face-up (regardless of value)
 		 */
@@ -2281,7 +2281,7 @@ public class TriPeaks extends JFrame {
 			}
 		});
 		cheatMenu.add(cheatItems[1]);
-		
+
 		/*
 		 * cheat 3 - no penalty (score can never go down)
 		 */
@@ -2301,33 +2301,33 @@ public class TriPeaks extends JFrame {
 			}
 		});
 		cheatMenu.add(cheatItems[2]);
-		
+
 		/*
 		 * The next menu will be on the right
 		 */
 		menuBar.add(Box.createHorizontalGlue());
-		
+
 		/*
 		 * Help menu
 		 */
 		JMenu helpMenu = new JMenu("Help");
-		
+
 		/*
 		 * Accessed with Alt+H
 		 */
 		helpMenu.setMnemonic(KeyEvent.VK_H);
-		
+
 		/*
 		 * tool-tip text
 		 */
 		helpMenu.getAccessibleContext().setAccessibleDescription(
 				"Game Help and Information");
-		
+
 		/*
 		 * add it to the menu bar
 		 */
 		menuBar.add(helpMenu);
-		
+
 		/*
 		 * basic explanation of gameplay
 		 */
@@ -2349,27 +2349,27 @@ public class TriPeaks extends JFrame {
 						"How to Play");
 				Font titleFont = new Font("SansSerif", Font.BOLD, 16);
 				Font textFont = new Font("Serif", Font.PLAIN, 14);
-				
+
 				/*
 				 * the title text
 				 */
 				JLabel titleHelp = new JLabel("How to Play");
-				
+
 				/*
 				 * make it big and bold
 				 */
 				titleHelp.setFont(titleFont);
-				
+
 				/*
 				 * make it centered
 				 */
 				titleHelp.setHorizontalAlignment(JLabel.CENTER);
-				
+
 				/*
 				 * create the area for the text
 				 */
 				JTextArea textHelp = new JTextArea();
-				
+
 				/*
 				 * set area
 				 */
@@ -2389,27 +2389,27 @@ public class TriPeaks extends JFrame {
 						+ " every card on the board. There is no penalty for "
 						+ "redealing if your deck is empty or if you've cleared"
 						+ " the board.");
-				
+
 				/*
 				 * the user can't change the help text
 				 */
 				textHelp.setEditable(false);
-				
+
 				/*
 				 * set the font for the text
 				 */
 				textHelp.setFont(textFont);
-				
+
 				/*
 				 * the text will wrap at the edges
 				 */
 				textHelp.setLineWrap(true);
-				
+
 				/*
 				 * the text will only wrap whole words
 				 */
 				textHelp.setWrapStyleWord(true);
-				
+
 				/*
 				 * used to add scrollbars to the text area
 				 */
@@ -2417,22 +2417,22 @@ public class TriPeaks extends JFrame {
 
 				helpScroll
 						.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-				
+
 				/*
 				 * create a panel to hold the scroll pane and title
 				 */
 				JPanel helpPanel = new JPanel(new BorderLayout(3, 3));
-				
+
 				/*
 				 * add the title to the top
 				 */
 				helpPanel.add(titleHelp, BorderLayout.PAGE_START);
-				
+
 				/*
 				 * add the scroll pane to the center
 				 */
 				helpPanel.add(helpScroll, BorderLayout.CENTER);
-				
+
 				/*
 				 * same thing for the srategy and cheat text
 				 */
@@ -2498,7 +2498,7 @@ public class TriPeaks extends JFrame {
 				helpTabs.addTab("How To Play", getImageIcon("Images"
 						+ File.separator + "help.png"), helpPanel,
 						"How to Play");
-				
+
 				/*
 				 * Alt+P
 				 */
@@ -2506,7 +2506,7 @@ public class TriPeaks extends JFrame {
 				helpTabs.addTab("Strategies", getImageIcon("Images"
 						+ File.separator + "Strategy.png"), stratPanel,
 						"Game Strategies");
-				
+
 				/*
 				 * Alt+S
 				 */
@@ -2514,7 +2514,7 @@ public class TriPeaks extends JFrame {
 				helpTabs.addTab("Cheats", getImageIcon("Images"
 						+ File.separator + "cheat.png"), cheatPanel,
 						"Game Cheats");
-				
+
 				/*
 				 * Alt+C
 				 */
@@ -2538,85 +2538,85 @@ public class TriPeaks extends JFrame {
 						 * hide the dialog
 						 */
 						helpDialog.setVisible(false);
-						
+
 						/*
 						 * dispose of the resources for the dialog
 						 */
 						helpDialog.dispose();
 					}
 				});
-				
+
 				/*
 				 * a panel for the button
 				 */
 				JPanel closePanel = new JPanel();
-				
+
 				/*
 				 * Align stuff on the X-Axis
 				 */
 				closePanel.setLayout(new BoxLayout(closePanel,
 						BoxLayout.LINE_AXIS));
-				
+
 				/*
 				 * right-align the button
 				 */
 				closePanel.add(Box.createHorizontalGlue());
-				
+
 				/*
 				 * add the button to the panel
 				 */
 				closePanel.add(closeButton);
 				closePanel.setBorder(BorderFactory
 						.createEmptyBorder(0, 0, 5, 5));
-				
+
 				/*
 				 * create a panel to be the content panel, with a 5-pixel gap
 				 * between elements
 				 */
 				JPanel contentPanel = new JPanel(new BorderLayout(5, 5));
-				
+
 				/*
 				 * add the tabbed pane to the center
 				 */
 				contentPanel.add(helpTabs, BorderLayout.CENTER);
-				
+
 				/*
 				 * add the panel with the close-button to the bottom
 				 */
 				contentPanel.add(closePanel, BorderLayout.PAGE_END);
-				
+
 				/*
 				 * set the panel as the content pane
 				 */
 				helpDialog.setContentPane(contentPanel);
-				
+
 				/*
 				 * make the dialog 400 x 400 pixels
 				 */
 				helpDialog.setSize(new Dimension(400, 400));
-				
+
 				/*
 				 * make it relative to the frame (in the center of the frame)
 				 */
 				helpDialog.setLocationRelativeTo(TriPeaks.this);
-				
+
 				/*
 				 * show the dialog
 				 */
 				helpDialog.setVisible(true);
 			}
 		});
-		
+
 		/*
 		 * add the item to the menu
 		 */
 		helpMenu.add(gameHelp);
-		
+
 		/*
 		 * add a separator to the menu
 		 */
 		helpMenu.addSeparator();
-		
+
 		/*
 		 * about the program/creator
 		 */
@@ -2624,7 +2624,7 @@ public class TriPeaks extends JFrame {
 		about.setMnemonic(KeyEvent.VK_A);
 		about.getAccessibleContext().setAccessibleDescription(
 				"About the creator and program");
-		
+
 		/*
 		 * add an action listener
 		 */
@@ -2644,12 +2644,12 @@ public class TriPeaks extends JFrame {
 										+ "decoder."); // credits...
 			}
 		});
-		
+
 		/*
 		 * add the item to the menu
 		 */
 		helpMenu.add(about);
-		
+
 		/*
 		 * return the finished menu bar
 		 */
@@ -2816,7 +2816,7 @@ public class TriPeaks extends JFrame {
 				 */
 				InputStream is = TriPeaks.class
 						.getResourceAsStream(SETTINGS_FILE_NAME);
-				
+
 				/*
 				 * placeholder for the line
 				 */
@@ -2827,7 +2827,7 @@ public class TriPeaks extends JFrame {
 					if (is == null) {
 						throw new Exception("First Time Running");
 					}
-					
+
 					/*
 					 * create a buffered reader for the file
 					 */
@@ -3014,14 +3014,14 @@ public class TriPeaks extends JFrame {
 	 * @return
 	 */
 	public static String capitalize(final String in) {
-		if (in.length() == 0){
+		if (in.length() == 0) {
 			return "";
 		}
-		
+
 		if (in.length() == 1) {
 			return in.toUpperCase();
 		}
-		
+
 		return Character.toUpperCase(in.charAt(0)) + in.substring(1);
 	}
 
@@ -3035,28 +3035,28 @@ public class TriPeaks extends JFrame {
 		 * create the frame
 		 */
 		TriPeaks frame = new TriPeaks("TriPeaks");
-		
+
 		/*
 		 * don't do anything when user presses the X - custom close handling
 		 */
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+
 		/*
 		 * create the GUI
 		 */
 		frame.createGUI();
-		
+
 		/*
 		 * give everything enough room
 		 */
 		frame.pack();
 		frame.setIconImage(getIcon("Images" + File.separator + "TriPeaks.png"));
-		
+
 		/*
 		 * can't resize the window
 		 */
 		frame.setResizable(false);
-		
+
 		/*
 		 * show it.
 		 */
@@ -3070,10 +3070,10 @@ public class TriPeaks extends JFrame {
 		/*
 		 * if the stats panel isn't shown, don't do anything
 		 */
-		if (statsPanel.isVisible() == false){
+		if (statsPanel.isVisible() == false) {
 			return;
 		}
-		
+
 		/*
 		 * get the stats, which are stored in the board
 		 */
@@ -3092,13 +3092,13 @@ public class TriPeaks extends JFrame {
 		 */
 		maxMin.setText("Most - Won:  " + intFmt.format(stats[6]) + ", Lost:  "
 				+ intFmt.format(stats[7]));
-		
+
 		/*
 		 * current streak
 		 */
 		curStr.setText("Current Streak:  " + stats[3] + " = "
 				+ intFmt.format((stats[3] * (stats[3] + 1) / 2)));
-		
+
 		/*
 		 * what was won/lost during the session (start program = new session)
 		 */
@@ -3112,7 +3112,7 @@ public class TriPeaks extends JFrame {
 			 * calulate the average
 			 */
 			double avg = ((double) stats[2]) / ((double) stats[5]);
-			
+
 			/*
 			 * round the average
 			 */
@@ -3123,17 +3123,17 @@ public class TriPeaks extends JFrame {
 			 */
 			sesAvg.setText("Session Average:  $0.00");
 		}
-		
+
 		/*
 		 * how many games were played during the session
 		 */
 		sesGame.setText("Session Games:  " + stats[5]);
-		
+
 		/*
 		 * how many games the player played altogether
 		 */
 		plrGame.setText("Player Games:  " + stats[4]);
-		
+
 		/*
 		 * if the player has played any games
 		 */
@@ -3152,7 +3152,7 @@ public class TriPeaks extends JFrame {
 			 */
 			plrAvg.setText("Player Average:  $0.00");
 		}
-		
+
 		/*
 		 * longest streak ever by the player
 		 */
@@ -3204,7 +3204,7 @@ public class TriPeaks extends JFrame {
 				 * set both values as the given number's square root
 				 */
 				dim[0] = dim[1] = q;
-				
+
 				/*
 				 * return the dimensions
 				 */
@@ -3220,7 +3220,7 @@ public class TriPeaks extends JFrame {
 			 * a placeholder
 			 */
 			int w;
-			
+
 			/*
 			 * go from 1 to 2 more than the current number
 			 */
@@ -3233,12 +3233,12 @@ public class TriPeaks extends JFrame {
 					 * set the first value
 					 */
 					dim[0] = q;
-					
+
 					/*
 					 * and the second
 					 */
 					dim[1] = w;
-					
+
 					/*
 					 * return the dimensions
 					 */
@@ -3254,18 +3254,18 @@ public class TriPeaks extends JFrame {
 				 * set the first value
 				 */
 				dim[0] = q + 1;
-				
+
 				/*
 				 * set the second value
 				 */
 				dim[1] = q + 2;
-				
+
 				/*
 				 * return the dimensions
 				 */
 				return dim;
 			}
-			
+
 			/*
 			 * go to the 4 more than the current number (no initialization
 			 * statement - go from the previous for left off)
@@ -3279,12 +3279,12 @@ public class TriPeaks extends JFrame {
 					 * set the first value
 					 */
 					dim[0] = q;
-					
+
 					/*
 					 * and the second
 					 */
 					dim[1] = w;
-					
+
 					/*
 					 * return the dimensions
 					 */
@@ -3292,7 +3292,7 @@ public class TriPeaks extends JFrame {
 				}
 			}
 		}
-		
+
 		/*
 		 * if something BAD happened, return 0 x 0
 		 */
@@ -3310,17 +3310,17 @@ public class TriPeaks extends JFrame {
 		 * only lowercase characters are wanted
 		 */
 		String low = in.toLowerCase();
-		
+
 		/*
 		 * a buffer for the output string
 		 */
 		StringBuffer out = new StringBuffer();
-		
+
 		/*
 		 * two index holders
 		 */
 		int index, newIndex;
-		
+
 		/*
 		 * go through the letters in the input string
 		 */
@@ -3329,25 +3329,25 @@ public class TriPeaks extends JFrame {
 			 * find the current character's index in the alphabet string
 			 */
 			index = LETTERS.indexOf(low.charAt(q));
-			
+
 			/*
 			 * if the letter wasn't found, skip it
 			 */
 			if (index == -1) {
 				continue;
 			}
-			
+
 			/*
 			 * do the rotation by 13
 			 */
 			newIndex = (index + LETTERS.length() / 2) % LETTERS.length();
-			
+
 			/*
 			 * append the ciphered characted
 			 */
 			out.append(LETTERS.charAt(newIndex));
 		}
-		
+
 		/*
 		 * return the ciphered string
 		 */
@@ -3365,7 +3365,7 @@ public class TriPeaks extends JFrame {
 		 * buffer for output
 		 */
 		StringBuffer out = new StringBuffer(in);
-		
+
 		/*
 		 * return the reversed string
 		 */
@@ -3382,44 +3382,44 @@ public class TriPeaks extends JFrame {
 		 * the filename is the ROT13 cipher of their name
 		 */
 		String fileName = rot13(uName);
-		
+
 		/*
 		 * get
 		 */
 		File file = new File(dirName + File.separator + fileName + ".txt");
-		
+
 		/*
 		 * if the file is null, don't do anything the file
 		 */
 		if (file.canRead() == false) {
 			throw new NewPlayerException("New Player: " + uName);
 		}
-		
+
 		/*
 		 * placeholder for the line
 		 */
 		String line = null;
-		
+
 		/*
 		 * the array for the stats
 		 */
 		int[] stats = new int[CardPanel.NSTATS];
-		
+
 		/*
 		 * cheats array for the cheat menu items
 		 */
 		boolean[] cheats = new boolean[CardPanel.NCHEATS];
-		
+
 		/*
 		 * the cheat status
 		 */
 		boolean hasCheated = false;
-		
+
 		/*
 		 * line number (incremented before setting value)
 		 */
 		int lNum = -1;
-		
+
 		/*
 		 * set up the encryptor to decrypt the lines (the passphrase is the
 		 * filename backwards)
@@ -3470,20 +3470,20 @@ public class TriPeaks extends JFrame {
 					 * two commas
 					 */
 					int cm1, cm2;
-					
+
 					/*
 					 * get the indexes of the two commas
 					 */
 					cm1 = deced.indexOf(',');
 					cm2 = deced.lastIndexOf(',');
-					
+
 					/*
 					 * if either comma isn't found, exit
 					 */
 					if ((cm1 == -1) || (cm2 == -1) || (cm1 == cm2)) {
 						continue;
 					}
-					
+
 					/*
 					 * convert to integer and set the color
 					 */
@@ -3531,22 +3531,22 @@ public class TriPeaks extends JFrame {
 					}
 				}
 			}
-			
+
 			/*
 			 * set the stats in the board
 			 */
 			board.setStats(stats);
-			
+
 			/*
 			 * set the cheat status
 			 */
 			board.setCheated(hasCheated);
-			
+
 			/*
 			 * set the title based on the cheat status
 			 */
 			setTitle(hasCheated ? "TriPeaks - Cheat Mode" : "TriPeaks");
-			
+
 			/*
 			 * go through the cheats
 			 */
@@ -3561,7 +3561,7 @@ public class TriPeaks extends JFrame {
 			 * update the labels
 			 */
 			updateStats();
-			
+
 			/*
 			 * repaint the board
 			 */
@@ -3597,19 +3597,19 @@ public class TriPeaks extends JFrame {
 		 * filename is the ROT13 cipher of the username
 		 */
 		String fileName = rot13(uName);
-		
+
 		/*
 		 * create
 		 */
 		File setFile = new File(dirName + File.separator + fileName + ".txt");
-		
+
 		/*
 		 * if the file doesn't exist, don't do anything the file
 		 */
 		if (setFile.canWrite() == false) {
 			return;
 		}
-		
+
 		/*
 		 * set up the encryptor to encrpyt the lines
 		 */

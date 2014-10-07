@@ -21,28 +21,29 @@
 package eu.veldsoft.tri.peaks;
 
 /**
+ * Possible cheats enumeration. 
  * 
  * @author Todor Balabanov
  */
 enum Cheat {
 
 	/**
-	 * 
+	 * All cards face up cheat.
 	 */
 	CARDS_FACE_UP(0),
 
 	/**
-	 * 
+	 * Any card collection cheat.
 	 */
 	CLICK_ANY_CARD(1),
 
 	/**
-	 * 
+	 * No penalty cheat constant.
 	 */
 	NO_PENALTY(2);
 
 	/**
-	 * 
+	 * Each constant has numeric representation.
 	 */
 	private int index;
 
@@ -55,8 +56,9 @@ enum Cheat {
 	}
 
 	/**
+	 * Constant numerical representation getter. 
 	 * 
-	 * @return
+	 * @return Numerical value of the constant.
 	 * 
 	 * @author Todor Balabanov
 	 */
