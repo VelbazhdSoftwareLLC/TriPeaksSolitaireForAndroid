@@ -3403,7 +3403,7 @@ public class TriPeaks extends JFrame {
 		/*
 		 * the array for the stats
 		 */
-		int[] stats = new int[CardPanel.NSTATS];
+		int[] stats = new int[CardPanel.NUMBR_OF_STATS];
 
 		/*
 		 * cheats array for the cheat menu items

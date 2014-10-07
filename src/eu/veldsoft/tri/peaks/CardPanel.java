@@ -55,7 +55,7 @@ class CardPanel extends JPanel implements MouseListener {
 	/**
 	 * 
 	 */
-	public static final int NSTATS = 5;
+	public static final int NUMBR_OF_STATS = 5;
 
 	/**
 	 * 

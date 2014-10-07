@@ -211,7 +211,7 @@ class HighScoreModel extends AbstractTableModel {
 			BufferedReader in = null;
 			try {
 				in = new BufferedReader(new FileReader(scoreFiles[q]));
-				for (int w = 0; w < CardPanel.NSTATS; w++) {
+				for (int w = 0; w < CardPanel.NUMBR_OF_STATS; w++) {
 					if ((line = in.readLine()) == null)
 						break;
 					deced = dec.decrypt(line);
