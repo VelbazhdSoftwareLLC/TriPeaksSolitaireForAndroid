@@ -53,6 +53,8 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
+		((ImageView) findViewById(R.id.imageView2))
+				.setOnClickListener(cardClickListener);
 		((ImageView) findViewById(R.id.imageView3))
 				.setOnClickListener(cardClickListener);
 		((ImageView) findViewById(R.id.imageView4))
@@ -111,7 +113,5 @@ public class GameActivity extends Activity {
 				.setOnClickListener(cardClickListener);
 		((ImageView) findViewById(R.id.imageView31))
 				.setOnClickListener(cardClickListener);
-		((ImageView) findViewById(R.id.imageView32))
-		.setOnClickListener(cardClickListener);
 	}
 }

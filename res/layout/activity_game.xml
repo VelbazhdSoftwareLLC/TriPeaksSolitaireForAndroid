@@ -25,8 +25,8 @@
         android:layout_marginLeft="5dp"
         android:text="Cards Remaining:" />
        	
-       	<TextView
-        android:id="@+id/textView33"
+	<TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -35,8 +35,8 @@
         android:layout_marginLeft="5dp"
         android:text="Game Winings:" />
        	
-       	<TextView
-        android:id="@+id/textView34"
+	<TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -45,18 +45,18 @@
         android:layout_marginLeft="5dp"
         android:text="Most - Won:" />
        	       	
-       	<TextView
-        android:id="@+id/textView35"
+	<TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="105dp"
-        android:text="Lost" />
+        android:text="Lost:" />
        	
-       	<TextView
-        android:id="@+id/textView36"
+	<TextView
+        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -65,8 +65,8 @@
         android:layout_marginLeft="5dp"
         android:text="Current Streak:" />
        	
-       	<TextView
-        android:id="@+id/textView37"
+	<TextView
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -75,28 +75,28 @@
         android:layout_marginLeft="200dp"
         android:text="Session Winings:" />
        	       	
-       	<TextView
-        android:id="@+id/textView38"
+	<TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="200dp"
-        android:text="Session Average" />
+        android:text="Session Average:" />
        	
-       	<TextView
-        android:id="@+id/textView39"
+	<TextView
+        android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="200dp"
-        android:text="Session Games" />
+        android:text="Session Games:" />
        	
-       	<TextView
-        android:id="@+id/textView40"
+	<TextView
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -105,28 +105,40 @@
         android:layout_marginLeft="395dp"
         android:text="Player Games:" />
        	       	
-       	<TextView
-        android:id="@+id/textView41"
+	<TextView
+        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="395dp"
-        android:text="Player Average" />
+        android:text="Player Average:" />
        	
-       	<TextView
-        android:id="@+id/textView42"
+	<TextView
+        android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="395dp"
-        android:text="Longest Streak" />
+        android:text="Longest Streak:" />
        	
+	<ImageView
+        android:id="@+id/imageView100"
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="14dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/nescafe" />
+       	       	    
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView2"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -138,7 +150,7 @@
         android:src="@drawable/clubs1" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageView3"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -148,20 +160,9 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/clubs2" />
-
-    <ImageView
-        android:layout_width="345dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/nescafe" />
     
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView4"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -172,8 +173,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs3" />
     
-        <ImageView
-        android:id="@+id/imageView6"
+	<ImageView
+        android:id="@+id/imageView5"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -184,8 +185,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs4" />
     
-        <ImageView
-        android:id="@+id/imageView7"
+	<ImageView
+        android:id="@+id/imageView6"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -196,8 +197,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs5" />
                 
-        <ImageView
-        android:id="@+id/imageView8"
+	<ImageView
+        android:id="@+id/imageView7"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -208,8 +209,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs6" />
                         
-        <ImageView
-        android:id="@+id/imageView9"
+	<ImageView
+        android:id="@+id/imageView8"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -220,8 +221,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs7" />
                                 
-        <ImageView
-        android:id="@+id/imageView10"
+	<ImageView
+        android:id="@+id/imageView9"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -232,8 +233,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs8" />
                                         
-        <ImageView
-        android:id="@+id/imageView11"
+	<ImageView
+        android:id="@+id/imageView10"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -244,8 +245,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs9" />
                                                 
-        <ImageView
-        android:id="@+id/imageView12"
+	<ImageView
+        android:id="@+id/imageView11"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -256,8 +257,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs10" />
                                                         
-        <ImageView
-        android:id="@+id/imageView13"
+	<ImageView
+        android:id="@+id/imageView12"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -268,8 +269,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs11" />
         
-        <ImageView
-        android:id="@+id/imageView14"
+	<ImageView
+        android:id="@+id/imageView13"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -280,8 +281,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs12" />
         
-        <ImageView
-        android:id="@+id/imageView15"
+	<ImageView
+        android:id="@+id/imageView14"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -292,8 +293,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/clubs13" />
         
-        <ImageView
-        android:id="@+id/imageView16"
+	<ImageView
+        android:id="@+id/imageView15"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -304,8 +305,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts1" />
         
-        <ImageView
-        android:id="@+id/imageView17"
+	<ImageView
+        android:id="@+id/imageView16"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -316,8 +317,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts2" />
         
-        <ImageView
-        android:id="@+id/imageView18"
+	<ImageView
+        android:id="@+id/imageView17"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -328,8 +329,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts3" />
         
-        <ImageView
-        android:id="@+id/imageView19"
+	<ImageView
+        android:id="@+id/imageView18"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -340,8 +341,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts4" />
         
-        <ImageView
-        android:id="@+id/imageView20"
+	<ImageView
+        android:id="@+id/imageView19"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -351,10 +352,9 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/hearts5" />
-        
-                
-        <ImageView
-        android:id="@+id/imageView21"
+                        
+	<ImageView
+        android:id="@+id/imageView20"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -365,8 +365,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts6" />
         
-        <ImageView
-        android:id="@+id/imageView22"
+	<ImageView
+        android:id="@+id/imageView21"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -377,8 +377,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts7" />
         
-        <ImageView
-        android:id="@+id/imageView23"
+	<ImageView
+        android:id="@+id/imageView22"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -389,8 +389,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts8" />
                
-        <ImageView
-        android:id="@+id/imageView24"
+	<ImageView
+        android:id="@+id/imageView23"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -401,8 +401,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts9" />
         
-        <ImageView
-        android:id="@+id/imageView25"
+	<ImageView
+        android:id="@+id/imageView24"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -413,8 +413,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts10" />
                 
-       	<ImageView
-        android:id="@+id/imageView26"
+	<ImageView
+        android:id="@+id/imageView25"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -425,8 +425,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts11" />
        	
-       	<ImageView
-        android:id="@+id/imageView27"
+	<ImageView
+        android:id="@+id/imageView26"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -437,8 +437,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts12" />
        	
-       	<ImageView
-        android:id="@+id/imageView28"
+	<ImageView
+        android:id="@+id/imageView27"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -449,8 +449,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/hearts13" />
        	
-       	<ImageView
-        android:id="@+id/imageView29"
+	<ImageView
+        android:id="@+id/imageView28"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -461,8 +461,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/spades1" />
        	       	
-       	<ImageView
-        android:id="@+id/imageView30"
+	<ImageView
+        android:id="@+id/imageView29"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -473,8 +473,8 @@
         android:scaleType="fitCenter"
         android:src="@drawable/spades2" />
        	
-       	<ImageView
-        android:id="@+id/imageView31"
+	<ImageView
+        android:id="@+id/imageView30"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -483,10 +483,10 @@
         android:layout_marginTop="130dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/back01" />
+        android:src="@drawable/back02" />
        	
-       	<ImageView
-        android:id="@+id/imageView32"
+	<ImageView
+        android:id="@+id/imageView31"
         android:layout_width="45dp"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
