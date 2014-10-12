@@ -209,6 +209,14 @@ class Card {
 	 * 
 	 * @return
 	 */
+	public boolean isFacingUp() {
+		return !isFaceDown;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
 	public int getX() {
 		return xCoord;
 	}
@@ -227,6 +235,14 @@ class Card {
 	 */
 	public boolean isVisible() {
 		return visible;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isInvisible() {
+		return !visible;
 	}
 
 	/**

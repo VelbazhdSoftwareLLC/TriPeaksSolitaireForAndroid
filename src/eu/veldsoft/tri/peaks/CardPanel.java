@@ -88,63 +88,6 @@ class CardPanel extends JPanel implements MouseListener {
 	private String backStyle = "Default";
 
 	/**
-	 * Deck of cards.
-	 */
-	public Card[] deck = {
-			new Card(Card.Rank.ACE, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.TWO, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.THREE, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.FOUR, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.FIVE, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.SIX, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.SEVEN, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.EIGHT, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.NINE, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.TEN, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.JACK, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.QUEEN, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.KING, Card.Suit.CLUBS, true, false, 0, 0),
-			new Card(Card.Rank.ACE, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.TWO, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.THREE, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.FOUR, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.FIVE, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.SIX, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.SEVEN, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.EIGHT, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.NINE, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.TEN, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.JACK, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.QUEEN, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.KING, Card.Suit.HEARTS, true, false, 0, 0),
-			new Card(Card.Rank.ACE, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.TWO, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.THREE, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.FOUR, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.FIVE, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.SIX, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.SEVEN, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.EIGHT, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.NINE, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.TEN, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.JACK, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.QUEEN, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.KING, Card.Suit.DIAMONDS, true, false, 0, 0),
-			new Card(Card.Rank.ACE, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.TWO, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.THREE, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.FOUR, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.FIVE, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.SIX, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.SEVEN, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.EIGHT, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.NINE, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.TEN, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.JACK, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, false, 0, 0),
-			new Card(Card.Rank.KING, Card.Suit.SPADES, true, false, 0, 0) };
-
-	/**
 	 * 
 	 */
 	private EnumSet<Cheat> cheats = EnumSet.noneOf(Cheat.class);
@@ -225,20 +168,6 @@ class CardPanel extends JPanel implements MouseListener {
 	private String status = "";
 
 	/**
-	 * Deck suffling.
-	 * 
-	 * @author Todor Balabanov
-	 */
-	private void shuffle() {
-		for (int last = deck.length - 1, r = -1; last > 0; last--) {
-			r = TriPeaks.PRNG.nextInt(last + 1);
-			Card swap = deck[last];
-			deck[last] = deck[r];
-			deck[r] = swap;
-		}
-	}
-
-	/**
 	 * class constructor
 	 */
 	public CardPanel() {
@@ -291,42 +220,36 @@ class CardPanel extends JPanel implements MouseListener {
 		}
 
 		/*
+		 * image to be created
+		 */
+		BufferedImage img = null;
+
+		/*
+		 * URL of the image
+		 */
+		URL imgURL = null;
+
+		/*
 		 * go through each card
 		 */
 		for (int q = 0; q < 52; q++) {
-			/*
-			 * if a card is null (i.e. program was just started, cards not
-			 * initialized yet), skip it
-			 */
-			if (deck[q] == null) {
-				continue;
-			}
+			Card card = Deck.cardAtPosition(q);
 
 			/*
 			 * if a card isn't visible, skip it
 			 */
-			if (!deck[q].isVisible()) {
+			if (card.isInvisible() == true) {
 				continue;
 			}
 
 			/*
-			 * image to be created
-			 */
-			BufferedImage img = null;
-
-			/*
-			 * URL of the image
-			 */
-			URL imgURL = null;
-
-			/*
 			 * if it's face-up
 			 */
-			if (!deck[q].isFacingDown()) {
+			if (card.isFacingUp() == true) {
 				imgURL = TriPeaks.class.getResource("CardSets" + File.separator
 						+ "Fronts" + File.separator + frontFolder
-						+ File.separator + deck[q].getSuit()
-						+ (deck[q].getRank().getValue() + 1) + ".png");
+						+ File.separator + card.getSuit()
+						+ (card.getRank().getValue() + 1) + ".png");
 
 				/*
 				 * get the corresponding front of the card otherwise it's
@@ -350,8 +273,8 @@ class CardPanel extends JPanel implements MouseListener {
 				} else {
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Fronts" + File.separator
-							+ frontFolder + File.separator + deck[q].getSuit()
-							+ (deck[q].getRank().getValue() + 1) + ".png");
+							+ frontFolder + File.separator + card.getSuit()
+							+ (card.getRank().getValue() + 1) + ".png");
 				}
 			}
 
@@ -378,12 +301,12 @@ class CardPanel extends JPanel implements MouseListener {
 			/*
 			 * left edge of the loft
 			 */
-			int startX = deck[q].getX() - ((int) Card.WIDTH / 2);
+			int startX = card.getX() - ((int) Card.WIDTH / 2);
 
 			/*
 			 * top of the card
 			 */
-			int startY = deck[q].getY() - ((int) Card.HEIGHT / 2);
+			int startY = card.getY() - ((int) Card.HEIGHT / 2);
 
 			/*
 			 * right
@@ -479,120 +402,11 @@ class CardPanel extends JPanel implements MouseListener {
 			}
 		}
 
-		shuffle();
-
-		for (Card card : deck) {
-			card.setVisible(true);
-		}
-
-		// TODO Do it in a single master loop.
-		/*
-		 * first row
-		 */
-		for (int q = 0; q < 3; q++) {
-			/*
-			 * set the X-coord
-			 */
-			deck[q].setX(2 * Card.WIDTH + q * 3 * Card.WIDTH);
-
-			/*
-			 * set the Y-coord for the card
-			 */
-			deck[q].setY((int) Card.HEIGHT / 2);
-
-			/*
-			 * make it face-down
-			 */
-			deck[q].flip(true);
-		}
-
-		/*
-		 * second row
-		 */
-		for (int q = 0; q < 6; q++) {
-			/*
-			 * set the coords
-			 */
-			deck[q + 3].setX(3 * ((int) Card.WIDTH / 2) + q * Card.WIDTH
-					+ ((int) q / 2) * Card.WIDTH);
-			deck[q + 3].setY(Card.HEIGHT);
-
-			/*
-			 * face-down
-			 */
-			deck[q + 3].flip(true);
-		}
-
-		/*
-		 * third row
-		 */
-		for (int q = 0; q < 9; q++) {
-			/*
-			 * set the coords
-			 */
-			deck[q + 9].setX(Card.WIDTH + q * Card.WIDTH);
-			deck[q + 9].setY(3 * ((int) Card.HEIGHT / 2));
-
-			/*
-			 * face-down
-			 */
-			deck[q + 9].flip(true);
-		}
-
-		/*
-		 * fourth row
-		 */
-		for (int q = 0; q < 10; q++) {
-			/*
-			 * set the coords
-			 */
-			deck[q + 18].setX(((int) Card.WIDTH / 2) + q * Card.WIDTH);
-			deck[q + 18].setY(2 * Card.HEIGHT);
-
-			/*
-			 * face-up
-			 */
-			deck[q + 18].flip(false);
-		}
-
-		/*
-		 * the deck
-		 */
-		for (int q = 28; q < 51; q++) {
-			/*
-			 * same coords for all of them
-			 */
-			deck[q].setX(7 * ((int) Card.WIDTH / 2));
-			deck[q].setY(13 * ((int) Card.HEIGHT / 4));
-
-			/*
-			 * they're all face-down
-			 */
-			deck[q].flip(true);
-
-			/*
-			 * they're invisible
-			 */
-			deck[q].setVisible(false);
-		}
-		/*
-		 * only the top one is visible (faster repaint)
-		 */
-		deck[50].setVisible(true);
-
-		/*
-		 * discard pile set the coords
-		 */
-		deck[51].setX(13 * ((int) Card.WIDTH / 2));
-		deck[51].setY(13 * ((int) Card.HEIGHT / 4));
-
-		/*
-		 * face-up
-		 */
-		deck[51].flip(false);
+		Deck.shuffle();
+		Deck.setAllVisible();
+		Deck.deal();
 
 		// TODO Add GameState class for all controlling variables.
-
 		/*
 		 * 23 cards left in the deck
 		 */
@@ -653,12 +467,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * resets everything
 	 */
 	public void reset() {
-		/*
-		 * go through every card make all the cards invisible
-		 */
-		for (Card card : deck) {
-			card.setVisible(false);
-		}
+		Deck.setAllInvisible();
 
 		/*
 		 * essentially the same thing as the default values for the fields
@@ -712,17 +521,19 @@ class CardPanel extends JPanel implements MouseListener {
 		 * top. All the skips make execution of the mouse-click faster.
 		 */
 		for (int q = 51; q >= 0; q--) {
+			Card card = Deck.cardAtPosition(q);
+
 			/*
 			 * if the card is invisible, skip it
 			 */
-			if (deck[q].isVisible() == false) {
+			if (card.isVisible() == false) {
 				continue;
 			}
 
 			/*
 			 * if the card isn't part of the deck and is face-down, skip it
 			 */
-			if (((q < 28) || (q == 51)) && deck[q].isFacingDown() == true) {
+			if (((q < 28) || (q == 51)) && card.isFacingDown() == true) {
 				continue;
 			}
 
@@ -736,22 +547,22 @@ class CardPanel extends JPanel implements MouseListener {
 			/*
 			 * left edge of the card
 			 */
-			startX = deck[q].getX() - ((int) Card.WIDTH / 2);
+			startX = card.getX() - ((int) Card.WIDTH / 2);
 
 			/*
 			 * top edge of the card
 			 */
-			startY = deck[q].getY() - ((int) Card.HEIGHT / 2);
+			startY = card.getY() - ((int) Card.HEIGHT / 2);
 
 			/*
 			 * right edge of the card
 			 */
-			endX = deck[q].getX() + ((int) Card.WIDTH / 2);
+			endX = card.getX() + ((int) Card.WIDTH / 2);
 
 			/*
 			 * bottom edge of the card
 			 */
-			endY = deck[q].getY() + ((int) Card.HEIGHT / 2);
+			endY = card.getY() + ((int) Card.HEIGHT / 2);
 
 			/*
 			 * if the mouse was clicked outside the card, skip the rest
@@ -787,8 +598,8 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * no cheat - check card check if the card is adjacent by value
 				 */
-				isAdjacent = deck[q].getRank().isAdjacentTo(
-						deck[discardIndex].getRank());
+				isAdjacent = card.getRank().isAdjacentTo(
+						Deck.cardAtPosition(discardIndex).getRank());
 			}
 
 			/*
@@ -799,17 +610,17 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * put the card in the discard pile
 				 */
-				deck[q].setX(deck[discardIndex].getX());
+				card.setX(Deck.cardAtPosition(discardIndex).getX());
 
 				/*
 				 * set the discard pile's card's coords
 				 */
-				deck[q].setY(deck[discardIndex].getY());
+				card.setY(Deck.cardAtPosition(discardIndex).getY());
 
 				/*
 				 * hide the previously discarded card - makes the repaint faster
 				 */
-				deck[discardIndex].setVisible(false);
+				Deck.cardAtPosition(discardIndex).setVisible(false);
 
 				/*
 				 * the card is now in the discard pile
@@ -912,7 +723,7 @@ class CardPanel extends JPanel implements MouseListener {
 							 * hide the deck (so you can't take cards from the
 							 * deck after you clear the board
 							 */
-							deck[w].setVisible(false);
+							Deck.cardAtPosition(w).setVisible(false);
 						}
 					} else {
 						/*
@@ -954,7 +765,7 @@ class CardPanel extends JPanel implements MouseListener {
 					/*
 					 * check if the left-adjacent card is visible
 					 */
-					if (!deck[q - 1].isVisible()) {
+					if (Deck.cardAtPosition(q - 1).isInvisible() == true) {
 						noLeft = true;
 					}
 				}
@@ -967,7 +778,7 @@ class CardPanel extends JPanel implements MouseListener {
 					/*
 					 * check if the right-adjacent card is visible
 					 */
-					if (!deck[q + 1].isVisible()) {
+					if (Deck.cardAtPosition(q + 1).isInvisible()==true) {
 						noRight = true;
 					}
 				}
@@ -1045,7 +856,7 @@ class CardPanel extends JPanel implements MouseListener {
 				 * right one
 				 */
 				if (noLeft) {
-					deck[q - offset].flip();
+					Deck.cardAtPosition(q - offset).flip();
 				}
 
 				/*
@@ -1053,7 +864,7 @@ class CardPanel extends JPanel implements MouseListener {
 				 * right one
 				 */
 				if (noRight) {
-					deck[q - offset + 1].flip();
+					Deck.cardAtPosition(q - offset + 1).flip();
 				}
 
 				/*
@@ -1064,24 +875,24 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * set the deck's coordinates
 				 */
-				deck[q].setX(deck[discardIndex].getX());
-				deck[q].setY(deck[discardIndex].getY());
+				card.setX(Deck.cardAtPosition(discardIndex).getX());
+				card.setY(Deck.cardAtPosition(discardIndex).getY());
 
 				/*
 				 * hide the previously discarded card (for faster repaint)
 				 */
-				deck[discardIndex].setVisible(false);
+				Deck.cardAtPosition(discardIndex).setVisible(false);
 
 				/*
 				 * flip the deck card
 				 */
-				deck[q].flip();
+				card.flip();
 
 				/*
 				 * show the next deck card if it's not the last deck card
 				 */
 				if (q != 28) {
-					deck[q - 1].setVisible(true);
+					Deck.cardAtPosition(q - 1).setVisible(true);
 				}
 
 				/*

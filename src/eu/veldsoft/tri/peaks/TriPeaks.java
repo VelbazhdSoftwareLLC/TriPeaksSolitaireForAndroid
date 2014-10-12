@@ -119,11 +119,6 @@ public class TriPeaks extends JFrame {
 	/**
 	 * 
 	 */
-	static final Random PRNG = new Random();
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -1101,7 +1096,7 @@ public class TriPeaks extends JFrame {
 					/*
 					 * generate a random value to get the random card
 					 */
-					randCard = PRNG.nextInt(52);
+					randCard = Constants.PRNG.nextInt(52);
 					String suit = null;
 					if (randCard < 13) {
 						suit = Card.Suit.CLUBS.toString();

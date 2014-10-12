@@ -20,6 +20,8 @@
 
 package eu.veldsoft.tri.peaks;
 
+import java.util.Random;
+
 /**
  * General constants class.
  * 
@@ -28,22 +30,27 @@ package eu.veldsoft.tri.peaks;
 class Constants {
 
 	/**
+	 * Pseudo-random number generator.
+	 */
+	static final Random PRNG = new Random();
+
+	/**
 	 * Add 15-point bonus amount.
 	 */
-	public static final int PEAK_BONUS = 15;
+	static final int PEAK_BONUS = 15;
 
 	/**
 	 * Add 15-point bonus when all peaks are removed amount.
 	 */
-	public static final int THREE_PEAKS_BONUS = 15;
+	static final int THREE_PEAKS_BONUS = 15;
 
 	/**
 	 * Subtract 5-point in no penalty amount. 
 	 */
-	public static final int NO_PENALTY_CHEAT = 5;
+	static final int NO_PENALTY_CHEAT = 5;
 
 	/**
 	 * Add 5 penalty for every card which was not removed.
 	 */
-	public static final int CARD_REMOVED_PENALTY = 5;
+	static final int CARD_REMOVED_PENALTY = 5;
 }
