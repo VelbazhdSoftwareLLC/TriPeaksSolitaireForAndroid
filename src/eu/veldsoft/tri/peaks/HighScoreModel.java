@@ -211,13 +211,13 @@ class HighScoreModel extends AbstractTableModel {
 			BufferedReader in = null;
 			try {
 				in = new BufferedReader(new FileReader(scoreFiles[q]));
-				for (int w = 0; w < CardPanel.NUMBR_OF_STATS; w++) {
+				for (int w = 0; w < GameState.NUMBR_OF_STATS; w++) {
 					if ((line = in.readLine()) == null)
 						break;
 					deced = dec.decrypt(line);
 					plrScores.add(new Integer(deced));
 				}
-				for (int w = 0; w < CardPanel.NCHEATS; w++) {
+				for (int w = 0; w < GameState.NUMBER_OF_CHEATS; w++) {
 					if ((line = in.readLine()) == null)
 						break;
 				}

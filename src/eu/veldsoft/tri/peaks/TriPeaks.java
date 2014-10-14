@@ -173,7 +173,7 @@ public class TriPeaks extends JFrame {
 	/**
 	 * 
 	 */
-	private JCheckBoxMenuItem[] cheatItems = new JCheckBoxMenuItem[CardPanel.NCHEATS];
+	private JCheckBoxMenuItem[] cheatItems = new JCheckBoxMenuItem[GameState.NUMBER_OF_CHEATS];
 
 	/**
 	 * 
@@ -3398,12 +3398,12 @@ public class TriPeaks extends JFrame {
 		/*
 		 * the array for the stats
 		 */
-		int[] stats = new int[CardPanel.NUMBR_OF_STATS];
+		int[] stats = new int[GameState.NUMBR_OF_STATS];
 
 		/*
 		 * cheats array for the cheat menu items
 		 */
-		boolean[] cheats = new boolean[CardPanel.NCHEATS];
+		boolean[] cheats = new boolean[GameState.NUMBER_OF_CHEATS];
 
 		/*
 		 * the cheat status

@@ -55,12 +55,7 @@ class CardPanel extends JPanel implements MouseListener {
 	/**
 	 * 
 	 */
-	public static final int NUMBR_OF_STATS = 5;
-
-	/**
-	 * 
-	 */
-	public static final int NCHEATS = 3;
+	private GameState state = new GameState();
 
 	/**
 	 * background color of the board
@@ -86,81 +81,6 @@ class CardPanel extends JPanel implements MouseListener {
 	 * style for the back of the cards
 	 */
 	private String backStyle = "Default";
-
-	/**
-	 * 
-	 */
-	private EnumSet<Cheat> cheats = EnumSet.noneOf(Cheat.class);
-
-	/**
-	 * 
-	 */
-	private boolean hasCheatedYet = false;
-
-	/**
-	 * index of the card in the discard pile
-	 */
-	private int discardIndex = 51;
-
-	/**
-	 * player's overall score
-	 */
-	private int score = 0;
-
-	/**
-	 * current game score
-	 */
-	private int gameScore = 0;
-
-	/**
-	 * session score
-	 */
-	private int sessionScore = 0;
-
-	/**
-	 * streak (number of cards, not the value)
-	 */
-	private int streak = 0;
-
-	/**
-	 * cards remaining in the deck
-	 */
-	private int remainingCards = 0;
-
-	/**
-	 * cards left on the board (not removed into the discard pile)
-	 */
-	private int cardsInPlay = 0;
-
-	/**
-	 * peaks remaining (0 is a clear board)
-	 */
-	private int remainingPeaks = 3;
-
-	/**
-	 * number of player games
-	 */
-	private int numberOfGames = 0;
-
-	/**
-	 * number of session games
-	 */
-	private int numberOfSessionGames = 0;
-
-	/**
-	 * highest score
-	 */
-	private int highScore = 0;
-
-	/**
-	 * lowest score
-	 */
-	private int lowScore = 0;
-
-	/**
-	 * longest streak
-	 */
-	private int highStreak = 0;
 
 	/**
 	 * status text (used later)
@@ -200,7 +120,7 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * draw the background
 		 */
-		if (hasCheatedYet) {
+		if (state.isHasCheatedYet()) {
 			/*
 			 * if the user has ever cheated set the color - white, somewhat
 			 * transparent
@@ -261,7 +181,7 @@ class CardPanel extends JPanel implements MouseListener {
 				 * get the image for the back of the card - if the first cheat
 				 * isn't on
 				 */
-				if (cheats.contains(Cheat.CARDS_FACE_UP) == false) {
+				if (state.getCheats().contains(Cheat.CARDS_FACE_UP) == false) {
 					imgURL = TriPeaks.class.getResource("CardSets"
 							+ File.separator + "Backs" + File.separator
 							+ backStyle + ".png");
@@ -328,14 +248,15 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * The won/lost string
 		 */
-		String scoreStr = (score < 0) ? "Lost $" + (-1) * score : "Won $"
-				+ score;
+		String scoreStr = (state.getScore() < 0) ? "Lost $" + (-1)
+				* state.getScore() : "Won $" + state.getScore();
 
 		/*
 		 * display how many cards are remaining
 		 */
-		String remStr = remainingCards
-				+ ((remainingCards == 1) ? " card" : " cards") + " remaining";
+		String remStr = state.getRemainingCards()
+				+ ((state.getRemainingCards() == 1) ? " card" : " cards")
+				+ " remaining";
 
 		/*
 		 * the text is white
@@ -410,42 +331,41 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * 23 cards left in the deck
 		 */
-		remainingCards = 23;
+		state.setRemainingCards(23);
 
 		/*
 		 * all 28 cards are in play
 		 */
-		cardsInPlay = 28;
+		state.setCardsInPlay(28);
 
 		/*
 		 * all three peaks are there
 		 */
-		remainingPeaks = 3;
+		state.setRemainingPeaks(3);
 
 		/*
 		 * the streak is reset
 		 */
-		streak = 0;
+		state.setStreak(0);
 
 		/*
 		 * the game score is reset
 		 */
-		gameScore = 0;
+		state.setGameScore(0);
 
 		/*
 		 * the discard pile index is back to 51
 		 */
-		discardIndex = 51;
+		state.setDiscardIndex(51);
 
 		/*
 		 * increment the number of games played
 		 */
-		numberOfGames++;
-
+		state.setNumberOfGames(state.getNumberOfGames() + 1);
 		/*
 		 * increment the number of session games
 		 */
-		numberOfSessionGames++;
+		state.setNumberOfSessionGames(state.getNumberOfSessionGames() + 1);
 
 		/*
 		 * repaint the board
@@ -472,22 +392,22 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * essentially the same thing as the default values for the fields
 		 */
-		discardIndex = 51;
-		score = 0;
-		gameScore = 0;
-		sessionScore = 0;
-		streak = 0;
-		remainingCards = 0;
-		cardsInPlay = 0;
-		remainingPeaks = 3;
-		numberOfGames = 0;
-		numberOfSessionGames = 0;
-		highScore = 0;
-		lowScore = 0;
-		highStreak = 0;
+		state.setDiscardIndex(51);
+		state.setScore(0);
+		state.setGameScore(0);
+		state.setSessionScore(0);
+		state.setStreak(0);
+		state.setRemainingCards(0);
+		state.setCardsInPlay(0);
+		state.setRemainingPeaks(3);
+		state.setNumberOfGames(0);
+		state.setNumberOfSessionGames(0);
+		state.setHighScore(0);
+		state.setLowScore(0);
+		state.setHighStreak(0);
 		status = "";
-		cheats.clear();
-		hasCheatedYet = false;
+		state.getCheats().clear();
+		state.setHasCheatedYet(false);
 
 		/*
 		 * repaint the board
@@ -540,7 +460,7 @@ class CardPanel extends JPanel implements MouseListener {
 			/*
 			 * if the card is in the discard pile, skip it
 			 */
-			if (q == discardIndex) {
+			if (q == state.getDiscardIndex()) {
 				continue;
 			}
 
@@ -589,7 +509,7 @@ class CardPanel extends JPanel implements MouseListener {
 			 * if the second cheat is used, the value of the card won't be
 			 * checked
 			 */
-			if (cheats.contains(Cheat.CLICK_ANY_CARD) == true) {
+			if (state.getCheats().contains(Cheat.CLICK_ANY_CARD) == true) {
 				/*
 				 * the card is adjacent automatically
 				 */
@@ -599,7 +519,7 @@ class CardPanel extends JPanel implements MouseListener {
 				 * no cheat - check card check if the card is adjacent by value
 				 */
 				isAdjacent = card.getRank().isAdjacentTo(
-						Deck.cardAtPosition(discardIndex).getRank());
+						Deck.cardAtPosition(state.getDiscardIndex()).getRank());
 			}
 
 			/*
@@ -610,60 +530,59 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * put the card in the discard pile
 				 */
-				card.setX(Deck.cardAtPosition(discardIndex).getX());
+				card.setX(Deck.cardAtPosition(state.getDiscardIndex()).getX());
 
 				/*
 				 * set the discard pile's card's coords
 				 */
-				card.setY(Deck.cardAtPosition(discardIndex).getY());
+				card.setY(Deck.cardAtPosition(state.getDiscardIndex()).getY());
 
 				/*
 				 * hide the previously discarded card - makes the repaint faster
 				 */
-				Deck.cardAtPosition(discardIndex).setVisible(false);
+				Deck.cardAtPosition(state.getDiscardIndex()).setVisible(false);
 
 				/*
 				 * the card is now in the discard pile
 				 */
-				discardIndex = q;
+				state.setDiscardIndex(q);
 
 				/*
 				 * increment the strea
 				 */
-				streak++;
-
+				state.setStreak(state.getStreak() + 1);
 				/*
 				 * decrement the number of cards in play
 				 */
-				cardsInPlay--;
+				state.setCardsInPlay(state.getCardsInPlay()-1);
 
 				/*
 				 * add the streak to the score
 				 */
-				score += streak;
+				state.setScore(state.getScore()+state.getStreak());
 
 				/*
 				 * and to the current game's score
 				 */
-				gameScore += streak;
+				state.setGameScore(state.getGameScore()+state.getStreak());
 
 				/*
 				 * and to the session score
 				 */
-				sessionScore += streak;
+				state.setSessionScore(state.getSessionScore()+state.getStreak());
 
 				/*
 				 * set the high streak if it's higher
 				 */
-				if (streak > highStreak) {
-					highStreak = streak;
+				if (state.getStreak() > state.getHighStreak()) {
+					state.setHighStreak(state.getStreak());
 				}
 
 				/*
 				 * set the high score if it's higher
 				 */
-				if (gameScore > highScore) {
-					highScore = gameScore;
+				if (state.getGameScore() > state.getHighScore()) {
+					state.setHighScore(state.getGameScore());
 				}
 
 				/*
@@ -673,42 +592,42 @@ class CardPanel extends JPanel implements MouseListener {
 					/*
 					 * there's one less peak
 					 */
-					remainingPeaks--;
-
+					state.setRemainingPeaks(state.getRemainingPeaks()-1);
+					
 					/*
 					 * add a 15-point bonus
 					 */
-					score += Constants.PEAK_BONUS;
-
+					state.setScore(state.getScore() + Constants.PEAK_BONUS);
+					
 					/*
 					 * and to the game score
 					 */
-					gameScore += Constants.PEAK_BONUS;
+					state.setGameScore(state.getGameScore() + Constants.PEAK_BONUS);
 
 					/*
 					 * and to the session score
 					 */
-					sessionScore += Constants.PEAK_BONUS;
+					state.setSessionScore(state.getSessionScore() + Constants.PEAK_BONUS);
 
 					/*
 					 * if all the peaks are gone
 					 */
-					if (remainingPeaks == 0) {
+					if (state.getRemainingCards() == 0) {
 						/*
 						 * add another 15-point bonus (for a total of 30 bonus
 						 * points)
 						 */
-						score += Constants.THREE_PEAKS_BONUS;
+						state.setScore(state.getScore() + Constants.THREE_PEAKS_BONUS);
 
 						/*
 						 * and to the game score
 						 */
-						gameScore += Constants.THREE_PEAKS_BONUS;
+						state.setGameScore(state.getGameScore() + Constants.THREE_PEAKS_BONUS);
 
 						/*
 						 * and to the session score
 						 */
-						sessionScore += Constants.THREE_PEAKS_BONUS;
+						state.setSessionScore(state.getSessionScore() + Constants.THREE_PEAKS_BONUS);
 
 						/*
 						 * set the status message
@@ -718,7 +637,7 @@ class CardPanel extends JPanel implements MouseListener {
 						/*
 						 * the remaining deck
 						 */
-						for (int w = 28; w < (remainingCards + 28); w++) {
+						for (int w = 28; w < (state.getRemainingCards() + 28); w++) {
 							/*
 							 * hide the deck (so you can't take cards from the
 							 * deck after you clear the board
@@ -735,8 +654,8 @@ class CardPanel extends JPanel implements MouseListener {
 					/*
 					 * set the high score if the score is higher
 					 */
-					if (gameScore > highScore) {
-						highScore = gameScore;
+					if (state.getGameScore() > state.getHighScore()) {
+						state.setHighScore(state.getGameScore());
 					}
 
 					/*
@@ -778,7 +697,7 @@ class CardPanel extends JPanel implements MouseListener {
 					/*
 					 * check if the right-adjacent card is visible
 					 */
-					if (Deck.cardAtPosition(q + 1).isInvisible()==true) {
+					if (Deck.cardAtPosition(q + 1).isInvisible() == true) {
 						noRight = true;
 					}
 				}
@@ -875,13 +794,13 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * set the deck's coordinates
 				 */
-				card.setX(Deck.cardAtPosition(discardIndex).getX());
-				card.setY(Deck.cardAtPosition(discardIndex).getY());
+				card.setX(Deck.cardAtPosition(state.getDiscardIndex()).getX());
+				card.setY(Deck.cardAtPosition(state.getDiscardIndex()).getY());
 
 				/*
 				 * hide the previously discarded card (for faster repaint)
 				 */
-				Deck.cardAtPosition(discardIndex).setVisible(false);
+				Deck.cardAtPosition(state.getDiscardIndex()).setVisible(false);
 
 				/*
 				 * flip the deck card
@@ -898,46 +817,46 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * set the index of the dicard pile
 				 */
-				discardIndex = q;
+				state.setDiscardIndex(q);
 
 				/*
 				 * reset the streak
 				 */
-				streak = 0;
+				state.setStreak(0);
 
 				/*
 				 * if the third cheat isn't on (no penalty cheat)
 				 */
-				if (cheats.contains(Cheat.NO_PENALTY) == false) {
+				if (state.getCheats().contains(Cheat.NO_PENALTY) == false) {
 					// TODO Call doPenalty() function.
 
 					/*
 					 * 5-point penalty
 					 */
-					score -= Constants.NO_PENALTY_CHEAT;
+					state.setScore(state.getScore() - Constants.NO_PENALTY_CHEAT);
 
 					/*
 					 * to the game score
 					 */
-					gameScore -= Constants.NO_PENALTY_CHEAT;
+					state.setGameScore(state.getGameScore() - Constants.NO_PENALTY_CHEAT);
 
 					/*
 					 * and the session score
 					 */
-					sessionScore -= Constants.NO_PENALTY_CHEAT;
+					state.setSessionScore(state.getSessionScore() - Constants.NO_PENALTY_CHEAT);
 				}
 
 				/*
 				 * set the low score if score is lower
 				 */
-				if (gameScore < lowScore) {
-					lowScore = gameScore;
+				if (state.getGameScore() < state.getLowScore()) {
+					state.setLowScore(state.getGameScore());
 				}
 
 				/*
 				 * decrement the number of cards in the deck
 				 */
-				remainingCards--;
+				state.setRemainingCards(state.getRemainingCards() - 1);
 			}
 
 			/*
@@ -971,7 +890,7 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * if the penalty cheat is on, there is no penalty
 		 */
-		if (cheats.contains(Cheat.NO_PENALTY) == true) {
+		if (state.getCheats().contains(Cheat.NO_PENALTY) == true) {
 			return 0;
 		}
 
@@ -979,8 +898,8 @@ class CardPanel extends JPanel implements MouseListener {
 		 * if there are cards in the deck AND in play, the penalty is $5 for
 		 * every card removed
 		 */
-		if ((cardsInPlay != 0) && (remainingCards != 0)) {
-			return (cardsInPlay * Constants.CARD_REMOVED_PENALTY);
+		if ((state.getCardsInPlay() != 0) && (state.getRemainingCards() != 0)) {
+			return (state.getCardsInPlay() * Constants.CARD_REMOVED_PENALTY);
 		} else {
 			/*
 			 * otherwise the penalty is 0
@@ -998,17 +917,17 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * subtract the penalty
 		 */
-		score -= penalty;
+		state.setScore(state.getScore() - penalty);
 
 		/*
 		 * from the session score
 		 */
-		sessionScore -= penalty;
+		state.setSessionScore(state.getSessionScore() - penalty);
 
 		/*
 		 * and from the game score
 		 */
-		gameScore -= penalty;
+		state.setGameScore(state.getGameScore() - penalty);
 	}
 
 	/**
@@ -1044,7 +963,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getScore() {
-		return score;
+		return state.getScore();
 	}
 
 	/**
@@ -1053,7 +972,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getGameScore() {
-		return gameScore;
+		return state.getGameScore();
 	}
 
 	/**
@@ -1062,7 +981,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getStreak() {
-		return streak;
+		return state.getStreak();
 	}
 
 	/**
@@ -1071,7 +990,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getNumGames() {
-		return numberOfGames;
+		return state.getNumberOfGames();
 	}
 
 	/**
@@ -1080,7 +999,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getHighScore() {
-		return highScore;
+		return state.getHighScore();
 	}
 
 	/**
@@ -1089,7 +1008,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getLowScore() {
-		return lowScore;
+		return state.getLowScore();
 	}
 
 	/**
@@ -1098,7 +1017,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getHighStreak() {
-		return highStreak;
+		return state.getHighStreak();
 	}
 
 	/**
@@ -1107,7 +1026,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getSessionScore() {
-		return sessionScore;
+		return state.getSessionScore();
 	}
 
 	/**
@@ -1116,7 +1035,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public int getSessionGames() {
-		return numberOfSessionGames;
+		return state.getNumberOfSessionGames();
 	}
 
 	/**
@@ -1157,7 +1076,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public boolean isCheating() {
-		return (cheats.isEmpty());
+		return (state.getCheats().isEmpty());
 	}
 
 	/**
@@ -1166,7 +1085,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @return
 	 */
 	public boolean hasCheated() {
-		return hasCheatedYet;
+		return state.isHasCheatedYet();
 	}
 
 	/**
@@ -1178,7 +1097,7 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * return the cheats array
 		 */
-		return cheats;
+		return state.getCheats();
 	}
 
 	/**
@@ -1191,16 +1110,16 @@ class CardPanel extends JPanel implements MouseListener {
 		 * the programmer knows the order of the stats to be passed into this
 		 * method:
 		 */
-		score = stats[0];
+		state.setScore(stats[0]);
 
 		/*
 		 * overall score, high score, low score, number ofgames, and longest
 		 * streak
 		 */
-		highScore = stats[1];
-		lowScore = stats[2];
-		numberOfGames = stats[3];
-		highStreak = stats[4];
+		state.setHighScore(stats[1]);
+		state.setLowScore(stats[2]);
+		state.setNumberOfGames(stats[3]);
+		state.setHighStreak(stats[4]);
 	}
 
 	/**
@@ -1237,17 +1156,18 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @param newState
 	 */
 	public void setCheat(Cheat cheat, boolean newState) {
-		if (cheats.contains(cheat) == false && newState == true) {
-			cheats.add(cheat);
-		} else if (cheats.contains(cheat) == true && newState == false) {
-			cheats.remove(cheat);
+		if (state.getCheats().contains(cheat) == false && newState == true) {
+			state.getCheats().add(cheat);
+		} else if (state.getCheats().contains(cheat) == true
+				&& newState == false) {
+			state.getCheats().remove(cheat);
 		}
 
 		/*
 		 * if the cheat is turned on, set the "has cheated" flag
 		 */
 		if (newState == true) {
-			hasCheatedYet = true;
+			state.setHasCheatedYet(true);
 		}
 	}
 
@@ -1257,8 +1177,8 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @param newCheats
 	 */
 	public void setCheats(EnumSet<Cheat> newCheats) {
-		cheats.clear();
-		cheats.addAll(newCheats);
+		state.getCheats().clear();
+		state.getCheats().addAll(newCheats);
 	}
 
 	/**
@@ -1267,7 +1187,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 * @param hasCheatedYet
 	 */
 	public void setCheated(boolean hasCheatedYet) {
-		this.hasCheatedYet = hasCheatedYet;
+		state.setHasCheatedYet(hasCheatedYet);
 	}
 
 	/**
