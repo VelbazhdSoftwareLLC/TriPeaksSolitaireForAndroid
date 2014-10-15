@@ -104,7 +104,7 @@ public class Deck {
 	 */
 	static void setAllVisible() {
 		for (Card card : cards) {
-			card.setVisible(true);
+			card.setVisible();
 		}
 	}
 
@@ -115,7 +115,7 @@ public class Deck {
 	 */
 	static void setAllInvisible() {
 		for (Card card : cards) {
-			card.setVisible(false);
+			card.setInvisible();
 		}
 	}
 
@@ -227,12 +227,12 @@ public class Deck {
 			/*
 			 * they're invisible
 			 */
-			cards[q].setVisible(false);
+			cards[q].setInvisible();
 		}
 		/*
 		 * only the top one is visible (faster repaint)
 		 */
-		cards[50].setVisible(true);
+		cards[50].setVisible();
 
 		/*
 		 * discard pile set the coords

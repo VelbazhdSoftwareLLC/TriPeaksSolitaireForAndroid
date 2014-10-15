@@ -326,46 +326,7 @@ class CardPanel extends JPanel implements MouseListener {
 		Deck.shuffle();
 		Deck.setAllVisible();
 		Deck.deal();
-
-		// TODO Add GameState class for all controlling variables.
-		/*
-		 * 23 cards left in the deck
-		 */
-		state.setRemainingCards(23);
-
-		/*
-		 * all 28 cards are in play
-		 */
-		state.setCardsInPlay(28);
-
-		/*
-		 * all three peaks are there
-		 */
-		state.setRemainingPeaks(3);
-
-		/*
-		 * the streak is reset
-		 */
-		state.setStreak(0);
-
-		/*
-		 * the game score is reset
-		 */
-		state.setGameScore(0);
-
-		/*
-		 * the discard pile index is back to 51
-		 */
-		state.setDiscardIndex(51);
-
-		/*
-		 * increment the number of games played
-		 */
-		state.setNumberOfGames(state.getNumberOfGames() + 1);
-		/*
-		 * increment the number of session games
-		 */
-		state.setNumberOfSessionGames(state.getNumberOfSessionGames() + 1);
+		state.redeal();
 
 		/*
 		 * repaint the board
@@ -392,22 +353,8 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * essentially the same thing as the default values for the fields
 		 */
-		state.setDiscardIndex(51);
-		state.setScore(0);
-		state.setGameScore(0);
-		state.setSessionScore(0);
-		state.setStreak(0);
-		state.setRemainingCards(0);
-		state.setCardsInPlay(0);
-		state.setRemainingPeaks(3);
-		state.setNumberOfGames(0);
-		state.setNumberOfSessionGames(0);
-		state.setHighScore(0);
-		state.setLowScore(0);
-		state.setHighStreak(0);
 		status = "";
-		state.getCheats().clear();
-		state.setHasCheatedYet(false);
+		state.reset();
 
 		/*
 		 * repaint the board
@@ -446,7 +393,7 @@ class CardPanel extends JPanel implements MouseListener {
 			/*
 			 * if the card is invisible, skip it
 			 */
-			if (card.isVisible() == false) {
+			if (card.isInvisible() == true) {
 				continue;
 			}
 
@@ -540,122 +487,30 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * hide the previously discarded card - makes the repaint faster
 				 */
-				Deck.cardAtPosition(state.getDiscardIndex()).setVisible(false);
-
+				Deck.cardAtPosition(state.getDiscardIndex()).setInvisible();
+				
 				/*
-				 * the card is now in the discard pile
+				 * Take the card from the peaks and put it in the discard pile.
 				 */
-				state.setDiscardIndex(q);
-
-				/*
-				 * increment the strea
-				 */
-				state.setStreak(state.getStreak() + 1);
-				/*
-				 * decrement the number of cards in play
-				 */
-				state.setCardsInPlay(state.getCardsInPlay()-1);
-
-				/*
-				 * add the streak to the score
-				 */
-				state.setScore(state.getScore()+state.getStreak());
-
-				/*
-				 * and to the current game's score
-				 */
-				state.setGameScore(state.getGameScore()+state.getStreak());
-
-				/*
-				 * and to the session score
-				 */
-				state.setSessionScore(state.getSessionScore()+state.getStreak());
-
-				/*
-				 * set the high streak if it's higher
-				 */
-				if (state.getStreak() > state.getHighStreak()) {
-					state.setHighStreak(state.getStreak());
-				}
-
-				/*
-				 * set the high score if it's higher
-				 */
-				if (state.getGameScore() > state.getHighScore()) {
-					state.setHighScore(state.getGameScore());
-				}
+				state.doValidMove(q);
 
 				/*
 				 * if it was a peak
 				 */
 				if (q < 3) {
 					/*
-					 * there's one less peak
-					 */
-					state.setRemainingPeaks(state.getRemainingPeaks()-1);
-					
-					/*
-					 * add a 15-point bonus
-					 */
-					state.setScore(state.getScore() + Constants.PEAK_BONUS);
-					
-					/*
-					 * and to the game score
-					 */
-					state.setGameScore(state.getGameScore() + Constants.PEAK_BONUS);
-
-					/*
-					 * and to the session score
-					 */
-					state.setSessionScore(state.getSessionScore() + Constants.PEAK_BONUS);
-
-					/*
 					 * if all the peaks are gone
 					 */
 					if (state.getRemainingCards() == 0) {
 						/*
-						 * add another 15-point bonus (for a total of 30 bonus
-						 * points)
-						 */
-						state.setScore(state.getScore() + Constants.THREE_PEAKS_BONUS);
-
-						/*
-						 * and to the game score
-						 */
-						state.setGameScore(state.getGameScore() + Constants.THREE_PEAKS_BONUS);
-
-						/*
-						 * and to the session score
-						 */
-						state.setSessionScore(state.getSessionScore() + Constants.THREE_PEAKS_BONUS);
-
-						/*
 						 * set the status message
 						 */
 						status = "You have Tri-Conquered! You get a bonus of $30";
-
-						/*
-						 * the remaining deck
-						 */
-						for (int w = 28; w < (state.getRemainingCards() + 28); w++) {
-							/*
-							 * hide the deck (so you can't take cards from the
-							 * deck after you clear the board
-							 */
-							Deck.cardAtPosition(w).setVisible(false);
-						}
 					} else {
 						/*
 						 * set the status message
 						 */
 						status = "You have reached a peak! You get a bonus of $15";
-					}
-
-					/*
-					 * set the high score if the score is higher
-					 */
-					if (state.getGameScore() > state.getHighScore()) {
-						state.setHighScore(state.getGameScore());
 					}
 
 					/*
@@ -800,7 +655,7 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * hide the previously discarded card (for faster repaint)
 				 */
-				Deck.cardAtPosition(state.getDiscardIndex()).setVisible(false);
+				Deck.cardAtPosition(state.getDiscardIndex()).setInvisible();
 
 				/*
 				 * flip the deck card
@@ -811,7 +666,7 @@ class CardPanel extends JPanel implements MouseListener {
 				 * show the next deck card if it's not the last deck card
 				 */
 				if (q != 28) {
-					Deck.cardAtPosition(q - 1).setVisible(true);
+					Deck.cardAtPosition(q - 1).setVisible();
 				}
 
 				/*

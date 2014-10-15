@@ -294,10 +294,16 @@ class Card {
 
 	/**
 	 * 
-	 * @param newVis
 	 */
-	public void setVisible(boolean newVis) {
-		visible = newVis;
+	public void setVisible() {
+		visible = true;
+	}
+
+	/**
+	 * 
+	 */
+	public void setInvisible() {
+		visible = false;
 	}
 
 	/**
