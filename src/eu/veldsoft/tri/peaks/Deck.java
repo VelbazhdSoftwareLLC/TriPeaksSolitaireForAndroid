@@ -82,6 +82,11 @@ public class Deck {
 			new Card(Card.Rank.JACK, Card.Suit.SPADES, true, false, 0, 0),
 			new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, false, 0, 0),
 			new Card(Card.Rank.KING, Card.Suit.SPADES, true, false, 0, 0) };
+	
+	/**
+	 * Deck size.
+	 */
+	public static final int SIZE = cards.length;
 
 	/**
 	 * Deck suffling.

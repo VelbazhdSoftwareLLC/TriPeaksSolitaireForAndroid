@@ -10,5 +10,6 @@
     <string name="about_us_caption">About Us</string>
     <string name="exit_caption">Exit</string>
     <string name="title_activity_game">Game</string>
-
+    <string name="title_menu_deal">Deal</string>
+    
 </resources>

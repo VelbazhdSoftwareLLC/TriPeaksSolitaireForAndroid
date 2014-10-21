@@ -22,6 +22,9 @@ package eu.veldsoft.tri.peaks;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,6 +33,11 @@ import android.widget.Toast;
  * 
  */
 public class GameActivity extends Activity {
+
+	/**
+	 * the panel with the cards
+	 */
+	private CardBoard board = null;
 
 	/**
 	 * 
@@ -44,6 +52,19 @@ public class GameActivity extends Activity {
 					.show();
 		}
 	};
+
+	/**
+	 * 
+	 * @param menu
+	 * @return
+	 * @author Todor Balabanov
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.layout.menu_game, menu);
+		return true;
+	}
 
 	/**
 	 * @param savedInstanceState
@@ -113,5 +134,20 @@ public class GameActivity extends Activity {
 				.setOnClickListener(cardClickListener);
 		((ImageView) findViewById(R.id.imageView31))
 				.setOnClickListener(cardClickListener);
+		
+		board = new CardBoard();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		switch (item.getItemId()) {
+		case R.id.menu_deal:
+			board.redeal();
+			return true;
+
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 }

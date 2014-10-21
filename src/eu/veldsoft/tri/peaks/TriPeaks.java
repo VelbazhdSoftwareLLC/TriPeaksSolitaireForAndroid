@@ -129,7 +129,7 @@ public class TriPeaks extends JFrame {
 	/**
 	 * the panel with the cards
 	 */
-	private CardPanel board;
+	private CardPanel board = null;
 
 	/**
 	 * the labels for the stats
