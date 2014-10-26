@@ -20,13 +20,19 @@
 
 package eu.veldsoft.tri.peaks;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -53,6 +59,22 @@ public class GameActivity extends Activity {
 		}
 	};
 
+	/**
+	 * Repaint all images.
+	 * 
+	 * @author Todor Balabanov
+	 */
+	private void repaint() {
+		/*
+		 * Draw the background.
+		 */
+		if (board.getState().isHasCheatedYet() == true) {
+			((TextView)findViewById(R.id.textView13)).setVisibility(View.VISIBLE);
+		} else {
+			((TextView)findViewById(R.id.textView13)).setVisibility(View.INVISIBLE);
+		}
+	}
+	
 	/**
 	 * 
 	 * @param menu
@@ -134,7 +156,7 @@ public class GameActivity extends Activity {
 				.setOnClickListener(cardClickListener);
 		((ImageView) findViewById(R.id.imageView31))
 				.setOnClickListener(cardClickListener);
-		
+
 		board = new CardBoard();
 	}
 
@@ -143,9 +165,37 @@ public class GameActivity extends Activity {
 
 		switch (item.getItemId()) {
 		case R.id.menu_deal:
-			board.redeal();
-			return true;
 
+			/*
+			 * Get the penalty for redealing if there is a penalty.
+			 */
+			if (board.getPenalty() != 0) {
+				/*
+				 * Show a confirmation message.
+				 */
+				new AlertDialog.Builder(this)
+						.setTitle("Game Cancel Penalty")
+						.setMessage("Do you really want to start new deal?")
+						.setIcon(android.R.drawable.ic_dialog_alert)
+						.setPositiveButton(android.R.string.yes,
+								new DialogInterface.OnClickListener() {
+									/*
+									 * Do the penalty if the user agreed.
+									 */
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+										board.doPenalty(board.getPenalty());
+										board.redeal();
+										repaint();
+									}
+								}).setNegativeButton(android.R.string.no, null)
+						.show();
+			} else {
+				board.redeal();
+				repaint();
+			}
+
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);

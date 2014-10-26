@@ -105,7 +105,7 @@ class CardPanel extends JPanel implements MouseListener {
 		g.fillRect(0, 0, getSize().width, getSize().height);
 
 		/*
-		 * draw the background
+		 * Draw the background.
 		 */
 		if (board.getState().isHasCheatedYet()) {
 			/*
@@ -833,7 +833,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 */
 	public void redeal() {
 		/*
-		 * get the penalty for redealing
+		 * Get the penalty for redealing.
 		 */
 		int penalty = getPenalty();
 
