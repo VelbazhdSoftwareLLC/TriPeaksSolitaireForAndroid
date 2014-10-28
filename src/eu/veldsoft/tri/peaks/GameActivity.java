@@ -20,8 +20,8 @@
 
 package eu.veldsoft.tri.peaks;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,6 +39,8 @@ import android.widget.Toast;
  * 
  */
 public class GameActivity extends Activity {
+	
+	private Map<Card, Integer> cardDrawaleMapping = new HashMap<Card, Integer>();
 
 	/**
 	 * the panel with the cards
@@ -69,12 +71,39 @@ public class GameActivity extends Activity {
 		 * Draw the background.
 		 */
 		if (board.getState().isHasCheatedYet() == true) {
-			((TextView)findViewById(R.id.textView13)).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.textView13))
+					.setVisibility(View.VISIBLE);
 		} else {
-			((TextView)findViewById(R.id.textView13)).setVisibility(View.INVISIBLE);
+			((TextView) findViewById(R.id.textView13))
+					.setVisibility(View.INVISIBLE);
+		}
+
+		/*
+		 * Go through each card.
+		 */
+		for (int q = 0; q < Deck.SIZE; q++) {
+			Card card = Deck.cardAtPosition(q);
+
+			/*
+			 * If the card is not visible, skip it.
+			 */
+			if (card.isInvisible() == true) {
+				continue;
+			}
+
+			/*
+			 * If the card is face-up.
+			 */
+			if (card.isFacingUp() == true
+					|| board.getState().getCheats()
+							.contains(Cheat.CARDS_FACE_UP) == true) {
+				// TODO Take face up image id.
+			} else if (card.isFacingDown() == true) {
+				// TODO Take back image id.
+			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param menu
