@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Tri Peaks Solitaire</string>
-    <string name="title_activity_lobby">Tri Peaks Lobby</string>
+    <string name="title_activity_lobby">Tri Peaks Solitaire</string>
     <string name="welcome_to_the_tri_peaks_solitaire_text">Welcome to the Tri Peaks Solitaire!</string>
     <string name="new_game_caption">New Game</string>
     <string name="high_scores_caption">High Scores</string>
@@ -12,5 +12,17 @@
     <string name="title_activity_game">Game</string>
     <string name="title_menu_deal">Deal</string>
     <string name="cheater_warning">CHEATER</string>
+    <string name="cards_remaining_label">Cards Remaining:</string>
+    <string name="lost_label">Lost:</string>
+    <string name="won_label">Won:</string>
+    <string name="game_winings_label">Game Winings:</string>
+    <string name="most_won_label">Most - Won:</string>
+    <string name="current_streak_label">Current Streak:</string>
+    <string name="session_winings_label">Session Winings:</string>
+    <string name="session_average_label">Session Average:</string>
+    <string name="session_games_label">Session Games:</string>
+    <string name="player_games_label">Player Games:</string>
+    <string name="player_average_label">Player Average:</string>
+    <string name="longest_streak_label">Longest Streak:</string>
     
 </resources>
