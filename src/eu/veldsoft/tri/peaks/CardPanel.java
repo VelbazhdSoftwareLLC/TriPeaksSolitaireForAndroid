@@ -107,7 +107,7 @@ class CardPanel extends JPanel implements MouseListener {
 		/*
 		 * Draw the background.
 		 */
-		if (board.getState().isHasCheatedYet()) {
+		if (board.getState().isHasCheatedYet() == true) {
 			/*
 			 * if the user has ever cheated set the color - white, somewhat
 			 * transparent
@@ -137,13 +137,13 @@ class CardPanel extends JPanel implements MouseListener {
 		URL imgURL = null;
 
 		/*
-		 * go through each card
+		 * Go through each card.
 		 */
 		for (int q = 0; q < Deck.SIZE; q++) {
 			Card card = Deck.cardAtPosition(q);
 
 			/*
-			 * if a card isn't visible, skip it
+			 * If the card is not visible, skip it.
 			 */
 			if (card.isInvisible() == true) {
 				continue;
@@ -635,17 +635,17 @@ class CardPanel extends JPanel implements MouseListener {
 		}
 
 		/*
-		 * repaint the board
+		 * Repaint the board.
 		 */
 		repaint();
 
 		/*
-		 * get the containing frame
+		 * Get the containing frame.
 		 */
 		TriPeaks theFrame = (TriPeaks) SwingUtilities.windowForComponent(this);
 
 		/*
-		 * update the stats labels
+		 * Update the status labels.
 		 */
 		theFrame.updateStats();
 	}
