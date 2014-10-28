@@ -496,4 +496,13 @@
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/spades4" />
+
+	<TextView
+	    android:id="@+id/textView13"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/cheater_warning"
+	    android:textColor="@color/darkred"
+	    android:visibility="invisible" />
+
 </RelativeLayout>
