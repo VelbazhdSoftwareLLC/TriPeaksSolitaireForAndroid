@@ -41,16 +41,30 @@ import android.widget.Toast;
  */
 public class GameActivity extends Activity {
 
-	private Map<Card, Integer> cardDrawaleMapping = new HashMap<Card, Integer>();
+	/**
+	 * 
+	 */
+	private Map<Card, Integer> cardDrawableMapping = new HashMap<Card, Integer>();
 
+	/**
+	 * 
+	 */
 	private DecimalFormat intFmt = new DecimalFormat("$###,###");
-	
+
+	/**
+	 * 
+	 */
 	private DecimalFormat dblFmt = new DecimalFormat("$###,##0.00");
-	
+
 	/**
 	 * the panel with the cards
 	 */
 	private CardBoard board = null;
+
+	/**
+	 * 
+	 */
+	private ImageView cardsViews[] = null;
 
 	/**
 	 * 
@@ -93,6 +107,10 @@ public class GameActivity extends Activity {
 			 * If the card is not visible, skip it.
 			 */
 			if (card.isInvisible() == true) {
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageBitmap(null);
+				}
+
 				continue;
 			}
 
@@ -139,10 +157,10 @@ public class GameActivity extends Activity {
 			avg = ((double) stats[2]) / ((double) stats[5]);
 		}
 		((TextView) findViewById(R.id.textView21)).setText(dblFmt.format(avg));
-		
+
 		((TextView) findViewById(R.id.textView22)).setText("" + stats[5]);
 	}
-	
+
 	/**
 	 * 
 	 * @param menu
@@ -163,6 +181,89 @@ public class GameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+
+		cardDrawableMapping.put(Deck.cardAtPosition(0), R.drawable.clubs1);
+		cardDrawableMapping.put(Deck.cardAtPosition(1), R.drawable.clubs2);
+		cardDrawableMapping.put(Deck.cardAtPosition(2), R.drawable.clubs3);
+		cardDrawableMapping.put(Deck.cardAtPosition(3), R.drawable.clubs4);
+		cardDrawableMapping.put(Deck.cardAtPosition(4), R.drawable.clubs5);
+		cardDrawableMapping.put(Deck.cardAtPosition(5), R.drawable.clubs6);
+		cardDrawableMapping.put(Deck.cardAtPosition(6), R.drawable.clubs7);
+		cardDrawableMapping.put(Deck.cardAtPosition(7), R.drawable.clubs8);
+		cardDrawableMapping.put(Deck.cardAtPosition(8), R.drawable.clubs9);
+		cardDrawableMapping.put(Deck.cardAtPosition(9), R.drawable.clubs10);
+		cardDrawableMapping.put(Deck.cardAtPosition(10), R.drawable.clubs11);
+		cardDrawableMapping.put(Deck.cardAtPosition(11), R.drawable.clubs12);
+		cardDrawableMapping.put(Deck.cardAtPosition(12), R.drawable.clubs13);
+		cardDrawableMapping.put(Deck.cardAtPosition(13), R.drawable.hearts1);
+		cardDrawableMapping.put(Deck.cardAtPosition(14), R.drawable.hearts2);
+		cardDrawableMapping.put(Deck.cardAtPosition(15), R.drawable.hearts3);
+		cardDrawableMapping.put(Deck.cardAtPosition(16), R.drawable.hearts4);
+		cardDrawableMapping.put(Deck.cardAtPosition(17), R.drawable.hearts5);
+		cardDrawableMapping.put(Deck.cardAtPosition(18), R.drawable.hearts6);
+		cardDrawableMapping.put(Deck.cardAtPosition(19), R.drawable.hearts7);
+		cardDrawableMapping.put(Deck.cardAtPosition(20), R.drawable.hearts8);
+		cardDrawableMapping.put(Deck.cardAtPosition(21), R.drawable.hearts9);
+		cardDrawableMapping.put(Deck.cardAtPosition(22), R.drawable.hearts10);
+		cardDrawableMapping.put(Deck.cardAtPosition(23), R.drawable.hearts11);
+		cardDrawableMapping.put(Deck.cardAtPosition(24), R.drawable.hearts12);
+		cardDrawableMapping.put(Deck.cardAtPosition(25), R.drawable.hearts13);
+		cardDrawableMapping.put(Deck.cardAtPosition(26), R.drawable.diamonds1);
+		cardDrawableMapping.put(Deck.cardAtPosition(27), R.drawable.diamonds2);
+		cardDrawableMapping.put(Deck.cardAtPosition(28), R.drawable.diamonds3);
+		cardDrawableMapping.put(Deck.cardAtPosition(29), R.drawable.diamonds4);
+		cardDrawableMapping.put(Deck.cardAtPosition(30), R.drawable.diamonds5);
+		cardDrawableMapping.put(Deck.cardAtPosition(31), R.drawable.diamonds6);
+		cardDrawableMapping.put(Deck.cardAtPosition(32), R.drawable.diamonds7);
+		cardDrawableMapping.put(Deck.cardAtPosition(33), R.drawable.diamonds8);
+		cardDrawableMapping.put(Deck.cardAtPosition(34), R.drawable.diamonds9);
+		cardDrawableMapping.put(Deck.cardAtPosition(35), R.drawable.diamonds10);
+		cardDrawableMapping.put(Deck.cardAtPosition(36), R.drawable.diamonds11);
+		cardDrawableMapping.put(Deck.cardAtPosition(37), R.drawable.diamonds12);
+		cardDrawableMapping.put(Deck.cardAtPosition(38), R.drawable.diamonds13);
+		cardDrawableMapping.put(Deck.cardAtPosition(39), R.drawable.spades1);
+		cardDrawableMapping.put(Deck.cardAtPosition(40), R.drawable.spades2);
+		cardDrawableMapping.put(Deck.cardAtPosition(41), R.drawable.spades3);
+		cardDrawableMapping.put(Deck.cardAtPosition(42), R.drawable.spades4);
+		cardDrawableMapping.put(Deck.cardAtPosition(43), R.drawable.spades5);
+		cardDrawableMapping.put(Deck.cardAtPosition(44), R.drawable.spades6);
+		cardDrawableMapping.put(Deck.cardAtPosition(45), R.drawable.spades7);
+		cardDrawableMapping.put(Deck.cardAtPosition(46), R.drawable.spades8);
+		cardDrawableMapping.put(Deck.cardAtPosition(47), R.drawable.spades9);
+		cardDrawableMapping.put(Deck.cardAtPosition(48), R.drawable.spades10);
+		cardDrawableMapping.put(Deck.cardAtPosition(49), R.drawable.spades11);
+		cardDrawableMapping.put(Deck.cardAtPosition(50), R.drawable.spades12);
+		cardDrawableMapping.put(Deck.cardAtPosition(51), R.drawable.spades13);
+
+		cardsViews = new ImageView[] {
+				(ImageView) findViewById(R.id.imageView2),
+				(ImageView) findViewById(R.id.imageView3),
+				(ImageView) findViewById(R.id.imageView4),
+				(ImageView) findViewById(R.id.imageView5),
+				(ImageView) findViewById(R.id.imageView6),
+				(ImageView) findViewById(R.id.imageView7),
+				(ImageView) findViewById(R.id.imageView8),
+				(ImageView) findViewById(R.id.imageView9),
+				(ImageView) findViewById(R.id.imageView10),
+				(ImageView) findViewById(R.id.imageView11),
+				(ImageView) findViewById(R.id.imageView12),
+				(ImageView) findViewById(R.id.imageView13),
+				(ImageView) findViewById(R.id.imageView14),
+				(ImageView) findViewById(R.id.imageView15),
+				(ImageView) findViewById(R.id.imageView16),
+				(ImageView) findViewById(R.id.imageView17),
+				(ImageView) findViewById(R.id.imageView18),
+				(ImageView) findViewById(R.id.imageView19),
+				(ImageView) findViewById(R.id.imageView20),
+				(ImageView) findViewById(R.id.imageView21),
+				(ImageView) findViewById(R.id.imageView22),
+				(ImageView) findViewById(R.id.imageView23),
+				(ImageView) findViewById(R.id.imageView24),
+				(ImageView) findViewById(R.id.imageView25),
+				(ImageView) findViewById(R.id.imageView26),
+				(ImageView) findViewById(R.id.imageView27),
+				(ImageView) findViewById(R.id.imageView28),
+				(ImageView) findViewById(R.id.imageView29) };
 
 		((ImageView) findViewById(R.id.imageView2))
 				.setOnClickListener(cardClickListener);
