@@ -20,8 +20,9 @@
 
 package eu.veldsoft.tri.peaks;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -40,6 +41,12 @@ import android.widget.Toast;
  */
 public class GameActivity extends Activity {
 
+	private Map<Card, Integer> cardDrawaleMapping = new HashMap<Card, Integer>();
+
+	private DecimalFormat intFmt = new DecimalFormat("$###,###");
+	
+	private DecimalFormat dblFmt = new DecimalFormat("$###,##0.00");
+	
 	/**
 	 * the panel with the cards
 	 */
@@ -69,10 +76,71 @@ public class GameActivity extends Activity {
 		 * Draw the background.
 		 */
 		if (board.getState().isHasCheatedYet() == true) {
-			((TextView)findViewById(R.id.textView13)).setVisibility(View.VISIBLE);
+			((TextView) findViewById(R.id.textView13))
+					.setVisibility(View.VISIBLE);
 		} else {
-			((TextView)findViewById(R.id.textView13)).setVisibility(View.INVISIBLE);
+			((TextView) findViewById(R.id.textView13))
+					.setVisibility(View.INVISIBLE);
 		}
+
+		/*
+		 * Go through each card.
+		 */
+		for (int q = 0; q < Deck.SIZE; q++) {
+			Card card = Deck.cardAtPosition(q);
+
+			/*
+			 * If the card is not visible, skip it.
+			 */
+			if (card.isInvisible() == true) {
+				continue;
+			}
+
+			/*
+			 * If the card is face-up.
+			 */
+			if (card.isFacingUp() == true
+					|| board.getState().getCheats()
+							.contains(Cheat.CARDS_FACE_UP) == true) {
+				// TODO Take face up image id.
+			} else if (card.isFacingDown() == true) {
+				// TODO Take back image id.
+			}
+		}
+
+		if (board.getState().getScore() < 0) {
+			((TextView) findViewById(R.id.textView1))
+					.setText(R.string.lost_label);
+		} else {
+			((TextView) findViewById(R.id.textView1))
+					.setText(R.string.won_label);
+		}
+
+		int score = Math.abs(board.getState().getScore());
+		((TextView) findViewById(R.id.textView14)).setText("" + score);
+
+		((TextView) findViewById(R.id.textView15)).setText(""
+				+ board.getState().getRemainingCards());
+
+		int[] stats = board.getAllStats();
+		((TextView) findViewById(R.id.textView16)).setText("" + stats[1]);
+
+		((TextView) findViewById(R.id.textView17)).setText("" + stats[6]);
+		((TextView) findViewById(R.id.textView18)).setText("" + stats[7]);
+
+		((TextView) findViewById(R.id.textView19)).setText("" + stats[3]
+				+ " = " + intFmt.format((stats[3] * (stats[3] + 1) / 2)));
+
+		((TextView) findViewById(R.id.textView20)).setText(intFmt
+				.format(stats[2]));
+
+		double avg = 0.0;
+		if (stats[5] != 0) {
+			avg = ((double) stats[2]) / ((double) stats[5]);
+		}
+		((TextView) findViewById(R.id.textView21)).setText(dblFmt.format(avg));
+		
+		((TextView) findViewById(R.id.textView22)).setText("" + stats[5]);
 	}
 	
 	/**
