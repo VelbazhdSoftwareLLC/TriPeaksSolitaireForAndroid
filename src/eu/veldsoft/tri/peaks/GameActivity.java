@@ -21,7 +21,9 @@
 package eu.veldsoft.tri.peaks;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
@@ -44,7 +46,7 @@ public class GameActivity extends Activity {
 	/**
 	 * 
 	 */
-	private Map<Card, Integer> cardDrawableMapping = new HashMap<Card, Integer>();
+	private Map<Integer, Integer> cardDrawableMapping = new HashMap<Integer, Integer>();
 
 	/**
 	 * 
@@ -77,6 +79,107 @@ public class GameActivity extends Activity {
 		public void onClick(View view) {
 			Toast.makeText(GameActivity.this, "" + view, Toast.LENGTH_SHORT)
 					.show();
+
+			/*
+			 * Go through the cards in reverse order - the higher index-cards
+			 * are on top. All the skips make execution of the mouse-click
+			 * faster.
+			 */
+			for (int q = Deck.SIZE - 1; q >= 0; q--) {
+				Card card = Deck.cardAtPosition(q);
+
+				/*
+				 * If the card is invisible, skip it.
+				 */
+				if (card.isInvisible() == true) {
+					continue;
+				}
+
+				/*
+				 * if the card isn't part of the deck and is face-down, skip it
+				 */
+				if (((q < 28) || (q == 51)) && card.isFacingDown() == true) {
+					continue;
+				}
+
+				/*
+				 * If the card is in the discard pile, skip it.
+				 */
+				if (q == board.getState().getDiscardIndex()) {
+					continue;
+				}
+
+				/*
+				 * A value to check if the card is adjacent by value.
+				 */
+				boolean isAdjacent = false;
+
+				/*
+				 * If the second cheat is used, the value of the card won't be
+				 * checked.
+				 */
+				if (board.getState().getCheats().contains(Cheat.CLICK_ANY_CARD) == true) {
+					/*
+					 * The card is adjacent automatically.
+					 */
+					isAdjacent = true;
+				} else {
+					/*
+					 * No cheat - check card check if the card is adjacent by
+					 * value.
+					 */
+					isAdjacent = card.getRank().isAdjacentTo(
+							Deck.cardAtPosition(
+									board.getState().getDiscardIndex())
+									.getRank());
+				}
+				
+				/*
+				 * If the card isn't in the deck and is adjacent to the last
+				 * discarded card.
+				 */
+				if (q < 28 && isAdjacent == true) {
+					/*
+					 * Hide the previously discarded card - makes the repaint faster.
+					 */
+					Deck.cardAtPosition(board.getState().getDiscardIndex())
+							.setInvisible();
+
+					/*
+					 * Take the card from the peaks and put it in the discard pile.
+					 */
+					board.getState().doValidMove(q);
+					
+
+					/*
+					 * If it was a peak.
+					 */
+					if (q < 3) {
+						/*
+						 * If all the peaks are gone.
+						 */
+						if (board.getState().getRemainingCards() == 0) {
+							/*
+							 * Set the status message.
+							 */
+							board.setStatus("You have Tri-Conquered! You get a bonus of $30");
+						} else {
+							/*
+							 * Set the status message.
+							 */
+							board.setStatus("You have reached a peak! You get a bonus of $15");
+						}
+
+						/*
+						 * The click was cosumed - don't go through the rest of
+						 * the cards.
+						 */
+						break;
+					}
+
+				}
+
+			}
 		}
 	};
 
@@ -120,11 +223,20 @@ public class GameActivity extends Activity {
 			if (card.isFacingUp() == true
 					|| board.getState().getCheats()
 							.contains(Cheat.CARDS_FACE_UP) == true) {
-				// TODO Take face up image id.
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageResource(cardDrawableMapping.get(card
+							.getIndex()));
+				}
 			} else if (card.isFacingDown() == true) {
-				// TODO Take back image id.
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageResource(R.drawable.back02);
+				}
 			}
 		}
+
+		((ImageView) findViewById(R.id.imageView31))
+				.setImageResource(cardDrawableMapping.get(Deck.cardAtPosition(
+						board.getState().getDiscardIndex()).getIndex()));
 
 		if (board.getState().getScore() < 0) {
 			((TextView) findViewById(R.id.textView1))
@@ -159,6 +271,19 @@ public class GameActivity extends Activity {
 		((TextView) findViewById(R.id.textView21)).setText(dblFmt.format(avg));
 
 		((TextView) findViewById(R.id.textView22)).setText("" + stats[5]);
+
+		((TextView) findViewById(R.id.textView23)).setText("" + stats[4]);
+
+		if (stats[4] != 0) {
+			avg = ((double) stats[0]) / ((double) stats[4]);
+		} else {
+			avg = 0;
+		}
+		((TextView) findViewById(R.id.textView24)).setText(""
+				+ dblFmt.format(avg));
+
+		((TextView) findViewById(R.id.textView25)).setText("" + stats[8]
+				+ " = " + intFmt.format((stats[8] * (stats[8] + 1) / 2)));
 	}
 
 	/**
@@ -182,58 +307,110 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
-		cardDrawableMapping.put(Deck.cardAtPosition(0), R.drawable.clubs1);
-		cardDrawableMapping.put(Deck.cardAtPosition(1), R.drawable.clubs2);
-		cardDrawableMapping.put(Deck.cardAtPosition(2), R.drawable.clubs3);
-		cardDrawableMapping.put(Deck.cardAtPosition(3), R.drawable.clubs4);
-		cardDrawableMapping.put(Deck.cardAtPosition(4), R.drawable.clubs5);
-		cardDrawableMapping.put(Deck.cardAtPosition(5), R.drawable.clubs6);
-		cardDrawableMapping.put(Deck.cardAtPosition(6), R.drawable.clubs7);
-		cardDrawableMapping.put(Deck.cardAtPosition(7), R.drawable.clubs8);
-		cardDrawableMapping.put(Deck.cardAtPosition(8), R.drawable.clubs9);
-		cardDrawableMapping.put(Deck.cardAtPosition(9), R.drawable.clubs10);
-		cardDrawableMapping.put(Deck.cardAtPosition(10), R.drawable.clubs11);
-		cardDrawableMapping.put(Deck.cardAtPosition(11), R.drawable.clubs12);
-		cardDrawableMapping.put(Deck.cardAtPosition(12), R.drawable.clubs13);
-		cardDrawableMapping.put(Deck.cardAtPosition(13), R.drawable.hearts1);
-		cardDrawableMapping.put(Deck.cardAtPosition(14), R.drawable.hearts2);
-		cardDrawableMapping.put(Deck.cardAtPosition(15), R.drawable.hearts3);
-		cardDrawableMapping.put(Deck.cardAtPosition(16), R.drawable.hearts4);
-		cardDrawableMapping.put(Deck.cardAtPosition(17), R.drawable.hearts5);
-		cardDrawableMapping.put(Deck.cardAtPosition(18), R.drawable.hearts6);
-		cardDrawableMapping.put(Deck.cardAtPosition(19), R.drawable.hearts7);
-		cardDrawableMapping.put(Deck.cardAtPosition(20), R.drawable.hearts8);
-		cardDrawableMapping.put(Deck.cardAtPosition(21), R.drawable.hearts9);
-		cardDrawableMapping.put(Deck.cardAtPosition(22), R.drawable.hearts10);
-		cardDrawableMapping.put(Deck.cardAtPosition(23), R.drawable.hearts11);
-		cardDrawableMapping.put(Deck.cardAtPosition(24), R.drawable.hearts12);
-		cardDrawableMapping.put(Deck.cardAtPosition(25), R.drawable.hearts13);
-		cardDrawableMapping.put(Deck.cardAtPosition(26), R.drawable.diamonds1);
-		cardDrawableMapping.put(Deck.cardAtPosition(27), R.drawable.diamonds2);
-		cardDrawableMapping.put(Deck.cardAtPosition(28), R.drawable.diamonds3);
-		cardDrawableMapping.put(Deck.cardAtPosition(29), R.drawable.diamonds4);
-		cardDrawableMapping.put(Deck.cardAtPosition(30), R.drawable.diamonds5);
-		cardDrawableMapping.put(Deck.cardAtPosition(31), R.drawable.diamonds6);
-		cardDrawableMapping.put(Deck.cardAtPosition(32), R.drawable.diamonds7);
-		cardDrawableMapping.put(Deck.cardAtPosition(33), R.drawable.diamonds8);
-		cardDrawableMapping.put(Deck.cardAtPosition(34), R.drawable.diamonds9);
-		cardDrawableMapping.put(Deck.cardAtPosition(35), R.drawable.diamonds10);
-		cardDrawableMapping.put(Deck.cardAtPosition(36), R.drawable.diamonds11);
-		cardDrawableMapping.put(Deck.cardAtPosition(37), R.drawable.diamonds12);
-		cardDrawableMapping.put(Deck.cardAtPosition(38), R.drawable.diamonds13);
-		cardDrawableMapping.put(Deck.cardAtPosition(39), R.drawable.spades1);
-		cardDrawableMapping.put(Deck.cardAtPosition(40), R.drawable.spades2);
-		cardDrawableMapping.put(Deck.cardAtPosition(41), R.drawable.spades3);
-		cardDrawableMapping.put(Deck.cardAtPosition(42), R.drawable.spades4);
-		cardDrawableMapping.put(Deck.cardAtPosition(43), R.drawable.spades5);
-		cardDrawableMapping.put(Deck.cardAtPosition(44), R.drawable.spades6);
-		cardDrawableMapping.put(Deck.cardAtPosition(45), R.drawable.spades7);
-		cardDrawableMapping.put(Deck.cardAtPosition(46), R.drawable.spades8);
-		cardDrawableMapping.put(Deck.cardAtPosition(47), R.drawable.spades9);
-		cardDrawableMapping.put(Deck.cardAtPosition(48), R.drawable.spades10);
-		cardDrawableMapping.put(Deck.cardAtPosition(49), R.drawable.spades11);
-		cardDrawableMapping.put(Deck.cardAtPosition(50), R.drawable.spades12);
-		cardDrawableMapping.put(Deck.cardAtPosition(51), R.drawable.spades13);
+		cardDrawableMapping.put(Deck.cardAtPosition(0).getIndex(),
+				R.drawable.clubs1);
+		cardDrawableMapping.put(Deck.cardAtPosition(1).getIndex(),
+				R.drawable.clubs2);
+		cardDrawableMapping.put(Deck.cardAtPosition(2).getIndex(),
+				R.drawable.clubs3);
+		cardDrawableMapping.put(Deck.cardAtPosition(3).getIndex(),
+				R.drawable.clubs4);
+		cardDrawableMapping.put(Deck.cardAtPosition(4).getIndex(),
+				R.drawable.clubs5);
+		cardDrawableMapping.put(Deck.cardAtPosition(5).getIndex(),
+				R.drawable.clubs6);
+		cardDrawableMapping.put(Deck.cardAtPosition(6).getIndex(),
+				R.drawable.clubs7);
+		cardDrawableMapping.put(Deck.cardAtPosition(7).getIndex(),
+				R.drawable.clubs8);
+		cardDrawableMapping.put(Deck.cardAtPosition(8).getIndex(),
+				R.drawable.clubs9);
+		cardDrawableMapping.put(Deck.cardAtPosition(9).getIndex(),
+				R.drawable.clubs10);
+		cardDrawableMapping.put(Deck.cardAtPosition(10).getIndex(),
+				R.drawable.clubs11);
+		cardDrawableMapping.put(Deck.cardAtPosition(11).getIndex(),
+				R.drawable.clubs12);
+		cardDrawableMapping.put(Deck.cardAtPosition(12).getIndex(),
+				R.drawable.clubs13);
+		cardDrawableMapping.put(Deck.cardAtPosition(13).getIndex(),
+				R.drawable.hearts1);
+		cardDrawableMapping.put(Deck.cardAtPosition(14).getIndex(),
+				R.drawable.hearts2);
+		cardDrawableMapping.put(Deck.cardAtPosition(15).getIndex(),
+				R.drawable.hearts3);
+		cardDrawableMapping.put(Deck.cardAtPosition(16).getIndex(),
+				R.drawable.hearts4);
+		cardDrawableMapping.put(Deck.cardAtPosition(17).getIndex(),
+				R.drawable.hearts5);
+		cardDrawableMapping.put(Deck.cardAtPosition(18).getIndex(),
+				R.drawable.hearts6);
+		cardDrawableMapping.put(Deck.cardAtPosition(19).getIndex(),
+				R.drawable.hearts7);
+		cardDrawableMapping.put(Deck.cardAtPosition(20).getIndex(),
+				R.drawable.hearts8);
+		cardDrawableMapping.put(Deck.cardAtPosition(21).getIndex(),
+				R.drawable.hearts9);
+		cardDrawableMapping.put(Deck.cardAtPosition(22).getIndex(),
+				R.drawable.hearts10);
+		cardDrawableMapping.put(Deck.cardAtPosition(23).getIndex(),
+				R.drawable.hearts11);
+		cardDrawableMapping.put(Deck.cardAtPosition(24).getIndex(),
+				R.drawable.hearts12);
+		cardDrawableMapping.put(Deck.cardAtPosition(25).getIndex(),
+				R.drawable.hearts13);
+		cardDrawableMapping.put(Deck.cardAtPosition(26).getIndex(),
+				R.drawable.diamonds1);
+		cardDrawableMapping.put(Deck.cardAtPosition(27).getIndex(),
+				R.drawable.diamonds2);
+		cardDrawableMapping.put(Deck.cardAtPosition(28).getIndex(),
+				R.drawable.diamonds3);
+		cardDrawableMapping.put(Deck.cardAtPosition(29).getIndex(),
+				R.drawable.diamonds4);
+		cardDrawableMapping.put(Deck.cardAtPosition(30).getIndex(),
+				R.drawable.diamonds5);
+		cardDrawableMapping.put(Deck.cardAtPosition(31).getIndex(),
+				R.drawable.diamonds6);
+		cardDrawableMapping.put(Deck.cardAtPosition(32).getIndex(),
+				R.drawable.diamonds7);
+		cardDrawableMapping.put(Deck.cardAtPosition(33).getIndex(),
+				R.drawable.diamonds8);
+		cardDrawableMapping.put(Deck.cardAtPosition(34).getIndex(),
+				R.drawable.diamonds9);
+		cardDrawableMapping.put(Deck.cardAtPosition(35).getIndex(),
+				R.drawable.diamonds10);
+		cardDrawableMapping.put(Deck.cardAtPosition(36).getIndex(),
+				R.drawable.diamonds11);
+		cardDrawableMapping.put(Deck.cardAtPosition(37).getIndex(),
+				R.drawable.diamonds12);
+		cardDrawableMapping.put(Deck.cardAtPosition(38).getIndex(),
+				R.drawable.diamonds13);
+		cardDrawableMapping.put(Deck.cardAtPosition(39).getIndex(),
+				R.drawable.spades1);
+		cardDrawableMapping.put(Deck.cardAtPosition(40).getIndex(),
+				R.drawable.spades2);
+		cardDrawableMapping.put(Deck.cardAtPosition(41).getIndex(),
+				R.drawable.spades3);
+		cardDrawableMapping.put(Deck.cardAtPosition(42).getIndex(),
+				R.drawable.spades4);
+		cardDrawableMapping.put(Deck.cardAtPosition(43).getIndex(),
+				R.drawable.spades5);
+		cardDrawableMapping.put(Deck.cardAtPosition(44).getIndex(),
+				R.drawable.spades6);
+		cardDrawableMapping.put(Deck.cardAtPosition(45).getIndex(),
+				R.drawable.spades7);
+		cardDrawableMapping.put(Deck.cardAtPosition(46).getIndex(),
+				R.drawable.spades8);
+		cardDrawableMapping.put(Deck.cardAtPosition(47).getIndex(),
+				R.drawable.spades9);
+		cardDrawableMapping.put(Deck.cardAtPosition(48).getIndex(),
+				R.drawable.spades10);
+		cardDrawableMapping.put(Deck.cardAtPosition(49).getIndex(),
+				R.drawable.spades11);
+		cardDrawableMapping.put(Deck.cardAtPosition(50).getIndex(),
+				R.drawable.spades12);
+		cardDrawableMapping.put(Deck.cardAtPosition(51).getIndex(),
+				R.drawable.spades13);
 
 		cardsViews = new ImageView[] {
 				(ImageView) findViewById(R.id.imageView2),
@@ -327,6 +504,9 @@ public class GameActivity extends Activity {
 				.setOnClickListener(cardClickListener);
 
 		board = new CardBoard();
+
+		board.redeal();
+		repaint();
 	}
 
 	@Override

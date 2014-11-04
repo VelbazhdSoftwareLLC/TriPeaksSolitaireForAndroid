@@ -132,7 +132,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="35dp"
-        android:layout_marginLeft="200dp"
+        android:layout_marginLeft="180dp"
         android:text="@string/session_winings_label" />
 
     <TextView
@@ -142,7 +142,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="35dp"
-        android:layout_marginLeft="330dp"
+        android:layout_marginLeft="310dp"
         android:text="" />
 
     <TextView
@@ -152,7 +152,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="200dp"
+        android:layout_marginLeft="180dp"
         android:text="@string/session_average_label" />
 
     <TextView
@@ -162,7 +162,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="330dp"
+        android:layout_marginLeft="310dp"
         android:text="" />
 
     <TextView
@@ -172,7 +172,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="200dp"
+        android:layout_marginLeft="180dp"
         android:text="@string/session_games_label" />
 
     <TextView
@@ -182,7 +182,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="330dp"
+        android:layout_marginLeft="310dp"
         android:text="" />
 
     <TextView
@@ -192,8 +192,18 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="35dp"
-        android:layout_marginLeft="395dp"
+        android:layout_marginLeft="365dp"
         android:text="@string/player_games_label" />
+    
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="35dp"
+        android:layout_marginLeft="470dp"
+        android:text="" />
 
     <TextView
         android:id="@+id/textView11"
@@ -202,8 +212,18 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="20dp"
-        android:layout_marginLeft="395dp"
+        android:layout_marginLeft="365dp"
         android:text="@string/player_average_label" />
+    
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="470dp"
+        android:text="" />
 
     <TextView
         android:id="@+id/textView12"
@@ -212,8 +232,18 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="395dp"
+        android:layout_marginLeft="365dp"
         android:text="@string/longest_streak_label" />
+    
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="470dp"
+        android:text="" />
 
     <ImageView
         android:id="@+id/imageView100"
@@ -237,7 +267,7 @@
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs1" />
+        />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -249,7 +279,7 @@
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs2" />
+         />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -261,7 +291,7 @@
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs3" />
+        />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -273,7 +303,7 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs4" />
+         />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -285,7 +315,7 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs5" />
+         />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -297,7 +327,7 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs6" />
+         />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -309,7 +339,7 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs7" />
+         />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -321,7 +351,7 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs8" />
+         />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -333,7 +363,7 @@
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs9" />
+         />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -345,7 +375,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs10" />
+        />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -357,7 +387,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs11" />
+         />
 
     <ImageView
         android:id="@+id/imageView13"
@@ -369,7 +399,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs12" />
+        />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -381,7 +411,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/clubs13" />
+        />
 
     <ImageView
         android:id="@+id/imageView15"
@@ -393,7 +423,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts1" />
+        />
 
     <ImageView
         android:id="@+id/imageView16"
@@ -405,7 +435,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts2" />
+        />
 
     <ImageView
         android:id="@+id/imageView17"
@@ -417,7 +447,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts3" />
+        />
 
     <ImageView
         android:id="@+id/imageView18"
@@ -429,7 +459,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts4" />
+         />
 
     <ImageView
         android:id="@+id/imageView19"
@@ -441,7 +471,7 @@
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts5" />
+        />
 
     <ImageView
         android:id="@+id/imageView20"
@@ -453,7 +483,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts6" />
+         />
 
     <ImageView
         android:id="@+id/imageView21"
@@ -465,7 +495,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts7" />
+         />
 
     <ImageView
         android:id="@+id/imageView22"
@@ -477,7 +507,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts8" />
+        />
 
     <ImageView
         android:id="@+id/imageView23"
@@ -489,7 +519,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts9" />
+        />
 
     <ImageView
         android:id="@+id/imageView24"
@@ -501,7 +531,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts10" />
+        />
 
     <ImageView
         android:id="@+id/imageView25"
@@ -513,7 +543,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts11" />
+        />
 
     <ImageView
         android:id="@+id/imageView26"
@@ -525,7 +555,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts12" />
+        />
 
     <ImageView
         android:id="@+id/imageView27"
@@ -537,7 +567,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/hearts13" />
+        />
 
     <ImageView
         android:id="@+id/imageView28"
@@ -549,7 +579,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/spades1" />
+        />
 
     <ImageView
         android:id="@+id/imageView29"
@@ -561,7 +591,7 @@
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/spades2" />
+         />
 
     <ImageView
         android:id="@+id/imageView30"

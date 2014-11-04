@@ -130,6 +130,11 @@ class Card {
 	 * 
 	 */
 	public static final int WIDTH = 64;
+	
+	/**
+	 * 
+	 */
+	private static int count = 0;
 
 	/**
 	 * is it facing down
@@ -160,6 +165,11 @@ class Card {
 	 * coordinates of the card (center, not top-left)
 	 */
 	private int yCoord;
+	
+	/**
+	 * Custom index.
+	 */
+	private int index;
 
 	/**
 	 * specify all the fields at once
@@ -179,8 +189,17 @@ class Card {
 		this.visible = visible;
 		xCoord = x;
 		yCoord = y;
+		index = count++;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public int getIndex() {
+		return index;
+	}
+	
 	/**
 	 * 
 	 * @return
