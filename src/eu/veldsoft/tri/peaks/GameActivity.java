@@ -29,6 +29,8 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -133,23 +135,24 @@ public class GameActivity extends Activity {
 									board.getState().getDiscardIndex())
 									.getRank());
 				}
-				
+
 				/*
 				 * If the card isn't in the deck and is adjacent to the last
 				 * discarded card.
 				 */
 				if (q < 28 && isAdjacent == true) {
 					/*
-					 * Hide the previously discarded card - makes the repaint faster.
+					 * Hide the previously discarded card - makes the repaint
+					 * faster.
 					 */
 					Deck.cardAtPosition(board.getState().getDiscardIndex())
 							.setInvisible();
 
 					/*
-					 * Take the card from the peaks and put it in the discard pile.
+					 * Take the card from the peaks and put it in the discard
+					 * pile.
 					 */
 					board.getState().doValidMove(q);
-					
 
 					/*
 					 * If it was a peak.
@@ -177,6 +180,52 @@ public class GameActivity extends Activity {
 						break;
 					}
 
+					/*
+					 * Check values for checking whether or not a card has a
+					 * card to the left or right.
+					 */
+					boolean noLeft = false, noRight = false;
+
+					/*
+					 * If the card is not a left end.
+					 */
+					if ((q != 3) && (q != 9) && (q != 18) && (q != 5)
+							&& (q != 7) && (q != 12) && (q != 15)) {
+						/*
+						 * Check if the left-adjacent card is visible.
+						 */
+						if (Deck.cardAtPosition(q - 1).isInvisible() == true) {
+							noLeft = true;
+						}
+					}
+
+					/*
+					 * If the card is not a right end.
+					 */
+					if ((q != 4) && (q != 6) && (q != 8) && (q != 17)
+							&& (q != 27) && (q != 11) && (q != 14)) {
+						/*
+						 * Check if the right-adjacent card is visible.
+						 */
+						if (Deck.cardAtPosition(q + 1).isInvisible() == true) {
+							noRight = true;
+						}
+					}
+					
+					/*
+					 * Some of the cards in the third row are considered to be edge
+					 * cards because not all pairs of adjacent cards in the third
+					 * row uncover another card.
+					 */
+					if ((noLeft || noRight) == false) {
+						/*
+						 * If both the left and right cards are present, don't do
+						 * anything.
+						 */
+						break;
+					}
+
+					//TODO To be continued ...
 				}
 
 			}
@@ -229,14 +278,27 @@ public class GameActivity extends Activity {
 				}
 			} else if (card.isFacingDown() == true) {
 				if (q < cardsViews.length) {
-					cardsViews[q].setImageResource(R.drawable.back02);
+					cardsViews[q].setImageResource(R.drawable.back03);
 				}
 			}
 		}
 
+		/*
+		 * Display last discarded card.
+		 */
 		((ImageView) findViewById(R.id.imageView31))
 				.setImageResource(cardDrawableMapping.get(Deck.cardAtPosition(
 						board.getState().getDiscardIndex()).getIndex()));
+
+		/*
+		 * Display deal deck.
+		 */
+		if (board.getState().getRemainingCards() > 0) {
+			((ImageView) findViewById(R.id.imageView30))
+					.setImageResource(R.drawable.back03);
+		} else {
+			((ImageView) findViewById(R.id.imageView30)).setImageBitmap(null);
+		}
 
 		if (board.getState().getScore() < 0) {
 			((TextView) findViewById(R.id.textView1))
@@ -502,6 +564,17 @@ public class GameActivity extends Activity {
 				.setOnClickListener(cardClickListener);
 		((ImageView) findViewById(R.id.imageView31))
 				.setOnClickListener(cardClickListener);
+
+		((ImageView) findViewById(R.id.imageView100))
+				.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						GameActivity.this.startActivity(new Intent(
+								Intent.ACTION_VIEW, Uri.parse(getResources()
+										.getString(R.string.ebinqo_url))));
+
+					}
+				});
 
 		board = new CardBoard();
 

@@ -194,7 +194,7 @@
         android:layout_marginBottom="35dp"
         android:layout_marginLeft="365dp"
         android:text="@string/player_games_label" />
-    
+
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="365dp"
         android:text="@string/player_average_label" />
-    
+
     <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
@@ -234,7 +234,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="365dp"
         android:text="@string/longest_streak_label" />
-    
+
     <TextView
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
@@ -251,11 +251,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="55dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/nescafe" />
+        android:src="@drawable/ebingo_logo" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -266,8 +266,7 @@
         android:layout_marginLeft="110dp"
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -278,8 +277,7 @@
         android:layout_marginLeft="245dp"
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -290,8 +288,7 @@
         android:layout_marginLeft="380dp"
         android:layout_marginTop="0dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -302,8 +299,7 @@
         android:layout_marginLeft="88dp"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -314,8 +310,7 @@
         android:layout_marginLeft="133dp"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView7"
@@ -326,8 +321,7 @@
         android:layout_marginLeft="223dp"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -338,8 +332,7 @@
         android:layout_marginLeft="268dp"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView9"
@@ -350,8 +343,7 @@
         android:layout_marginLeft="358dp"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -362,8 +354,7 @@
         android:layout_marginLeft="403dp"
         android:layout_marginTop="20dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView11"
@@ -374,8 +365,7 @@
         android:layout_marginLeft="65dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView12"
@@ -386,8 +376,7 @@
         android:layout_marginLeft="110dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView13"
@@ -398,8 +387,7 @@
         android:layout_marginLeft="155dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView14"
@@ -410,8 +398,7 @@
         android:layout_marginLeft="200dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView15"
@@ -422,8 +409,7 @@
         android:layout_marginLeft="245dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView16"
@@ -434,8 +420,7 @@
         android:layout_marginLeft="290dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView17"
@@ -446,8 +431,7 @@
         android:layout_marginLeft="335dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView18"
@@ -458,8 +442,7 @@
         android:layout_marginLeft="380dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView19"
@@ -470,8 +453,7 @@
         android:layout_marginLeft="425dp"
         android:layout_marginTop="40dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView20"
@@ -482,8 +464,7 @@
         android:layout_marginLeft="43dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView21"
@@ -494,8 +475,7 @@
         android:layout_marginLeft="88dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView22"
@@ -506,8 +486,7 @@
         android:layout_marginLeft="133dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView23"
@@ -518,8 +497,7 @@
         android:layout_marginLeft="178dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView24"
@@ -530,8 +508,7 @@
         android:layout_marginLeft="223dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView25"
@@ -542,8 +519,7 @@
         android:layout_marginLeft="268dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView26"
@@ -554,8 +530,7 @@
         android:layout_marginLeft="313dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView27"
@@ -566,8 +541,7 @@
         android:layout_marginLeft="358dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView28"
@@ -578,8 +552,7 @@
         android:layout_marginLeft="403dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView29"
@@ -590,8 +563,7 @@
         android:layout_marginLeft="448dp"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-         />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView30"
@@ -602,8 +574,7 @@
         android:layout_marginLeft="178dp"
         android:layout_marginTop="130dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/back02" />
+        android:scaleType="fitCenter" />
 
     <ImageView
         android:id="@+id/imageView31"
@@ -614,8 +585,7 @@
         android:layout_marginLeft="312dp"
         android:layout_marginTop="130dp"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/spades4" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/textView13"
