@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -21,7 +21,7 @@
 package eu.veldsoft.tri.peaks;
 
 /**
- * Possible cheats enumeration. 
+ * Possible cheats enumeration.
  * 
  * @author Todor Balabanov
  */
@@ -56,7 +56,7 @@ enum Cheat {
 	}
 
 	/**
-	 * Constant numerical representation getter. 
+	 * Constant numerical representation getter.
 	 * 
 	 * @return Numerical value of the constant.
 	 * 

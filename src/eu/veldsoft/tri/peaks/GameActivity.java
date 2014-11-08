@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -95,7 +95,7 @@ public class GameActivity extends Activity {
 				}
 
 				/*
-				 * if the card isn't part of the deck and is face-down, skip it
+				 * If the card isn't part of the deck and is face-down, skip it.
 				 */
 				if (((q < 28) || (q == 51)) && card.isFacingDown() == true) {
 					continue;
@@ -105,6 +105,16 @@ public class GameActivity extends Activity {
 				 * If the card is in the discard pile, skip it.
 				 */
 				if (q == board.getState().getDiscardIndex()) {
+					continue;
+				}
+
+				/*
+				 * If the click is not for the particular card, skip the rest.
+				 */
+				// TODO
+				// cardsViews[q].setImageResource(cardDrawableMapping.get(card.getIndex()));
+				// ((ImageView)view).getResources();
+				if (q < cardsViews.length && view != cardsViews[q]) {
 					continue;
 				}
 
@@ -298,7 +308,14 @@ public class GameActivity extends Activity {
 				/*
 				 * In the deck move the card to the deck.
 				 */
-				if ((q >= 28) && (q < 51)) {
+				else if ((q >= 28) && (q < 51)) {
+
+					/*
+					 * If the clicked card is not the deck itself, skip it.
+					 */
+					if (view != findViewById(R.id.imageView30)) {
+						continue;
+					}
 
 					/*
 					 * Set the deck's coordinates.
@@ -414,6 +431,17 @@ public class GameActivity extends Activity {
 		 */
 		for (int q = 0; q < Deck.SIZE; q++) {
 			Card card = Deck.cardAtPosition(q);
+
+			/*
+			 * If the card is in the discard pile, skip it.
+			 */
+			if (q == board.getState().getDiscardIndex()) {
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageBitmap(null);
+				}
+
+				continue;
+			}
 
 			/*
 			 * If the card is not visible, skip it.

@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -82,7 +82,7 @@ public class Deck {
 			new Card(Card.Rank.JACK, Card.Suit.SPADES, true, false, 0, 0),
 			new Card(Card.Rank.QUEEN, Card.Suit.SPADES, true, false, 0, 0),
 			new Card(Card.Rank.KING, Card.Suit.SPADES, true, false, 0, 0) };
-	
+
 	/**
 	 * Deck size.
 	 */

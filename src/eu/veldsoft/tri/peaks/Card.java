@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -130,7 +130,7 @@ class Card {
 	 * 
 	 */
 	public static final int WIDTH = 64;
-	
+
 	/**
 	 * 
 	 */
@@ -165,7 +165,7 @@ class Card {
 	 * coordinates of the card (center, not top-left)
 	 */
 	private int yCoord;
-	
+
 	/**
 	 * Custom index.
 	 */
@@ -199,7 +199,7 @@ class Card {
 	public int getIndex() {
 		return index;
 	}
-	
+
 	/**
 	 * 
 	 * @return

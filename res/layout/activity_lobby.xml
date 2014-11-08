@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:text="@string/new_game_caption" />
 
+    <!--
     <Button
         android:id="@+id/button2"
         android:layout_width="fill_parent"
@@ -27,6 +28,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/options_caption" />
+    -->
 
     <Button
         android:id="@+id/button4"
