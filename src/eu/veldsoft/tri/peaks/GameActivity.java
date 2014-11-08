@@ -111,9 +111,6 @@ public class GameActivity extends Activity {
 				/*
 				 * If the click is not for the particular card, skip the rest.
 				 */
-				// TODO
-				// cardsViews[q].setImageResource(cardDrawableMapping.get(card.getIndex()));
-				// ((ImageView)view).getResources();
 				if (q < cardsViews.length && view != cardsViews[q]) {
 					continue;
 				}
