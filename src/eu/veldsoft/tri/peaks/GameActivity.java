@@ -79,9 +79,6 @@ public class GameActivity extends Activity {
 		 */
 		@Override
 		public void onClick(View view) {
-			Toast.makeText(GameActivity.this, "" + view, Toast.LENGTH_SHORT)
-					.show();
-
 			/*
 			 * Go through the cards in reverse order - the higher index-cards
 			 * are on top. All the skips make execution of the mouse-click
@@ -174,8 +171,8 @@ public class GameActivity extends Activity {
 						}
 
 						/*
-						 * The click was cosumed - don't go through the rest of
-						 * the cards.
+						 * The click was consumed - do not go through the rest
+						 * of the cards.
 						 */
 						break;
 					}
@@ -211,24 +208,187 @@ public class GameActivity extends Activity {
 							noRight = true;
 						}
 					}
-					
+
 					/*
-					 * Some of the cards in the third row are considered to be edge
-					 * cards because not all pairs of adjacent cards in the third
-					 * row uncover another card.
+					 * Some of the cards in the third row are considered to be
+					 * edge cards because not all pairs of adjacent cards in the
+					 * third row uncover another card.
 					 */
 					if ((noLeft || noRight) == false) {
 						/*
-						 * If both the left and right cards are present, don't do
-						 * anything.
+						 * If both the left and right cards are present, don't
+						 * do anything.
 						 */
 						break;
 					}
 
-					//TODO To be continued ...
+					/*
+					 * The offset is the difference in the indexes of the right
+					 * card of the adjacent pair and the card that pair will
+					 * uncover.
+					 */
+					int offset = -1;
+
+					if ((q >= 18) && (q <= 27)) {
+						/*
+						 * 4th row
+						 */
+						offset = 10;
+					} else if ((q >= 9) && (q <= 11)) {
+						/*
+						 * first 3 of 3rd row
+						 */
+						offset = 7;
+					} else if ((q >= 12) && (q <= 14)) {
+						/*
+						 * second 3 of third row
+						 */
+						offset = 8;
+					} else if ((q >= 15) && (q <= 17)) {
+						/*
+						 * last 3 of third row
+						 */
+						offset = 9;
+					} else if ((q >= 3) && (q <= 4)) {
+						/*
+						 * first 2 of second row
+						 */
+						offset = 4;
+					} else if ((q >= 5) && (q <= 6)) {
+						/*
+						 * second 2 of second row
+						 */
+						offset = 5;
+					} else if ((q >= 7) && (q <= 8)) {
+						/*
+						 * last 2 of second row
+						 */
+						offset = 6;
+					}
+
+					/*
+					 * The first row is not here because the peaks are special
+					 * and were already taken care of above.
+					 */
+					if (offset == -1) {
+						/*
+						 * If the offset didn't get set, do not do anything
+						 * (offset should get set, but just in case).
+						 */
+						break;
+					}
+
+					/*
+					 * If the left card is missing, use the current card as the
+					 * right one.
+					 */
+					if (noLeft) {
+						Deck.cardAtPosition(q - offset).flip();
+					}
+
+					/*
+					 * If the right card is missing, use the missing card as the
+					 * right one.
+					 */
+					if (noRight) {
+						Deck.cardAtPosition(q - offset + 1).flip();
+					}
 				}
 
+				/*
+				 * In the deck move the card to the deck.
+				 */
+				if ((q >= 28) && (q < 51)) {
+
+					/*
+					 * Set the deck's coordinates.
+					 */
+					card.setX(Deck.cardAtPosition(
+							board.getState().getDiscardIndex()).getX());
+					card.setY(Deck.cardAtPosition(
+							board.getState().getDiscardIndex()).getY());
+
+					/*
+					 * Hide the previously discarded card (for faster repaint).
+					 */
+					Deck.cardAtPosition(board.getState().getDiscardIndex())
+							.setInvisible();
+
+					/*
+					 * Flip the deck card.
+					 */
+					card.flip();
+
+					/*
+					 * Show the next deck card if it's not the last deck card.
+					 */
+					if (q != 28) {
+						Deck.cardAtPosition(q - 1).setVisible();
+					}
+
+					/*
+					 * Set the index of the discard pile.
+					 */
+					board.getState().setDiscardIndex(q);
+
+					/*
+					 * Reset the streak.
+					 */
+					board.getState().setStreak(0);
+
+					/*
+					 * If the third cheat is not on (no penalty cheat).
+					 */
+					if (board.getState().getCheats().contains(Cheat.NO_PENALTY) == false) {
+						/*
+						 * 5-point penalty.
+						 */
+						board.getState().setScore(
+								board.getState().getScore()
+										- Constants.NO_PENALTY_CHEAT);
+
+						/*
+						 * To the game score.
+						 */
+						board.getState().setGameScore(
+								board.getState().getGameScore()
+										- Constants.NO_PENALTY_CHEAT);
+
+						/*
+						 * And the session score.
+						 */
+						board.getState().setSessionScore(
+								board.getState().getSessionScore()
+										- Constants.NO_PENALTY_CHEAT);
+					}
+
+					/*
+					 * Set the low score if score is lower.
+					 */
+					if (board.getState().getGameScore() < board.getState()
+							.getLowScore()) {
+						board.getState().setLowScore(
+								board.getState().getGameScore());
+					}
+
+					/*
+					 * Decrement the number of cards in the deck.
+					 */
+					board.getState().setRemainingCards(
+							board.getState().getRemainingCards() - 1);
+				}
+
+				/*
+				 * The click was consumed - do not go through the rest of the
+				 * cards.
+				 */
+				break;
 			}
+
+			/*
+			 * Repaint the board.
+			 */
+			repaint();
 		}
 	};
 
