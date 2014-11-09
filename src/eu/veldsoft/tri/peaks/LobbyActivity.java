@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov, Daniela Pancheva
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -43,12 +43,32 @@ public class LobbyActivity extends Activity {
 					}
 				});
 
+		((Button) findViewById(R.id.button4))
+				.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						LobbyActivity.this.startActivity(new Intent(
+								LobbyActivity.this, AboutUsActivity.class));
+					}
+				});
+
 		((Button) findViewById(R.id.button5))
 				.setOnClickListener(new View.OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						finish();
+					}
+				});
+
+		((Button) findViewById(R.id.button6))
+				.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						LobbyActivity.this.startActivity(new Intent(
+								LobbyActivity.this, HelpActivity.class));
 					}
 				});
 	}
