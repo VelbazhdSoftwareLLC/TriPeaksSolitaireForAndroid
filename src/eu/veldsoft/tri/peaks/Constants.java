@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -45,7 +45,7 @@ class Constants {
 	static final int THREE_PEAKS_BONUS = 15;
 
 	/**
-	 * Subtract 5-point in no penalty amount. 
+	 * Subtract 5-point in no penalty amount.
 	 */
 	static final int NO_PENALTY_CHEAT = 5;
 

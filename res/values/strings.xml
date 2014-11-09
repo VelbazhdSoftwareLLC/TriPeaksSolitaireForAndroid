@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="ebinqo_url">http://ebinqo.com/</string>
     <string name="app_name">Tri Peaks Solitaire</string>
     <string name="title_activity_lobby">Tri Peaks Solitaire</string>
     <string name="welcome_to_the_tri_peaks_solitaire_text">Welcome to the Tri Peaks Solitaire!</string>
@@ -24,5 +25,5 @@
     <string name="player_games_label">Player Games:</string>
     <string name="player_average_label">Player Average:</string>
     <string name="longest_streak_label">Longest Streak:</string>
-    
+
 </resources>

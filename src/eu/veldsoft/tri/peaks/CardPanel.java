@@ -560,13 +560,16 @@ class CardPanel extends JPanel implements MouseListener {
 				/*
 				 * set the deck's coordinates
 				 */
-				card.setX(Deck.cardAtPosition(board.getState().getDiscardIndex()).getX());
-				card.setY(Deck.cardAtPosition(board.getState().getDiscardIndex()).getY());
+				card.setX(Deck.cardAtPosition(
+						board.getState().getDiscardIndex()).getX());
+				card.setY(Deck.cardAtPosition(
+						board.getState().getDiscardIndex()).getY());
 
 				/*
 				 * hide the previously discarded card (for faster repaint)
 				 */
-				Deck.cardAtPosition(board.getState().getDiscardIndex()).setInvisible();
+				Deck.cardAtPosition(board.getState().getDiscardIndex())
+						.setInvisible();
 
 				/*
 				 * flip the deck card
@@ -599,33 +602,39 @@ class CardPanel extends JPanel implements MouseListener {
 					/*
 					 * 5-point penalty
 					 */
-					board.getState().setScore(board.getState().getScore()
-							- Constants.NO_PENALTY_CHEAT);
+					board.getState().setScore(
+							board.getState().getScore()
+									- Constants.NO_PENALTY_CHEAT);
 
 					/*
 					 * to the game score
 					 */
-					board.getState().setGameScore(board.getState().getGameScore()
-							- Constants.NO_PENALTY_CHEAT);
+					board.getState().setGameScore(
+							board.getState().getGameScore()
+									- Constants.NO_PENALTY_CHEAT);
 
 					/*
 					 * and the session score
 					 */
-					board.getState().setSessionScore(board.getState().getSessionScore()
-							- Constants.NO_PENALTY_CHEAT);
+					board.getState().setSessionScore(
+							board.getState().getSessionScore()
+									- Constants.NO_PENALTY_CHEAT);
 				}
 
 				/*
 				 * set the low score if score is lower
 				 */
-				if (board.getState().getGameScore() < board.getState().getLowScore()) {
-					board.getState().setLowScore(board.getState().getGameScore());
+				if (board.getState().getGameScore() < board.getState()
+						.getLowScore()) {
+					board.getState().setLowScore(
+							board.getState().getGameScore());
 				}
 
 				/*
 				 * decrement the number of cards in the deck
 				 */
-				board.getState().setRemainingCards(board.getState().getRemainingCards() - 1);
+				board.getState().setRemainingCards(
+						board.getState().getRemainingCards() - 1);
 			}
 
 			/*
@@ -710,8 +719,6 @@ class CardPanel extends JPanel implements MouseListener {
 		frontFolder = front;
 	}
 
-	
-	
 	/**
 	 * returns the background color
 	 * 
@@ -811,7 +818,7 @@ class CardPanel extends JPanel implements MouseListener {
 	 */
 	public void reset() {
 		board.reset();
-		
+
 		/*
 		 * repaint the board
 		 */

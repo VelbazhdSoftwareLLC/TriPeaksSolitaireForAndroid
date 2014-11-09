@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -21,12 +21,16 @@
 package eu.veldsoft.tri.peaks;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,7 +48,7 @@ public class GameActivity extends Activity {
 	/**
 	 * 
 	 */
-	private Map<Card, Integer> cardDrawableMapping = new HashMap<Card, Integer>();
+	private Map<Integer, Integer> cardDrawableMapping = new HashMap<Integer, Integer>();
 
 	/**
 	 * 
@@ -75,8 +79,330 @@ public class GameActivity extends Activity {
 		 */
 		@Override
 		public void onClick(View view) {
-			Toast.makeText(GameActivity.this, "" + view, Toast.LENGTH_SHORT)
-					.show();
+			/*
+			 * Go through the cards in reverse order - the higher index-cards
+			 * are on top. All the skips make execution of the mouse-click
+			 * faster.
+			 */
+			for (int q = Deck.SIZE - 1; q >= 0; q--) {
+				Card card = Deck.cardAtPosition(q);
+
+				/*
+				 * If the card is invisible, skip it.
+				 */
+				if (card.isInvisible() == true) {
+					continue;
+				}
+
+				/*
+				 * If the card isn't part of the deck and is face-down, skip it.
+				 */
+				if (((q < 28) || (q == 51)) && card.isFacingDown() == true) {
+					continue;
+				}
+
+				/*
+				 * If the card is in the discard pile, skip it.
+				 */
+				if (q == board.getState().getDiscardIndex()) {
+					continue;
+				}
+
+				/*
+				 * If the click is not for the particular card, skip the rest.
+				 */
+				if (q < cardsViews.length && view != cardsViews[q]) {
+					continue;
+				}
+
+				/*
+				 * A value to check if the card is adjacent by value.
+				 */
+				boolean isAdjacent = false;
+
+				/*
+				 * If the second cheat is used, the value of the card won't be
+				 * checked.
+				 */
+				if (board.getState().getCheats().contains(Cheat.CLICK_ANY_CARD) == true) {
+					/*
+					 * The card is adjacent automatically.
+					 */
+					isAdjacent = true;
+				} else {
+					/*
+					 * No cheat - check card check if the card is adjacent by
+					 * value.
+					 */
+					isAdjacent = card.getRank().isAdjacentTo(
+							Deck.cardAtPosition(
+									board.getState().getDiscardIndex())
+									.getRank());
+				}
+
+				/*
+				 * If the card isn't in the deck and is adjacent to the last
+				 * discarded card.
+				 */
+				if (q < 28 && isAdjacent == true) {
+					/*
+					 * Hide the previously discarded card - makes the repaint
+					 * faster.
+					 */
+					Deck.cardAtPosition(board.getState().getDiscardIndex())
+							.setInvisible();
+
+					/*
+					 * Take the card from the peaks and put it in the discard
+					 * pile.
+					 */
+					board.getState().doValidMove(q);
+
+					/*
+					 * If it was a peak.
+					 */
+					if (q < 3) {
+						/*
+						 * If all the peaks are gone.
+						 */
+						if (board.getState().getRemainingCards() == 0) {
+							/*
+							 * Set the status message.
+							 */
+							board.setStatus("You have Tri-Conquered! You get a bonus of $30");
+						} else {
+							/*
+							 * Set the status message.
+							 */
+							board.setStatus("You have reached a peak! You get a bonus of $15");
+						}
+
+						/*
+						 * The click was consumed - do not go through the rest
+						 * of the cards.
+						 */
+						break;
+					}
+
+					/*
+					 * Check values for checking whether or not a card has a
+					 * card to the left or right.
+					 */
+					boolean noLeft = false, noRight = false;
+
+					/*
+					 * If the card is not a left end.
+					 */
+					if ((q != 3) && (q != 9) && (q != 18) && (q != 5)
+							&& (q != 7) && (q != 12) && (q != 15)) {
+						/*
+						 * Check if the left-adjacent card is visible.
+						 */
+						if (Deck.cardAtPosition(q - 1).isInvisible() == true) {
+							noLeft = true;
+						}
+					}
+
+					/*
+					 * If the card is not a right end.
+					 */
+					if ((q != 4) && (q != 6) && (q != 8) && (q != 17)
+							&& (q != 27) && (q != 11) && (q != 14)) {
+						/*
+						 * Check if the right-adjacent card is visible.
+						 */
+						if (Deck.cardAtPosition(q + 1).isInvisible() == true) {
+							noRight = true;
+						}
+					}
+
+					/*
+					 * Some of the cards in the third row are considered to be
+					 * edge cards because not all pairs of adjacent cards in the
+					 * third row uncover another card.
+					 */
+					if ((noLeft || noRight) == false) {
+						/*
+						 * If both the left and right cards are present, don't
+						 * do anything.
+						 */
+						break;
+					}
+
+					/*
+					 * The offset is the difference in the indexes of the right
+					 * card of the adjacent pair and the card that pair will
+					 * uncover.
+					 */
+					int offset = -1;
+
+					if ((q >= 18) && (q <= 27)) {
+						/*
+						 * 4th row
+						 */
+						offset = 10;
+					} else if ((q >= 9) && (q <= 11)) {
+						/*
+						 * first 3 of 3rd row
+						 */
+						offset = 7;
+					} else if ((q >= 12) && (q <= 14)) {
+						/*
+						 * second 3 of third row
+						 */
+						offset = 8;
+					} else if ((q >= 15) && (q <= 17)) {
+						/*
+						 * last 3 of third row
+						 */
+						offset = 9;
+					} else if ((q >= 3) && (q <= 4)) {
+						/*
+						 * first 2 of second row
+						 */
+						offset = 4;
+					} else if ((q >= 5) && (q <= 6)) {
+						/*
+						 * second 2 of second row
+						 */
+						offset = 5;
+					} else if ((q >= 7) && (q <= 8)) {
+						/*
+						 * last 2 of second row
+						 */
+						offset = 6;
+					}
+
+					/*
+					 * The first row is not here because the peaks are special
+					 * and were already taken care of above.
+					 */
+					if (offset == -1) {
+						/*
+						 * If the offset didn't get set, do not do anything
+						 * (offset should get set, but just in case).
+						 */
+						break;
+					}
+
+					/*
+					 * If the left card is missing, use the current card as the
+					 * right one.
+					 */
+					if (noLeft) {
+						Deck.cardAtPosition(q - offset).flip();
+					}
+
+					/*
+					 * If the right card is missing, use the missing card as the
+					 * right one.
+					 */
+					if (noRight) {
+						Deck.cardAtPosition(q - offset + 1).flip();
+					}
+				}
+
+				/*
+				 * In the deck move the card to the deck.
+				 */
+				else if ((q >= 28) && (q < 51)) {
+
+					/*
+					 * If the clicked card is not the deck itself, skip it.
+					 */
+					if (view != findViewById(R.id.imageView30)) {
+						continue;
+					}
+
+					/*
+					 * Set the deck's coordinates.
+					 */
+					card.setX(Deck.cardAtPosition(
+							board.getState().getDiscardIndex()).getX());
+					card.setY(Deck.cardAtPosition(
+							board.getState().getDiscardIndex()).getY());
+
+					/*
+					 * Hide the previously discarded card (for faster repaint).
+					 */
+					Deck.cardAtPosition(board.getState().getDiscardIndex())
+							.setInvisible();
+
+					/*
+					 * Flip the deck card.
+					 */
+					card.flip();
+
+					/*
+					 * Show the next deck card if it's not the last deck card.
+					 */
+					if (q != 28) {
+						Deck.cardAtPosition(q - 1).setVisible();
+					}
+
+					/*
+					 * Set the index of the discard pile.
+					 */
+					board.getState().setDiscardIndex(q);
+
+					/*
+					 * Reset the streak.
+					 */
+					board.getState().setStreak(0);
+
+					/*
+					 * If the third cheat is not on (no penalty cheat).
+					 */
+					if (board.getState().getCheats().contains(Cheat.NO_PENALTY) == false) {
+						/*
+						 * 5-point penalty.
+						 */
+						board.getState().setScore(
+								board.getState().getScore()
+										- Constants.NO_PENALTY_CHEAT);
+
+						/*
+						 * To the game score.
+						 */
+						board.getState().setGameScore(
+								board.getState().getGameScore()
+										- Constants.NO_PENALTY_CHEAT);
+
+						/*
+						 * And the session score.
+						 */
+						board.getState().setSessionScore(
+								board.getState().getSessionScore()
+										- Constants.NO_PENALTY_CHEAT);
+					}
+
+					/*
+					 * Set the low score if score is lower.
+					 */
+					if (board.getState().getGameScore() < board.getState()
+							.getLowScore()) {
+						board.getState().setLowScore(
+								board.getState().getGameScore());
+					}
+
+					/*
+					 * Decrement the number of cards in the deck.
+					 */
+					board.getState().setRemainingCards(
+							board.getState().getRemainingCards() - 1);
+				}
+
+				/*
+				 * The click was consumed - do not go through the rest of the
+				 * cards.
+				 */
+				break;
+			}
+
+			/*
+			 * Repaint the board.
+			 */
+			repaint();
 		}
 	};
 
@@ -104,6 +430,17 @@ public class GameActivity extends Activity {
 			Card card = Deck.cardAtPosition(q);
 
 			/*
+			 * If the card is in the discard pile, skip it.
+			 */
+			if (q == board.getState().getDiscardIndex()) {
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageBitmap(null);
+				}
+
+				continue;
+			}
+
+			/*
 			 * If the card is not visible, skip it.
 			 */
 			if (card.isInvisible() == true) {
@@ -120,10 +457,32 @@ public class GameActivity extends Activity {
 			if (card.isFacingUp() == true
 					|| board.getState().getCheats()
 							.contains(Cheat.CARDS_FACE_UP) == true) {
-				// TODO Take face up image id.
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageResource(cardDrawableMapping.get(card
+							.getIndex()));
+				}
 			} else if (card.isFacingDown() == true) {
-				// TODO Take back image id.
+				if (q < cardsViews.length) {
+					cardsViews[q].setImageResource(R.drawable.back03);
+				}
 			}
+		}
+
+		/*
+		 * Display last discarded card.
+		 */
+		((ImageView) findViewById(R.id.imageView31))
+				.setImageResource(cardDrawableMapping.get(Deck.cardAtPosition(
+						board.getState().getDiscardIndex()).getIndex()));
+
+		/*
+		 * Display deal deck.
+		 */
+		if (board.getState().getRemainingCards() > 0) {
+			((ImageView) findViewById(R.id.imageView30))
+					.setImageResource(R.drawable.back03);
+		} else {
+			((ImageView) findViewById(R.id.imageView30)).setImageBitmap(null);
 		}
 
 		if (board.getState().getScore() < 0) {
@@ -159,6 +518,19 @@ public class GameActivity extends Activity {
 		((TextView) findViewById(R.id.textView21)).setText(dblFmt.format(avg));
 
 		((TextView) findViewById(R.id.textView22)).setText("" + stats[5]);
+
+		((TextView) findViewById(R.id.textView23)).setText("" + stats[4]);
+
+		if (stats[4] != 0) {
+			avg = ((double) stats[0]) / ((double) stats[4]);
+		} else {
+			avg = 0;
+		}
+		((TextView) findViewById(R.id.textView24)).setText(""
+				+ dblFmt.format(avg));
+
+		((TextView) findViewById(R.id.textView25)).setText("" + stats[8]
+				+ " = " + intFmt.format((stats[8] * (stats[8] + 1) / 2)));
 	}
 
 	/**
@@ -182,58 +554,110 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
-		cardDrawableMapping.put(Deck.cardAtPosition(0), R.drawable.clubs1);
-		cardDrawableMapping.put(Deck.cardAtPosition(1), R.drawable.clubs2);
-		cardDrawableMapping.put(Deck.cardAtPosition(2), R.drawable.clubs3);
-		cardDrawableMapping.put(Deck.cardAtPosition(3), R.drawable.clubs4);
-		cardDrawableMapping.put(Deck.cardAtPosition(4), R.drawable.clubs5);
-		cardDrawableMapping.put(Deck.cardAtPosition(5), R.drawable.clubs6);
-		cardDrawableMapping.put(Deck.cardAtPosition(6), R.drawable.clubs7);
-		cardDrawableMapping.put(Deck.cardAtPosition(7), R.drawable.clubs8);
-		cardDrawableMapping.put(Deck.cardAtPosition(8), R.drawable.clubs9);
-		cardDrawableMapping.put(Deck.cardAtPosition(9), R.drawable.clubs10);
-		cardDrawableMapping.put(Deck.cardAtPosition(10), R.drawable.clubs11);
-		cardDrawableMapping.put(Deck.cardAtPosition(11), R.drawable.clubs12);
-		cardDrawableMapping.put(Deck.cardAtPosition(12), R.drawable.clubs13);
-		cardDrawableMapping.put(Deck.cardAtPosition(13), R.drawable.hearts1);
-		cardDrawableMapping.put(Deck.cardAtPosition(14), R.drawable.hearts2);
-		cardDrawableMapping.put(Deck.cardAtPosition(15), R.drawable.hearts3);
-		cardDrawableMapping.put(Deck.cardAtPosition(16), R.drawable.hearts4);
-		cardDrawableMapping.put(Deck.cardAtPosition(17), R.drawable.hearts5);
-		cardDrawableMapping.put(Deck.cardAtPosition(18), R.drawable.hearts6);
-		cardDrawableMapping.put(Deck.cardAtPosition(19), R.drawable.hearts7);
-		cardDrawableMapping.put(Deck.cardAtPosition(20), R.drawable.hearts8);
-		cardDrawableMapping.put(Deck.cardAtPosition(21), R.drawable.hearts9);
-		cardDrawableMapping.put(Deck.cardAtPosition(22), R.drawable.hearts10);
-		cardDrawableMapping.put(Deck.cardAtPosition(23), R.drawable.hearts11);
-		cardDrawableMapping.put(Deck.cardAtPosition(24), R.drawable.hearts12);
-		cardDrawableMapping.put(Deck.cardAtPosition(25), R.drawable.hearts13);
-		cardDrawableMapping.put(Deck.cardAtPosition(26), R.drawable.diamonds1);
-		cardDrawableMapping.put(Deck.cardAtPosition(27), R.drawable.diamonds2);
-		cardDrawableMapping.put(Deck.cardAtPosition(28), R.drawable.diamonds3);
-		cardDrawableMapping.put(Deck.cardAtPosition(29), R.drawable.diamonds4);
-		cardDrawableMapping.put(Deck.cardAtPosition(30), R.drawable.diamonds5);
-		cardDrawableMapping.put(Deck.cardAtPosition(31), R.drawable.diamonds6);
-		cardDrawableMapping.put(Deck.cardAtPosition(32), R.drawable.diamonds7);
-		cardDrawableMapping.put(Deck.cardAtPosition(33), R.drawable.diamonds8);
-		cardDrawableMapping.put(Deck.cardAtPosition(34), R.drawable.diamonds9);
-		cardDrawableMapping.put(Deck.cardAtPosition(35), R.drawable.diamonds10);
-		cardDrawableMapping.put(Deck.cardAtPosition(36), R.drawable.diamonds11);
-		cardDrawableMapping.put(Deck.cardAtPosition(37), R.drawable.diamonds12);
-		cardDrawableMapping.put(Deck.cardAtPosition(38), R.drawable.diamonds13);
-		cardDrawableMapping.put(Deck.cardAtPosition(39), R.drawable.spades1);
-		cardDrawableMapping.put(Deck.cardAtPosition(40), R.drawable.spades2);
-		cardDrawableMapping.put(Deck.cardAtPosition(41), R.drawable.spades3);
-		cardDrawableMapping.put(Deck.cardAtPosition(42), R.drawable.spades4);
-		cardDrawableMapping.put(Deck.cardAtPosition(43), R.drawable.spades5);
-		cardDrawableMapping.put(Deck.cardAtPosition(44), R.drawable.spades6);
-		cardDrawableMapping.put(Deck.cardAtPosition(45), R.drawable.spades7);
-		cardDrawableMapping.put(Deck.cardAtPosition(46), R.drawable.spades8);
-		cardDrawableMapping.put(Deck.cardAtPosition(47), R.drawable.spades9);
-		cardDrawableMapping.put(Deck.cardAtPosition(48), R.drawable.spades10);
-		cardDrawableMapping.put(Deck.cardAtPosition(49), R.drawable.spades11);
-		cardDrawableMapping.put(Deck.cardAtPosition(50), R.drawable.spades12);
-		cardDrawableMapping.put(Deck.cardAtPosition(51), R.drawable.spades13);
+		cardDrawableMapping.put(Deck.cardAtPosition(0).getIndex(),
+				R.drawable.clubs1);
+		cardDrawableMapping.put(Deck.cardAtPosition(1).getIndex(),
+				R.drawable.clubs2);
+		cardDrawableMapping.put(Deck.cardAtPosition(2).getIndex(),
+				R.drawable.clubs3);
+		cardDrawableMapping.put(Deck.cardAtPosition(3).getIndex(),
+				R.drawable.clubs4);
+		cardDrawableMapping.put(Deck.cardAtPosition(4).getIndex(),
+				R.drawable.clubs5);
+		cardDrawableMapping.put(Deck.cardAtPosition(5).getIndex(),
+				R.drawable.clubs6);
+		cardDrawableMapping.put(Deck.cardAtPosition(6).getIndex(),
+				R.drawable.clubs7);
+		cardDrawableMapping.put(Deck.cardAtPosition(7).getIndex(),
+				R.drawable.clubs8);
+		cardDrawableMapping.put(Deck.cardAtPosition(8).getIndex(),
+				R.drawable.clubs9);
+		cardDrawableMapping.put(Deck.cardAtPosition(9).getIndex(),
+				R.drawable.clubs10);
+		cardDrawableMapping.put(Deck.cardAtPosition(10).getIndex(),
+				R.drawable.clubs11);
+		cardDrawableMapping.put(Deck.cardAtPosition(11).getIndex(),
+				R.drawable.clubs12);
+		cardDrawableMapping.put(Deck.cardAtPosition(12).getIndex(),
+				R.drawable.clubs13);
+		cardDrawableMapping.put(Deck.cardAtPosition(13).getIndex(),
+				R.drawable.hearts1);
+		cardDrawableMapping.put(Deck.cardAtPosition(14).getIndex(),
+				R.drawable.hearts2);
+		cardDrawableMapping.put(Deck.cardAtPosition(15).getIndex(),
+				R.drawable.hearts3);
+		cardDrawableMapping.put(Deck.cardAtPosition(16).getIndex(),
+				R.drawable.hearts4);
+		cardDrawableMapping.put(Deck.cardAtPosition(17).getIndex(),
+				R.drawable.hearts5);
+		cardDrawableMapping.put(Deck.cardAtPosition(18).getIndex(),
+				R.drawable.hearts6);
+		cardDrawableMapping.put(Deck.cardAtPosition(19).getIndex(),
+				R.drawable.hearts7);
+		cardDrawableMapping.put(Deck.cardAtPosition(20).getIndex(),
+				R.drawable.hearts8);
+		cardDrawableMapping.put(Deck.cardAtPosition(21).getIndex(),
+				R.drawable.hearts9);
+		cardDrawableMapping.put(Deck.cardAtPosition(22).getIndex(),
+				R.drawable.hearts10);
+		cardDrawableMapping.put(Deck.cardAtPosition(23).getIndex(),
+				R.drawable.hearts11);
+		cardDrawableMapping.put(Deck.cardAtPosition(24).getIndex(),
+				R.drawable.hearts12);
+		cardDrawableMapping.put(Deck.cardAtPosition(25).getIndex(),
+				R.drawable.hearts13);
+		cardDrawableMapping.put(Deck.cardAtPosition(26).getIndex(),
+				R.drawable.diamonds1);
+		cardDrawableMapping.put(Deck.cardAtPosition(27).getIndex(),
+				R.drawable.diamonds2);
+		cardDrawableMapping.put(Deck.cardAtPosition(28).getIndex(),
+				R.drawable.diamonds3);
+		cardDrawableMapping.put(Deck.cardAtPosition(29).getIndex(),
+				R.drawable.diamonds4);
+		cardDrawableMapping.put(Deck.cardAtPosition(30).getIndex(),
+				R.drawable.diamonds5);
+		cardDrawableMapping.put(Deck.cardAtPosition(31).getIndex(),
+				R.drawable.diamonds6);
+		cardDrawableMapping.put(Deck.cardAtPosition(32).getIndex(),
+				R.drawable.diamonds7);
+		cardDrawableMapping.put(Deck.cardAtPosition(33).getIndex(),
+				R.drawable.diamonds8);
+		cardDrawableMapping.put(Deck.cardAtPosition(34).getIndex(),
+				R.drawable.diamonds9);
+		cardDrawableMapping.put(Deck.cardAtPosition(35).getIndex(),
+				R.drawable.diamonds10);
+		cardDrawableMapping.put(Deck.cardAtPosition(36).getIndex(),
+				R.drawable.diamonds11);
+		cardDrawableMapping.put(Deck.cardAtPosition(37).getIndex(),
+				R.drawable.diamonds12);
+		cardDrawableMapping.put(Deck.cardAtPosition(38).getIndex(),
+				R.drawable.diamonds13);
+		cardDrawableMapping.put(Deck.cardAtPosition(39).getIndex(),
+				R.drawable.spades1);
+		cardDrawableMapping.put(Deck.cardAtPosition(40).getIndex(),
+				R.drawable.spades2);
+		cardDrawableMapping.put(Deck.cardAtPosition(41).getIndex(),
+				R.drawable.spades3);
+		cardDrawableMapping.put(Deck.cardAtPosition(42).getIndex(),
+				R.drawable.spades4);
+		cardDrawableMapping.put(Deck.cardAtPosition(43).getIndex(),
+				R.drawable.spades5);
+		cardDrawableMapping.put(Deck.cardAtPosition(44).getIndex(),
+				R.drawable.spades6);
+		cardDrawableMapping.put(Deck.cardAtPosition(45).getIndex(),
+				R.drawable.spades7);
+		cardDrawableMapping.put(Deck.cardAtPosition(46).getIndex(),
+				R.drawable.spades8);
+		cardDrawableMapping.put(Deck.cardAtPosition(47).getIndex(),
+				R.drawable.spades9);
+		cardDrawableMapping.put(Deck.cardAtPosition(48).getIndex(),
+				R.drawable.spades10);
+		cardDrawableMapping.put(Deck.cardAtPosition(49).getIndex(),
+				R.drawable.spades11);
+		cardDrawableMapping.put(Deck.cardAtPosition(50).getIndex(),
+				R.drawable.spades12);
+		cardDrawableMapping.put(Deck.cardAtPosition(51).getIndex(),
+				R.drawable.spades13);
 
 		cardsViews = new ImageView[] {
 				(ImageView) findViewById(R.id.imageView2),
@@ -326,7 +750,21 @@ public class GameActivity extends Activity {
 		((ImageView) findViewById(R.id.imageView31))
 				.setOnClickListener(cardClickListener);
 
+		((ImageView) findViewById(R.id.imageView100))
+				.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						GameActivity.this.startActivity(new Intent(
+								Intent.ACTION_VIEW, Uri.parse(getResources()
+										.getString(R.string.ebinqo_url))));
+
+					}
+				});
+
 		board = new CardBoard();
+
+		board.redeal();
+		repaint();
 	}
 
 	@Override

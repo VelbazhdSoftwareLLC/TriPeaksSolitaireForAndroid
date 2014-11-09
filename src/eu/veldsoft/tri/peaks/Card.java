@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -132,6 +132,11 @@ class Card {
 	public static final int WIDTH = 64;
 
 	/**
+	 * 
+	 */
+	private static int count = 0;
+
+	/**
 	 * is it facing down
 	 */
 	private boolean isFaceDown;
@@ -162,6 +167,11 @@ class Card {
 	private int yCoord;
 
 	/**
+	 * Custom index.
+	 */
+	private int index;
+
+	/**
 	 * specify all the fields at once
 	 * 
 	 * @param rank
@@ -179,6 +189,15 @@ class Card {
 		this.visible = visible;
 		xCoord = x;
 		yCoord = y;
+		index = count++;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public int getIndex() {
+		return index;
 	}
 
 	/**

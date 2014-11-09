@@ -2,7 +2,7 @@
  * This file is a part of Tri Peaks Solitaire for Android
  *
  * Copyright (C) 2013-2014 by Valera Trubachev, Christian d'Heureuse, Todor 
- * Balabanov, Ina Baltadzhieva
+ * Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova, Victor Vangelov
  *
  * Tri Peaks Solitaire for Android is free software: you can redistribute it 
  * and/or modify it under the terms of the GNU General Public License as 
@@ -446,7 +446,7 @@ public class GameState {
 		 * increment the number of games played
 		 */
 		setNumberOfGames(getNumberOfGames() + 1);
-		
+
 		/*
 		 * increment the number of session games
 		 */
@@ -456,7 +456,8 @@ public class GameState {
 	/**
 	 * Collect card from the peaks to the discard pile.
 	 * 
-	 * @param index Index in the deck.
+	 * @param index
+	 *            Index in the deck.
 	 * 
 	 * @author Todor Balabanov
 	 */
@@ -471,26 +472,26 @@ public class GameState {
 		 * increment the streak
 		 */
 		setStreak(getStreak() + 1);
-		
+
 		/*
 		 * decrement the number of cards in play
 		 */
-		setCardsInPlay(getCardsInPlay()-1);
+		setCardsInPlay(getCardsInPlay() - 1);
 
 		/*
 		 * add the streak to the score
 		 */
-		setScore(getScore()+getStreak());
+		setScore(getScore() + getStreak());
 
 		/*
 		 * and to the current game's score
 		 */
-		setGameScore(getGameScore()+getStreak());
+		setGameScore(getGameScore() + getStreak());
 
 		/*
 		 * and to the session score
 		 */
-		setSessionScore(getSessionScore()+getStreak());
+		setSessionScore(getSessionScore() + getStreak());
 
 		/*
 		 * set the high streak if it's higher
@@ -505,7 +506,6 @@ public class GameState {
 		if (getGameScore() > getHighScore()) {
 			setHighScore(getGameScore());
 		}
-		
 
 		/*
 		 * if it was a peak
@@ -514,13 +514,13 @@ public class GameState {
 			/*
 			 * there's one less peak
 			 */
-			setRemainingPeaks(getRemainingPeaks()-1);
-			
+			setRemainingPeaks(getRemainingPeaks() - 1);
+
 			/*
 			 * add a 15-point bonus
 			 */
 			setScore(getScore() + Constants.PEAK_BONUS);
-			
+
 			/*
 			 * and to the game score
 			 */
@@ -530,14 +530,13 @@ public class GameState {
 			 * and to the session score
 			 */
 			setSessionScore(getSessionScore() + Constants.PEAK_BONUS);
-			
+
 			/*
 			 * if all the peaks are gone
 			 */
 			if (getRemainingCards() == 0) {
 				/*
-				 * add another 15-point bonus (for a total of 30 bonus
-				 * points)
+				 * add another 15-point bonus (for a total of 30 bonus points)
 				 */
 				setScore(getScore() + Constants.THREE_PEAKS_BONUS);
 
@@ -556,13 +555,13 @@ public class GameState {
 				 */
 				for (int w = 28; w < (getRemainingCards() + 28); w++) {
 					/*
-					 * hide the deck (so you can't take cards from the
-					 * deck after you clear the board
+					 * hide the deck (so you can't take cards from the deck
+					 * after you clear the board
 					 */
 					Deck.cardAtPosition(w).setInvisible();
 				}
 			}
-			
+
 			/*
 			 * set the high score if the score is higher
 			 */
