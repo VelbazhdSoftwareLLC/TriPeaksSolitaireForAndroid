@@ -2,9 +2,9 @@
 <resources>
 
     <string name="ebinqo_url">http://ebinqo.com/</string>
-    <string name="app_name">Tri Peaks Solitaire</string>
-    <string name="title_activity_lobby">Tri Peaks Solitaire</string>
-    <string name="welcome_to_the_tri_peaks_solitaire_text">Welcome to the Tri Peaks Solitaire!</string>
+    <string name="app_name">Tri Peaks Solitaire for Android</string>
+    <string name="title_activity_lobby">Tri Peaks Solitaire for Android</string>
+    <string name="welcome_to_the_tri_peaks_solitaire_text">Welcome to the Tri Peaks Solitaire for Android!</string>
     <string name="new_game_caption">New Game</string>
     <string name="high_scores_caption">High Scores</string>
     <string name="options_caption">Options</string>
@@ -25,5 +25,10 @@
     <string name="player_games_label">Player Games:</string>
     <string name="player_average_label">Player Average:</string>
     <string name="longest_streak_label">Longest Streak:</string>
+    <string name="title_activity_help">Help</string>
+    <string name="help_caption">Help</string>
+    <string name="help_text">"How to Play\n\n   The goal of the game is to remove all the cards: you can remove any card that is adjacent in value. (e.g. If you have an Ace, you can remove a King or a Two). Suit doesn't matter.\n   If there is no adjacent card, you can take a card from the deck, with a penalty of $5. For the first card you remove, you get $1; for the second $2; $3 for the third; and so on. However, when you take a card from the deck, the streak gets reset to 0.\n   You get $15 for the first two peaks that you reach, and $30 for the last one (i.e. clearing the board). You can redeal before you clear the board AND still have some cards in the deck, but with a penalty of $5 for every card on the board. There is no penalty for redealing if your deck is empty or if you've cleared the board.\n\nGame Strategies\n\n   The more cards you get in a row, the higher your score. However, there are times when you have to choose between cards. If those cards get you the same score, there are several strategies involved:\n   1)  Pick the card that opens up more cards That will give you more to choose from on your next move. It might go with the card you just took.\n   2)  If one on the choices is a peak, don't choose the peak. It doesn't open any cards.\n   Other than choosing cards, try working out a streak in your head. If they're the same, go with the one that opens more cards."</string>
+    <string name="title_activity_about_us">About Us</string>
+    <string name="about_us_text">"   Tri Peaks Solitaire for Android was published by Velbazhd Software LLC\n\n   The project was started by Valera Trubachev. Programming was done by Valera Trubachev, Christian d'Heureuse, Todor Balabanov, Ina Baltadzhieva, Maria Barova, Kamelia Ivanova and Victor Vangelov. Graphics was done by Daniela Pancheva.\n\n   You can modify this code in accordance with GPL v3.0.\n\n   To check if there is a newer version, go to: \nhttps://github.com/TodorBalabanov/TriPeaksSolitaireForAndroid/\n"</string>
 
 </resources>

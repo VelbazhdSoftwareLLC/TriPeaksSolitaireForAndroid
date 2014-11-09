@@ -20,37 +20,27 @@
 
 package eu.veldsoft.tri.peaks;
 
-import java.util.Random;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-/**
- * General constants class.
- * 
- * @author Todor Balabanov
- */
-class Constants {
+public class HelpActivity extends Activity {
 
-	/**
-	 * Pseudo-random number generator.
-	 */
-	static final Random PRNG = new Random();
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_help);
 
-	/**
-	 * Add 15-point bonus amount.
-	 */
-	static final int PEAK_BONUS = 15;
+		((Button) findViewById(R.id.button1))
+				.setOnClickListener(new View.OnClickListener() {
 
-	/**
-	 * Add 15-point bonus when all peaks are removed amount.
-	 */
-	static final int THREE_PEAKS_BONUS = 15;
-
-	/**
-	 * Subtract 5-point in no penalty amount.
-	 */
-	static final int NO_PENALTY_CHEAT = 5;
-
-	/**
-	 * Add 5 penalty for every card which was not removed.
-	 */
-	static final int CARD_REMOVED_PENALTY = 5;
+					@Override
+					public void onClick(View v) {
+						finish();
+					}
+				});
+	}
 }
