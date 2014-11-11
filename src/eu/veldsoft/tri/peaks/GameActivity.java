@@ -75,7 +75,9 @@ public class GameActivity extends Activity {
 	 */
 	private View.OnClickListener cardClickListener = new View.OnClickListener() {
 		/**
+		 * @param view
 		 * 
+		 * @author Todor Balabanov
 		 */
 		@Override
 		public void onClick(View view) {
@@ -84,7 +86,8 @@ public class GameActivity extends Activity {
 			 * are on top. All the skips make execution of the mouse-click
 			 * faster.
 			 */
-			for (int q = Deck.SIZE - 1; q >= 0; q--) {
+			int q = 0;
+			for (q = Deck.SIZE - 1; q >= 0; q--) {
 				Card card = Deck.cardAtPosition(q);
 
 				/*
@@ -111,293 +114,22 @@ public class GameActivity extends Activity {
 				/*
 				 * If the click is not for the particular card, skip the rest.
 				 */
-				if (q < cardsViews.length && view != cardsViews[q]) {
-					continue;
+				if (q < cardsViews.length && view == cardsViews[q]) {
+					break;
 				}
 
 				/*
-				 * A value to check if the card is adjacent by value.
+				 * If the clicked card is not the deck itself, skip it.
 				 */
-				boolean isAdjacent = false;
-
-				/*
-				 * If the second cheat is used, the value of the card won't be
-				 * checked.
-				 */
-				if (board.getState().getCheats().contains(Cheat.CLICK_ANY_CARD) == true) {
-					/*
-					 * The card is adjacent automatically.
-					 */
-					isAdjacent = true;
-				} else {
-					/*
-					 * No cheat - check card check if the card is adjacent by
-					 * value.
-					 */
-					isAdjacent = card.getRank().isAdjacentTo(
-							Deck.cardAtPosition(
-									board.getState().getDiscardIndex())
-									.getRank());
+				if (view == findViewById(R.id.imageView30)) {
+					break;
 				}
-
-				/*
-				 * If the card isn't in the deck and is adjacent to the last
-				 * discarded card.
-				 */
-				if (q < 28 && isAdjacent == true) {
-					/*
-					 * Hide the previously discarded card - makes the repaint
-					 * faster.
-					 */
-					Deck.cardAtPosition(board.getState().getDiscardIndex())
-							.setInvisible();
-
-					/*
-					 * Take the card from the peaks and put it in the discard
-					 * pile.
-					 */
-					board.getState().doValidMove(q);
-
-					/*
-					 * If it was a peak.
-					 */
-					if (q < 3) {
-						/*
-						 * If all the peaks are gone.
-						 */
-						if (board.getState().getRemainingCards() == 0) {
-							/*
-							 * Set the status message.
-							 */
-							board.setStatus("You have Tri-Conquered! You get a bonus of $30");
-						} else {
-							/*
-							 * Set the status message.
-							 */
-							board.setStatus("You have reached a peak! You get a bonus of $15");
-						}
-
-						/*
-						 * The click was consumed - do not go through the rest
-						 * of the cards.
-						 */
-						break;
-					}
-
-					/*
-					 * Check values for checking whether or not a card has a
-					 * card to the left or right.
-					 */
-					boolean noLeft = false, noRight = false;
-
-					/*
-					 * If the card is not a left end.
-					 */
-					if ((q != 3) && (q != 9) && (q != 18) && (q != 5)
-							&& (q != 7) && (q != 12) && (q != 15)) {
-						/*
-						 * Check if the left-adjacent card is visible.
-						 */
-						if (Deck.cardAtPosition(q - 1).isInvisible() == true) {
-							noLeft = true;
-						}
-					}
-
-					/*
-					 * If the card is not a right end.
-					 */
-					if ((q != 4) && (q != 6) && (q != 8) && (q != 17)
-							&& (q != 27) && (q != 11) && (q != 14)) {
-						/*
-						 * Check if the right-adjacent card is visible.
-						 */
-						if (Deck.cardAtPosition(q + 1).isInvisible() == true) {
-							noRight = true;
-						}
-					}
-
-					/*
-					 * Some of the cards in the third row are considered to be
-					 * edge cards because not all pairs of adjacent cards in the
-					 * third row uncover another card.
-					 */
-					if ((noLeft || noRight) == false) {
-						/*
-						 * If both the left and right cards are present, don't
-						 * do anything.
-						 */
-						break;
-					}
-
-					/*
-					 * The offset is the difference in the indexes of the right
-					 * card of the adjacent pair and the card that pair will
-					 * uncover.
-					 */
-					int offset = -1;
-
-					if ((q >= 18) && (q <= 27)) {
-						/*
-						 * 4th row
-						 */
-						offset = 10;
-					} else if ((q >= 9) && (q <= 11)) {
-						/*
-						 * first 3 of 3rd row
-						 */
-						offset = 7;
-					} else if ((q >= 12) && (q <= 14)) {
-						/*
-						 * second 3 of third row
-						 */
-						offset = 8;
-					} else if ((q >= 15) && (q <= 17)) {
-						/*
-						 * last 3 of third row
-						 */
-						offset = 9;
-					} else if ((q >= 3) && (q <= 4)) {
-						/*
-						 * first 2 of second row
-						 */
-						offset = 4;
-					} else if ((q >= 5) && (q <= 6)) {
-						/*
-						 * second 2 of second row
-						 */
-						offset = 5;
-					} else if ((q >= 7) && (q <= 8)) {
-						/*
-						 * last 2 of second row
-						 */
-						offset = 6;
-					}
-
-					/*
-					 * The first row is not here because the peaks are special
-					 * and were already taken care of above.
-					 */
-					if (offset == -1) {
-						/*
-						 * If the offset didn't get set, do not do anything
-						 * (offset should get set, but just in case).
-						 */
-						break;
-					}
-
-					/*
-					 * If the left card is missing, use the current card as the
-					 * right one.
-					 */
-					if (noLeft) {
-						Deck.cardAtPosition(q - offset).flip();
-					}
-
-					/*
-					 * If the right card is missing, use the missing card as the
-					 * right one.
-					 */
-					if (noRight) {
-						Deck.cardAtPosition(q - offset + 1).flip();
-					}
-				}
-
-				/*
-				 * In the deck move the card to the deck.
-				 */
-				else if ((q >= 28) && (q < 51)) {
-
-					/*
-					 * If the clicked card is not the deck itself, skip it.
-					 */
-					if (view != findViewById(R.id.imageView30)) {
-						continue;
-					}
-
-					/*
-					 * Set the deck's coordinates.
-					 */
-					card.setX(Deck.cardAtPosition(
-							board.getState().getDiscardIndex()).getX());
-					card.setY(Deck.cardAtPosition(
-							board.getState().getDiscardIndex()).getY());
-
-					/*
-					 * Hide the previously discarded card (for faster repaint).
-					 */
-					Deck.cardAtPosition(board.getState().getDiscardIndex())
-							.setInvisible();
-
-					/*
-					 * Flip the deck card.
-					 */
-					card.flip();
-
-					/*
-					 * Show the next deck card if it's not the last deck card.
-					 */
-					if (q != 28) {
-						Deck.cardAtPosition(q - 1).setVisible();
-					}
-
-					/*
-					 * Set the index of the discard pile.
-					 */
-					board.getState().setDiscardIndex(q);
-
-					/*
-					 * Reset the streak.
-					 */
-					board.getState().setStreak(0);
-
-					/*
-					 * If the third cheat is not on (no penalty cheat).
-					 */
-					if (board.getState().getCheats().contains(Cheat.NO_PENALTY) == false) {
-						/*
-						 * 5-point penalty.
-						 */
-						board.getState().setScore(
-								board.getState().getScore()
-										- Constants.NO_PENALTY_CHEAT);
-
-						/*
-						 * To the game score.
-						 */
-						board.getState().setGameScore(
-								board.getState().getGameScore()
-										- Constants.NO_PENALTY_CHEAT);
-
-						/*
-						 * And the session score.
-						 */
-						board.getState().setSessionScore(
-								board.getState().getSessionScore()
-										- Constants.NO_PENALTY_CHEAT);
-					}
-
-					/*
-					 * Set the low score if score is lower.
-					 */
-					if (board.getState().getGameScore() < board.getState()
-							.getLowScore()) {
-						board.getState().setLowScore(
-								board.getState().getGameScore());
-					}
-
-					/*
-					 * Decrement the number of cards in the deck.
-					 */
-					board.getState().setRemainingCards(
-							board.getState().getRemainingCards() - 1);
-				}
-
-				/*
-				 * The click was consumed - do not go through the rest of the
-				 * cards.
-				 */
-				break;
 			}
+
+			/*
+			 * Update board internal state.
+			 */
+			board.updateState(q);
 
 			/*
 			 * Repaint the board.
@@ -531,6 +263,11 @@ public class GameActivity extends Activity {
 
 		((TextView) findViewById(R.id.textView25)).setText("" + stats[8]
 				+ " = " + intFmt.format((stats[8] * (stats[8] + 1) / 2)));
+
+		if (board.getStatus().equals("") == false) {
+			Toast.makeText(this, board.getStatus(), Toast.LENGTH_LONG).show();
+			board.setStatus("");
+		}
 	}
 
 	/**
@@ -544,6 +281,15 @@ public class GameActivity extends Activity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.layout.menu_game, menu);
 		return true;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		repaint();
 	}
 
 	/**
@@ -771,6 +517,34 @@ public class GameActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		switch (item.getItemId()) {
+		case R.id.menu_exit:
+			GameActivity.this.finish();
+			break;
+
+		case R.id.menu_reset:
+			/*
+			 * Show a confirmation message.
+			 */
+			new AlertDialog.Builder(this)
+					.setTitle("Confirm Game Reset")
+					.setMessage(
+							"Are you sure you want to reset your game?\nResetting results in a PERMANENT loss of score and stats!")
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setPositiveButton(android.R.string.yes,
+							new DialogInterface.OnClickListener() {
+								/*
+								 * Do the penalty if the user agreed.
+								 */
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									board.reset();
+									board.redeal();
+									repaint();
+								}
+							}).setNegativeButton(android.R.string.no, null)
+					.show();
+			break;
+
 		case R.id.menu_deal:
 
 			/*

@@ -318,4 +318,275 @@ class CardBoard {
 		state.setHasCheatedYet(hasCheatedYet);
 	}
 
+	/**
+	 * 
+	 * @param index
+	 *            Index of the card to be handled.
+	 */
+	public void updateState(int index) {
+		Card card = null;
+
+		try {
+			card = Deck.cardAtPosition(index);
+		} catch (Exception ex) {
+			return;
+		}
+
+		/*
+		 * A value to check if the card is adjacent by value.
+		 */
+		boolean isAdjacent = false;
+
+		/*
+		 * If the second cheat is used, the value of the card won't be checked.
+		 */
+		if (getState().getCheats().contains(Cheat.CLICK_ANY_CARD) == true) {
+			/*
+			 * The card is adjacent automatically.
+			 */
+			isAdjacent = true;
+		} else {
+			/*
+			 * No cheat - check card check if the card is adjacent by value.
+			 */
+			isAdjacent = card.getRank()
+					.isAdjacentTo(
+							Deck.cardAtPosition(getState().getDiscardIndex())
+									.getRank());
+		}
+
+		/*
+		 * If the card isn't in the deck and is adjacent to the last discarded
+		 * card.
+		 */
+		if (index < 28 && isAdjacent == true) {
+			/*
+			 * Hide the previously discarded card - makes the repaint faster.
+			 */
+			Deck.cardAtPosition(getState().getDiscardIndex()).setInvisible();
+
+			/*
+			 * Take the card from the peaks and put it in the discard pile.
+			 */
+			getState().doValidMove(index);
+
+			/*
+			 * If it was a peak.
+			 */
+			if (index < 3) {
+				/*
+				 * If all the peaks are gone.
+				 */
+				if (getState().getRemainingCards() == 0) {
+					/*
+					 * Set the status message.
+					 */
+					setStatus("You have Tri-Conquered! You get a bonus of $30");
+				} else {
+					/*
+					 * Set the status message.
+					 */
+					setStatus("You have reached a peak! You get a bonus of $15");
+				}
+
+				/*
+				 * The click was consumed - do not go through the rest of the
+				 * cards.
+				 */
+				return;
+			}
+
+			/*
+			 * Check values for checking whether or not a card has a card to the
+			 * left or right.
+			 */
+			boolean noLeft = false, noRight = false;
+
+			/*
+			 * If the card is not a left end.
+			 */
+			if ((index != 3) && (index != 9) && (index != 18) && (index != 5)
+					&& (index != 7) && (index != 12) && (index != 15)) {
+				/*
+				 * Check if the left-adjacent card is visible.
+				 */
+				if (Deck.cardAtPosition(index - 1).isInvisible() == true) {
+					noLeft = true;
+				}
+			}
+
+			/*
+			 * If the card is not a right end.
+			 */
+			if ((index != 4) && (index != 6) && (index != 8) && (index != 17)
+					&& (index != 27) && (index != 11) && (index != 14)) {
+				/*
+				 * Check if the right-adjacent card is visible.
+				 */
+				if (Deck.cardAtPosition(index + 1).isInvisible() == true) {
+					noRight = true;
+				}
+			}
+
+			/*
+			 * Some of the cards in the third row are considered to be edge
+			 * cards because not all pairs of adjacent cards in the third row
+			 * uncover another card.
+			 */
+			if ((noLeft || noRight) == false) {
+				/*
+				 * If both the left and right cards are present, don't do
+				 * anything.
+				 */
+				return;
+			}
+
+			/*
+			 * The offset is the difference in the indexes of the right card of
+			 * the adjacent pair and the card that pair will uncover.
+			 */
+			int offset = -1;
+
+			if ((index >= 18) && (index <= 27)) {
+				/*
+				 * 4th row
+				 */
+				offset = 10;
+			} else if ((index >= 9) && (index <= 11)) {
+				/*
+				 * first 3 of 3rd row
+				 */
+				offset = 7;
+			} else if ((index >= 12) && (index <= 14)) {
+				/*
+				 * second 3 of third row
+				 */
+				offset = 8;
+			} else if ((index >= 15) && (index <= 17)) {
+				/*
+				 * last 3 of third row
+				 */
+				offset = 9;
+			} else if ((index >= 3) && (index <= 4)) {
+				/*
+				 * first 2 of second row
+				 */
+				offset = 4;
+			} else if ((index >= 5) && (index <= 6)) {
+				/*
+				 * second 2 of second row
+				 */
+				offset = 5;
+			} else if ((index >= 7) && (index <= 8)) {
+				/*
+				 * last 2 of second row
+				 */
+				offset = 6;
+			}
+
+			/*
+			 * The first row is not here because the peaks are special and were
+			 * already taken care of above.
+			 */
+			if (offset == -1) {
+				/*
+				 * If the offset didn't get set, do not do anything (offset
+				 * should get set, but just in case).
+				 */
+				return;
+			}
+
+			/*
+			 * If the left card is missing, use the current card as the right
+			 * one.
+			 */
+			if (noLeft) {
+				Deck.cardAtPosition(index - offset).flip();
+			}
+
+			/*
+			 * If the right card is missing, use the missing card as the right
+			 * one.
+			 */
+			if (noRight) {
+				Deck.cardAtPosition(index - offset + 1).flip();
+			}
+		}
+
+		/*
+		 * In the deck move the card to the deck.
+		 */
+		else if ((index >= 28) && (index < 51)) {
+
+			/*
+			 * Set the deck's coordinates.
+			 */
+			card.setX(Deck.cardAtPosition(getState().getDiscardIndex()).getX());
+			card.setY(Deck.cardAtPosition(getState().getDiscardIndex()).getY());
+
+			/*
+			 * Hide the previously discarded card (for faster repaint).
+			 */
+			Deck.cardAtPosition(getState().getDiscardIndex()).setInvisible();
+
+			/*
+			 * Flip the deck card.
+			 */
+			card.flip();
+
+			/*
+			 * Show the next deck card if it's not the last deck card.
+			 */
+			if (index != 28) {
+				Deck.cardAtPosition(index - 1).setVisible();
+			}
+
+			/*
+			 * Set the index of the discard pile.
+			 */
+			getState().setDiscardIndex(index);
+
+			/*
+			 * Reset the streak.
+			 */
+			getState().setStreak(0);
+
+			/*
+			 * If the third cheat is not on (no penalty cheat).
+			 */
+			if (getState().getCheats().contains(Cheat.NO_PENALTY) == false) {
+				/*
+				 * 5-point penalty.
+				 */
+				getState().setScore(
+						getState().getScore() - Constants.NO_PENALTY_CHEAT);
+
+				/*
+				 * To the game score.
+				 */
+				getState().setGameScore(
+						getState().getGameScore() - Constants.NO_PENALTY_CHEAT);
+
+				/*
+				 * And the session score.
+				 */
+				getState().setSessionScore(
+						getState().getSessionScore()
+								- Constants.NO_PENALTY_CHEAT);
+			}
+
+			/*
+			 * Set the low score if score is lower.
+			 */
+			if (getState().getGameScore() < getState().getLowScore()) {
+				getState().setLowScore(getState().getGameScore());
+			}
+
+			/*
+			 * Decrement the number of cards in the deck.
+			 */
+			getState().setRemainingCards(getState().getRemainingCards() - 1);
+		}
+	}
+
 }

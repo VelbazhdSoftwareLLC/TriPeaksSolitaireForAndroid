@@ -12,6 +12,8 @@
     <string name="exit_caption">Exit</string>
     <string name="title_activity_game">Game</string>
     <string name="title_menu_deal">Deal</string>
+    <string name="title_menu_reset">Reset</string>
+    <string name="title_menu_exit">Exit</string>
     <string name="cheater_warning">CHEATER</string>
     <string name="cards_remaining_label">Cards Remaining:</string>
     <string name="lost_label">Lost:</string>

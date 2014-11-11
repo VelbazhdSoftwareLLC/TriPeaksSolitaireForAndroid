@@ -5,4 +5,12 @@
         android:id="@+id/menu_deal"
         android:title="@string/title_menu_deal"/>
 
+    <item
+        android:id="@+id/menu_reset"
+        android:title="@string/title_menu_reset"/>
+    
+    <item
+        android:id="@+id/menu_exit"
+        android:title="@string/title_menu_exit"/>
+    
 </menu>
