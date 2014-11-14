@@ -67,7 +67,10 @@ class Base64Coder {
 	/**
 	 * 
 	 * @param s
+	 * 
 	 * @return
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	public static String encodeString(String s) {
 		return new String(encode(s.getBytes()));
@@ -77,6 +80,8 @@ class Base64Coder {
 	 * 
 	 * @param in
 	 * @return
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	public static char[] encode(byte[] in) {
 		return encode(in, in.length);
@@ -86,7 +91,10 @@ class Base64Coder {
 	 * 
 	 * @param in
 	 * @param iLen
+	 * 
 	 * @return
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	public static char[] encode(byte[] in, int iLen) {
 		int oDataLen = (iLen * 4 + 2) / 3;
@@ -115,7 +123,10 @@ class Base64Coder {
 	/**
 	 * 
 	 * @param s
+	 * 
 	 * @return
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	public static String decodeString(String s) {
 		return new String(decode(s));
@@ -124,7 +135,10 @@ class Base64Coder {
 	/**
 	 * 
 	 * @param s
+	 * 
 	 * @return
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	public static byte[] decode(String s) {
 		return decode(s.toCharArray());
@@ -133,7 +147,10 @@ class Base64Coder {
 	/**
 	 * 
 	 * @param in
+	 * 
 	 * @return
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	public static byte[] decode(char[] in) {
 		int iLen = in.length;
@@ -175,7 +192,10 @@ class Base64Coder {
 
 	/**
 	 * Object less class.
+	 * 
+	 * @author Christian d'Heureuse
 	 */
 	private Base64Coder() {
 	}
 }
+

@@ -27,8 +27,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * About us information as Android activity. 
+ *
+ * @author Todor Balabanov
+ */
 public class AboutUsActivity extends Activity {
 
+	/**
+	 * Create activity event.
+	 * 
+	 * @param savedInstanceState Saved instantce state.
+	 * 
+	 * @author Todor Balabanov
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,3 +56,4 @@ public class AboutUsActivity extends Activity {
 				});
 	}
 }
+

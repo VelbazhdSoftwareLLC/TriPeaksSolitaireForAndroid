@@ -21,37 +21,41 @@
 package eu.veldsoft.tri.peaks;
 
 /**
- * defines a card
+ * Defines cards.
  * 
  * @author Todor Balabanov
  */
 class Card {
 
 	/**
-	 * value (0-12) - 0=Ace, 10=Jack, 11=Queen, 12=King
+	 * Card rank enumeration. All cards have rank value in the range of 0 to 12 
+	 * (0=Ace, ..., 10=Jack, 11=Queen, 12=King).
 	 * 
 	 * @author Todor Balabanov
 	 */
-	public static enum Rank {
+	static enum Rank {
 		ACE(0, "ace"), TWO(1, "two"), THREE(2, "three"), FOUR(3, "four"), FIVE(
 				4, "five"), SIX(5, "six"), SEVEN(6, "seven"), EIGHT(7, "eight"), NINE(
 				8, "nine"), TEN(9, "ten"), JACK(10, "jack"), QUEEN(11, "queen"), KING(
 				12, "king");
 
 		/**
-		 * 
+		 * Rank numeric value used in some of the calculations.
 		 */
 		private final int value;
 
 		/**
-		 * 
+		 * Rank description as text.
 		 */
 		private final String description;
 
 		/**
+		 * Constructor with all fields.
 		 * 
-		 * @param value
+		 * @param value Rank index.
 		 * @param description
+		 * 
+		 * @author Todor Balabanov
 		 */
 		private Rank(int value, String description) {
 			this.value = value;
@@ -59,17 +63,24 @@ class Card {
 		}
 
 		/**
+		 * Card rank as index getter.
 		 * 
-		 * @return
+		 * @return Card rank index.
+		 * 
+		 * @author Todor Balabanov
 		 */
 		public int getValue() {
 			return value;
 		}
 
 		/**
+		 * Card are adjacent by rank. This function checks the adjecent.
 		 * 
-		 * @param rank
-		 * @return
+		 * @param rank External card rank.
+		 * 
+		 * @return True if cards are adjecent, false otherwise.
+		 * 
+		 * @author Todor Balabanov
 		 */
 		public boolean isAdjacentTo(Rank rank) {
 			// TODO Do not use internal numbering.
@@ -83,7 +94,11 @@ class Card {
 		}
 
 		/**
+		 * Card rank representation as string.
 		 * 
+		 * @return String representation.
+		 * 
+		 * @author Todor Balabanov
 		 */
 		@Override
 		public String toString() {
@@ -92,28 +107,35 @@ class Card {
 	}
 
 	/**
-	 * the 4 suits
+	 * Card suits enumeration.
 	 * 
 	 * @author Todor Balabanov
 	 */
-	public static enum Suit {
+	static enum Suit {
 		CLUBS("clubs"), HEARTS("hearts"), DIAMONDS("diamonds"), SPADES("spades");
 
 		/**
-		 * 
+		 * Text descrption of the card suit.
 		 */
 		private final String description;
 
 		/**
+		 * Constructor with all fields.
 		 * 
-		 * @param description
+		 * @param description Card suit description as text.
+		 * 
+		 * @author Todor Balabanov
 		 */
 		private Suit(String description) {
 			this.description = description;
 		}
 
 		/**
+		 * String representation of the card suit.
 		 * 
+		 * @return String representation.
+		 * 
+		 * @author Todor Balabanov
 		 */
 		@Override
 		public String toString() {
@@ -122,27 +144,27 @@ class Card {
 	}
 
 	/**
-	 * 
+	 * Swing information for the card height.
 	 */
-	public static final int HEIGHT = 86;
+	static final int HEIGHT = 86;
 
 	/**
-	 * 
+	 * Swing information for the card width.
 	 */
-	public static final int WIDTH = 64;
+	static final int WIDTH = 64;
 
 	/**
-	 * 
+	 * Counter is used to map cards in the collections.
 	 */
 	private static int count = 0;
 
 	/**
-	 * is it facing down
+	 * Is card facing down flag.
 	 */
 	private boolean isFaceDown;
 
 	/**
-	 * is it visible
+	 * Is card visible flag.
 	 */
 	private boolean visible;
 
@@ -157,29 +179,31 @@ class Card {
 	private Suit suit;
 
 	/**
-	 * coordinates of the card (center, not top-left)
+	 * Swing coordinates of the card (center, not top-left).
 	 */
 	private int xCoord;
 
 	/**
-	 * coordinates of the card (center, not top-left)
+	 * Swing coordinates of the card (center, not top-left).
 	 */
 	private int yCoord;
 
 	/**
-	 * Custom index.
+	 * Custom index used for collections mapping.
 	 */
 	private int index;
 
 	/**
-	 * specify all the fields at once
+	 * Constructor for all the fields at once.
 	 * 
-	 * @param rank
-	 * @param suit
-	 * @param isFaceDown
-	 * @param visible
-	 * @param x
-	 * @param y
+	 * @param rank Card rank.
+	 * @param suit Card suit.
+	 * @param isFaceDown Card facing down flag.
+	 * @param visible Card visible flag.
+	 * @param x Swing x coordinate.
+	 * @param y Swing y coordinate.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public Card(Rank rank, Suit suit, boolean isFaceDown, boolean visible,
 			int x, int y) {
@@ -193,142 +217,192 @@ class Card {
 	}
 
 	/**
+	 * Card custom index getter.
+	 *
+	 * @return Custom index.
 	 * 
-	 * @return
+	 * @author Todor Balabanov
 	 */
 	public int getIndex() {
 		return index;
 	}
 
 	/**
+	 * Card rank getter.
 	 * 
-	 * @return
+	 * @return Card rank.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public Rank getRank() {
 		return rank;
 	}
 
 	/**
+	 * Card suit getter.
 	 * 
-	 * @return
+	 * @return Card suit.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public Suit getSuit() {
 		return suit;
 	}
 
 	/**
+	 * Is card facing down getter.
 	 * 
-	 * @return
+	 * @return True if the card is facing down, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public boolean isFacingDown() {
 		return isFaceDown;
 	}
 
 	/**
+	 * Is card facing up getter.
 	 * 
-	 * @return
+	 * @return True if the card is facing up, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public boolean isFacingUp() {
 		return !isFaceDown;
 	}
 
 	/**
+	 * Swing x coordinate getter.
 	 * 
-	 * @return
+	 * @return X coordinate.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getX() {
 		return xCoord;
 	}
 
 	/**
+	 * Swing y coordiante getter.
 	 * 
-	 * @return
+	 * @return Y coordinate.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getY() {
 		return yCoord;
 	}
 
 	/**
+	 * Is card visible gettter.
 	 * 
-	 * @return
+	 * @return True if the card is visible, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public boolean isVisible() {
 		return visible;
 	}
 
 	/**
+	 * Is card invisible getter.
 	 * 
-	 * @return
+	 * @return True if the card is invisible, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public boolean isInvisible() {
 		return !visible;
 	}
 
 	/**
+	 * Card rank setter.
 	 * 
-	 * @param newVal
+	 * @param newVal New value for the card rank.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setRank(Rank newVal) {
 		rank = newVal;
 	}
 
 	/**
+	 * Card suit setter.
 	 * 
-	 * @param newSuit
+	 * @param newSuit New value for the card suit.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setSuit(Suit newSuit) {
 		suit = newSuit;
 	}
 
 	/**
+	 * Flip the card. If the card is facing down it will be fliped and otherwise.
 	 * 
+	 * @author Todor Balabanov
 	 */
 	public void flip() {
 		isFaceDown = !isFaceDown;
 	}
 
 	/**
+	 * Flip the card.
 	 * 
-	 * @param isFaceDown
+	 * @param isFaceDown It gives particular valu for flipping.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void flip(boolean isFaceDown) {
 		this.isFaceDown = isFaceDown;
 	}
 
 	/**
+	 * Swing x coordinate setter.
 	 * 
-	 * @param newX
+	 * @param newX New card x coordinate.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setX(int newX) {
 		xCoord = newX;
 	}
 
 	/**
+	 * Swing y coordinate setter.
 	 * 
-	 * @param newY
+	 * @param newY New card y coordinate.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setY(int newY) {
 		yCoord = newY;
 	}
 
 	/**
+	 * Set card to be visible.
 	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setVisible() {
 		visible = true;
 	}
 
 	/**
+	 * Set card to be invisible.
 	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setInvisible() {
 		visible = false;
 	}
 
 	/**
-	 * converts the card to a string representation
+	 * Converts the card to a string representation.
 	 * 
-	 * @return
+	 * @return String representation.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	@Override
 	public String toString() {
@@ -340,7 +414,11 @@ class Card {
 	}
 
 	/**
+	 * Hash code calculation.
 	 * 
+	 * @return Hash code.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	@Override
 	public int hashCode() {
@@ -361,8 +439,13 @@ class Card {
 	}
 
 	/**
-	 * @param obj
-	 * @return
+	 * Equals method implementation.
+	 * 
+	 * @param obj External object to compare with.
+	 * 
+	 * @return True if the objects are equal, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -388,3 +471,4 @@ class Card {
 		return true;
 	}
 }
+

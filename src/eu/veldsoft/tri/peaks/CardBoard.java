@@ -22,42 +22,79 @@ package eu.veldsoft.tri.peaks;
 
 import java.util.EnumSet;
 
+/**
+ * Game board object model.
+ * 
+ * @author Todor Balabanov
+ */
 class CardBoard {
 
 	/**
-	 * 
+	 * Game state information.
 	 */
 	private GameState state = new GameState();
 
 	/**
-	 * status text (used later)
+	 * Status text.
 	 */
 	private String status = "";
 
 	/**
-	 * class constructor
+	 * Constructor without parameters.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public CardBoard() {
 	}
 
+	/**
+	 * Game state getter.
+	 * 
+	 * @return Game state.
+	 * 
+	 * @author Todor Balabanov
+	 */
 	public GameState getState() {
 		return state;
 	}
 
+	/**
+	 * Game state setter.
+	 * 
+	 * @param state New game state.
+	 * 
+	 * @author Todor Balabanov
+	 */
 	public void setState(GameState state) {
 		this.state = state;
 	}
 
+	/**
+	 * Status message getter.
+	 * 
+	 * @return Status message.
+	 * 
+	 * @author Todor Balabanov
+	 */
 	public String getStatus() {
 		return status;
 	}
 
+	/**
+	 * Status message setter.
+	 * 
+	 * @param status New status message.
+	 * 
+	 * @author Todor Balabanov
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	/**
 	 * Redeals the cards.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void redeal() {
 		Deck.shuffle();
@@ -67,156 +104,182 @@ class CardBoard {
 	}
 
 	/**
-	 * resets everything
+	 * Resets all internal variables.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void reset() {
 		Deck.setAllInvisible();
 
 		/*
-		 * essentially the same thing as the default values for the fields
+		 * Essentially the same thing as the default values for the fields.
 		 */
 		status = "";
 		state.reset();
 	}
 
 	/**
-	 * return the penalty
+	 * Penalty getter.
 	 * 
-	 * @return
+	 * @return Penalty value.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getPenalty() {
 		/*
-		 * if the penalty cheat is on, there is no penalty
+		 * If the penalty cheat is on, there is no penalty.
 		 */
 		if (state.getCheats().contains(Cheat.NO_PENALTY) == true) {
 			return 0;
 		}
 
 		/*
-		 * if there are cards in the deck AND in play, the penalty is $5 for
-		 * every card removed
+		 * If there are cards in the deck AND in play, the penalty is $5 for
+		 * every card removed.
 		 */
 		if ((state.getCardsInPlay() == 0 || state.getRemainingCards() == 0) == false) {
 			return (state.getCardsInPlay() * Constants.CARD_REMOVED_PENALTY);
 		} else {
 			/*
-			 * otherwise the penalty is 0
+			 * Otherwise the penalty is 0.
 			 */
 			return 0;
 		}
 	}
 
 	/**
-	 * perform the penalty - penalty doesn't affect the low score
+	 * Perform the penalty - penalty doesn't affect the low score.
 	 * 
-	 * @param penalty
+	 * @param penalty Size of the penalty to be applied.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void doPenalty(int penalty) {
 		/*
-		 * subtract the penalty
+		 * Subtract the penalty.
 		 */
 		state.setScore(state.getScore() - penalty);
 
 		/*
-		 * from the session score
+		 * Subtract from the session score.
 		 */
 		state.setSessionScore(state.getSessionScore() - penalty);
 
 		/*
-		 * and from the game score
+		 * Subtract from the game score.
 		 */
 		state.setGameScore(state.getGameScore() - penalty);
 	}
 
 	/**
-	 * returns the player's overall score
+	 * Player's overall score getter.
 	 * 
-	 * @return
+	 * @return Overall score.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getScore() {
 		return state.getScore();
 	}
 
 	/**
-	 * returns the current game score
+	 * Current game score getter.
 	 * 
-	 * @return
+	 * @return Current game score.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getGameScore() {
 		return state.getGameScore();
 	}
 
 	/**
-	 * returns the current streak
+	 * Current streak getter.
 	 * 
-	 * @return
+	 * @return Current streak.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getStreak() {
 		return state.getStreak();
 	}
 
 	/**
-	 * returns the number of games played
+	 * Number of games played getter.
 	 * 
-	 * @return
+	 * @return Number of games.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getNumGames() {
 		return state.getNumberOfGames();
 	}
 
 	/**
-	 * returns the high score
+	 * High score getter.
 	 * 
-	 * @return
+	 * @return High score.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getHighScore() {
 		return state.getHighScore();
 	}
 
 	/**
-	 * returns the low score
+	 * Low score getter.
 	 * 
-	 * @return
+	 * @return Low score.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getLowScore() {
 		return state.getLowScore();
 	}
 
 	/**
-	 * returns the longest streak
+	 * Longest streak getter.
 	 * 
-	 * @return
+	 * @return Longest streak.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getHighStreak() {
 		return state.getHighStreak();
 	}
 
 	/**
-	 * returns the session score
+	 * Session score getter.
 	 * 
-	 * @return
+	 * @return Session score.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getSessionScore() {
 		return state.getSessionScore();
 	}
 
 	/**
-	 * returns the number of session games
+	 * Number of session games getter.
 	 * 
-	 * @return
+	 * @return Number of session games.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int getSessionGames() {
 		return state.getNumberOfSessionGames();
 	}
 
 	/**
-	 * returns all the stats in an array
+	 * All stats in an array getter.
 	 * 
-	 * @return
+	 * @return All stats.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public int[] getAllStats() {
 		/*
-		 * the array of stats
+		 * Array of stats.
 		 */
 		int[] retVal = { getScore(), getGameScore(), getSessionScore(),
 				getStreak(), getNumGames(), getSessionGames(), getHighScore(),
@@ -226,27 +289,33 @@ class CardBoard {
 	}
 
 	/**
-	 * check if the player is currently cheating
+	 * Check if the player is currently cheating.
 	 * 
-	 * @return
+	 * @return True if the player is cheating, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public boolean isCheating() {
 		return (state.getCheats().isEmpty());
 	}
 
 	/**
-	 * checks if player has ever cheated
+	 * Checks if player has ever cheated.
 	 * 
-	 * @return
+	 * @return True if hte player has cheated, false otherwise.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public boolean hasCheated() {
 		return state.isHasCheatedYet();
 	}
 
 	/**
-	 * returns all the cheats
+	 * Returns all the cheats.
 	 * 
-	 * @return
+	 * @return Cheats set.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public EnumSet<Cheat> getCheats() {
 		/*
@@ -256,20 +325,22 @@ class CardBoard {
 	}
 
 	/**
-	 * sets all the stats based on the array values
+	 * Sets all the stats based on the array values.
 	 * 
-	 * @param stats
+	 * @param stats New stats values.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setStats(int[] stats) {
 		/*
-		 * the programmer knows the order of the stats to be passed into this
+		 * The programmer knows the order of the stats to be passed into this
 		 * method:
 		 */
 		state.setScore(stats[0]);
 
 		/*
-		 * overall score, high score, low score, number ofgames, and longest
-		 * streak
+		 * Overall score, high score, low score, number ofgames, and longest
+		 * streak.
 		 */
 		state.setHighScore(stats[1]);
 		state.setLowScore(stats[2]);
@@ -278,10 +349,12 @@ class CardBoard {
 	}
 
 	/**
-	 * set a cheat with the given index
+	 * Set a cheat with the given index.
 	 * 
-	 * @param cheat
-	 * @param newState
+	 * @param cheat Cheat to be set.
+	 * @param newState New state of the cheat.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setCheat(Cheat cheat, boolean newState) {
 		if (state.getCheats().contains(cheat) == false && newState == true) {
@@ -292,7 +365,7 @@ class CardBoard {
 		}
 
 		/*
-		 * if the cheat is turned on, set the "has cheated" flag
+		 * If the cheat is turned on, set the "has cheated" flag.
 		 */
 		if (newState == true) {
 			state.setHasCheatedYet(true);
@@ -300,9 +373,11 @@ class CardBoard {
 	}
 
 	/**
-	 * set all the cheats in a given array
+	 * Set all the cheats in a given array.
 	 * 
-	 * @param newCheats
+	 * @param newCheats New cheats values.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setCheats(EnumSet<Cheat> newCheats) {
 		state.getCheats().clear();
@@ -310,18 +385,23 @@ class CardBoard {
 	}
 
 	/**
-	 * set the cheated status for the player.
+	 * Set the cheated status for the player.
 	 * 
-	 * @param hasCheatedYet
+	 * @param hasCheatedYet New player's cheat status.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void setCheated(boolean hasCheatedYet) {
 		state.setHasCheatedYet(hasCheatedYet);
 	}
 
 	/**
+	 * Update internal game state.
 	 * 
 	 * @param index
 	 *            Index of the card to be handled.
+	 * 
+	 * @author Todor Balabanov
 	 */
 	public void updateState(int index) {
 		Card card = null;
@@ -588,5 +668,5 @@ class CardBoard {
 			getState().setRemainingCards(getState().getRemainingCards() - 1);
 		}
 	}
-
 }
+
