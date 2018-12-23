@@ -1,4 +1,0 @@
-#Sat Dec 22 17:29:00 EET 2018
-base.0=/Users/todorbalabanov/Desktop/TriPeaksSolitaireForAndroid/TriPeaksSolitaireForAndroid/build/intermediates/transforms/dexMerger/debug/0
-path.0=classes.dex
-renamed.0=classes.dex
